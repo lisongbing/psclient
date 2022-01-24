@@ -775,6 +775,9 @@ module.exports = {
 				req:PB.StrongboxIncomeListReq,
 				resp:PB.StrongboxIncomeListResp,
 			},
+			2343: {
+				req:PB.TeaHouseMemberSetCordonReq,
+			},
 			2401: {
 				req:PB.KickGameReq,
 			},

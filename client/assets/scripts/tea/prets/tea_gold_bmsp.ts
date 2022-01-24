@@ -33,6 +33,8 @@ export default class TeaBmsp extends cc.Component {
     // Itemzdxy: cc.Prefab = null;
     @property(cc.Prefab)
     YqcsDlg: cc.Prefab = null;
+    @property(cc.Prefab)
+    teaFbDialogPre: cc.Prefab = null;
 
     togZdxy:cc.Node = null;
     EditBox_search:cc.EditBox = null;
@@ -1818,7 +1820,9 @@ export default class TeaBmsp extends cc.Component {
     }
     // 调整信誉 查看记录
     onBtnZdxyXinyujilu(evt, arg) {
-        cc.dlog('arg--->' + JSON.stringify(arg))
+        if (!arg.fanbi) {
+            cc.dlog('arg--->' + JSON.stringify(arg))
+        }
         // cc.dlog('onBtnZdxyXinyujilu', arg.xinyu, arg.itm.idx, arg.itm.ud);
 
         // @ts-ignore
@@ -1826,6 +1830,8 @@ export default class TeaBmsp extends cc.Component {
 
         if (arg.jjx) {
             this.zdxyUpjjx(arg.itm);
+        } else if (arg.fanbi) {
+            this.zdxySetFanbi(arg.itm);
         } else if (arg.xinyu) {
             this.zdxyUpTzyx(arg.itm);
         } else {
@@ -1903,6 +1909,22 @@ export default class TeaBmsp extends cc.Component {
         cc.find('Label_zf', r.dlgJJX).getComponent(cc.Label).string = cc.g.utils.realNum1(item.credit);
         // @ts-ignore
         r.tzxy_ebjjx.string = cc.g.utils.realNum1(item.cordon);
+    }
+    //设置反比
+    zdxySetFanbi(item) {
+        cc.log('设置反比');
+        let ud = item['ud'];
+
+        let dlg = cc.instantiate(this.teaFbDialogPre);
+        this.node.addChild(dlg);
+        let com = dlg.getComponent('tea_fanbichang');
+        com.showUiDatas(true, ud);
+
+        com.fanbiOKFun = (val)=>{
+            ud.contributeRate = val;
+            // @ts-ignore
+            item.fanbi.string = cc.g.utils.fixNum1(val) + '%';
+        };
     }
     onBtnZdxyjjx(evt, arg) {
         let r = this.ctt['zdxy'];

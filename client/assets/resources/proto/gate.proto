@@ -233,6 +233,7 @@ enum PROTO{
 	STRONGBOX_GET_GOLD=2340;
 	STRONGBOX_WITHDRAW=2341;
 	STRONGBOX_INCOME_LIST=2342;
+	TEA_HOUSE_MEMBER_SET_CORDON=2343;
 	KICK_GAME=2401;
 	FEN_BAO=2402;
 	SHI_MING_REN_ZHENG=2403;
@@ -470,6 +471,7 @@ enum ERROR{
 	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK2=1435;
 	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK3=1436;
 	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK4=1437;
+	YOUR_CREDIT_NOT_ENOUGH_NOT_JOIN_DESK=1438;
 }
 enum CONST{
 	CONST_UNUSED=0;
@@ -1804,6 +1806,15 @@ message GoldMatchTeamInfo{
 	int64   credit=6;
 	bool    power=7;
 	int64   cordon=8;
+	int64   gold=9;
+	float   contributeRate=10;
+	int64   tdayDraw=11;
+	int64   tdayActualDraw=12;
+	int64   tdayPresonDraw=13;
+	int64   ydayDraw=14;
+	int64   ydayActualDraw=15;
+	int64   ydayPresonDraw=16;
+	int64   teamGold=17;
 }
 message  GoldMatchTeamListReq{
          int32    teaHouseId=1;
@@ -2246,6 +2257,11 @@ message  StrongboxIncomeListResp{
 	int32    totalPage=6;
 	int64    totalIncome=7;
 	repeated StrongboxIncomeLogInfo list=8;
+}
+message  TeaHouseMemberSetCordonReq{
+	int32   teaHouseId=1;
+	int64   memberId=2 ;
+	int64   cordon=3 ;
 }
 message KickGameReq{
 	int64 uid=1;
@@ -3053,6 +3069,9 @@ message CircleTeaHouseRecord{
 	string fractionStr=14;
 	repeated OnePersonFight  totalFight=15;
 	repeated string replayIds=16;
+	int32 endRes=17;
+	repeated  int64  uidGolds=18;
+	MyThRecordRoomInfo roomInfo=19;
 }
 message CircleTeaHouseRecordReq{
       int64  timeType=1;

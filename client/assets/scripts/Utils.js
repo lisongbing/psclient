@@ -2118,12 +2118,12 @@ cc.Class({
             list.push(`大赢家 ${cc.g.utils.realNum1(ri.winnerScore)}`);
         }
 
-        if (false && ri.goldMatchRule) {
+        if (ri.goldMatchRule) {
             let d = ri.goldMatchRule;
             list.push(`>${cc.g.utils.realNum1(d.joinGold)} 可加入牌桌`);
             list.push(`<${cc.g.utils.realNum1(d.disbandGold)} ${d.exitType==1 ? '解散牌桌' : '继续游戏'}`);
 
-            if (!isls) {
+            if (false && !isls) {
                 if (d.lotteryType==1) {
                     list.push(`不抽奖`);
                 } else if (d.lotteryType==2) {

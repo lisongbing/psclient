@@ -8,3 +8,10 @@ client/*.zip
 client/.svn
 client/.vscode
 client/.DS_Store
+client/yim
+client/keystore
+client/library
+client/local
+client/newKeys
+client/packages
+

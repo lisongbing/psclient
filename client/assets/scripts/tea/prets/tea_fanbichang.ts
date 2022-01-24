@@ -127,6 +127,10 @@ export default class TeaFanBiChange extends cc.Component {
             if (!cc.g.utils.judgeObjectEmpty(resp)) {
                 // @ts-ignore
                 cc.g.global.showMsgBox(MsgBoxType.Normal, '提示', '操作成功');
+
+                if (this['fanbiOKFun']) {
+                    this['fanbiOKFun'](resp.contributeRate);
+                }
             } else {
                 // @ts-ignore
                 cc.g.global.showMsgBox(MsgBoxType.Normal, '提示', '操作失败');
