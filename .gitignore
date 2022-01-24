@@ -5,3 +5,6 @@ client/js-template-link_old
 client/temp
 client/wechat
 client/*.zip
+client/.svn
+client/.vscode
+client/.DS_Store
