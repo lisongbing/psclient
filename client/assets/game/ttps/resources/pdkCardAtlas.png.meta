@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "167d3298-a306-49df-bbe5-c66115b9c1b2",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 2046,
+  "height": 1078,
+  "platformSettings": {},
+  "subMetas": {
+    "pdkCardAtlas": {
+      "ver": "1.0.4",
+      "uuid": "828662cd-27b1-48fa-8084-85f261f61fee",
+      "rawTextureUuid": "167d3298-a306-49df-bbe5-c66115b9c1b2",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 2,
+      "trimY": 2,
+      "width": 2042,
+      "height": 1074,
+      "rawWidth": 2046,
+      "rawHeight": 1078,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
