@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "281a6df8-93d7-4e5b-8b02-fb7d4d1eabdf",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1536,
+  "height": 403,
+  "platformSettings": {},
+  "subMetas": {
+    "绿桌8人": {
+      "ver": "1.0.4",
+      "uuid": "1942be80-568d-4fd2-901a-b4317b3b89b2",
+      "rawTextureUuid": "281a6df8-93d7-4e5b-8b02-fb7d4d1eabdf",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1536,
+      "height": 403,
+      "rawWidth": 1536,
+      "rawHeight": 403,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

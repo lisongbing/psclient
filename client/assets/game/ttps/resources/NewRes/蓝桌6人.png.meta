@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "3b87a8c9-247c-422e-97ec-0135d0d54070",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1536,
+  "height": 400,
+  "platformSettings": {},
+  "subMetas": {
+    "蓝桌6人": {
+      "ver": "1.0.4",
+      "uuid": "113c647f-37ca-4f75-8447-88c235249a53",
+      "rawTextureUuid": "3b87a8c9-247c-422e-97ec-0135d0d54070",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1536,
+      "height": 400,
+      "rawWidth": 1536,
+      "rawHeight": 400,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
