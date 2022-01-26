@@ -2,7 +2,7 @@ var cfg_dbg = {
     appName: '同乡游戏',
     checkRemoteConfig: true,
 	gameVersion: '2.2.0',
-    gameConfigUrl: 'https://conf.7csht8s99.xyz',//'http://47.243.172.111:10100', //120-app  //http://120.77.173.104:10100  
+    gameConfigUrl: '',//'https://conf.7csht8s99.xyz',//'http://47.243.172.111:10100', //120-app  //http://120.77.173.104:10100  
     //gameConfigUrl:'https://xyx.qqqpgame.com',   //120-小程序
     //gameConfigUrl:'http://119.23.235.127:10100',  //119-app
     playBackIDUrl:'https://hfapi.7csht8s99.top/getrecord',
@@ -15,12 +15,12 @@ var cfg_dbg = {
     hotUpdateUrl: '"https://niuhot.csqjyc008.xyz/"',
     //wsAddress: ["wss://qqqpgame.com/ws"],
     //wsAddress: ["ws://192.168.0.61:8082/ws"], //糖饼
-    wsAddress: ["ws://47.243.172.111:9013/ws"], //糖饼
+   // wsAddress: ["ws://47.243.172.111:9013/ws"], //糖饼
     //wsAddress: ["ws://47.243.172.111:9013/ws"],
     //wsAddress: ["wss://zhouwei520.picp.vip/ws"],
     //wsAddress: ["ws://127.0.0.1:8082/ws"],
     //wsAddress: ["ws://119.23.235.127:8082/ws"],
-    //wsAddress: ["ws://120.77.173.104:8082/ws"],
+    wsAddress: ["ws://120.77.173.104:8082/ws"],
     //wsAddress: ["ws://192.168.0.99:8082/ws"],
     //wsAddress: ["ws://lisongbing.net/ws"],
     //wsAddress: ["ws://120.77.85.34:9013/ws"],
