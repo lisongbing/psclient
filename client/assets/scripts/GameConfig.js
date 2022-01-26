@@ -15,7 +15,7 @@ var cfg_dbg = {
     hotUpdateUrl: '"https://niuhot.csqjyc008.xyz/"',
     //wsAddress: ["wss://qqqpgame.com/ws"],
     //wsAddress: ["ws://192.168.0.61:8082/ws"], //糖饼
-    wsAddress: ["ws://47.243.172.111:9013/ws"], //糖饼
+    wsAddress: ["wss://ws.7csht8s99.xyz/ws"], //糖饼
     //wsAddress: ["ws://47.243.172.111:9013/ws"],
     //wsAddress: ["wss://zhouwei520.picp.vip/ws"],
     //wsAddress: ["ws://127.0.0.1:8082/ws"],
