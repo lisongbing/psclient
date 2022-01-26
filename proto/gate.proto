@@ -1,0 +1,3951 @@
+
+// 客户端和gate的通信协议
+syntax="proto3";
+
+import "const.proto";
+
+package protocol;
+option java_multiple_files = true;
+message ClientReq {
+	PROTO api = 1;
+	bytes data = 2;
+}
+
+message ClientResp {
+	PROTO api = 1;
+	bytes data = 2;
+}
+
+//登录
+//@api:2002,@type:req
+message LoginReq{
+	string uuid = 1; 
+	string account = 2;
+	string pwd = 3;
+	PLATFORM platform = 4;
+	bool   isNew = 5;
+	string code  = 6;
+	string token = 7;
+	string refreshToken = 8;
+	int64  inviter = 9;
+	string os      = 10;//手机的操作系统
+	string clientVersion = 11;//客户端的版本
+}
+
+//@api:2002,@type:resp 
+message LoginResp {
+	int64 id = 1;
+	string name = 2;
+	int64 gold = 3;
+	int64 diamond = 4;
+	repeated int64 roomcard = 5;
+	int32 gsId = 6;
+	int32 roomId = 7;
+	string uuid = 8;
+	int64  bankGold = 9;
+    string icon = 10;
+	string signature = 11;
+	bool isNew = 12;
+	int32 shareCnt = 13;
+	int32 shareTotal = 14;
+	int32 shareAchieve = 15;
+	int32 canOpenRedPkg = 16;
+	float achieveRedPkg = 17;
+	string ip = 18;
+	int64 serverTime = 19;
+	int32 sex = 20; //性别
+	Gps   gps = 21;
+	repeated int32 createClubPerm = 22;
+	int32 bindSFZ = 23;//身份是否已经认证
+    int32 isNeedBingSFZ = 24;//身份是否需要认证
+	string phoneNo   = 25;//绑定的手机号
+}
+
+//修改玩家信息
+//@api:2024,@type:req
+message ModifyUserInfo {
+	string name = 1;
+	string signature = 2;
+}
+
+//打开邮件
+//@api:2016,@type:req
+message OpenMailReq {
+	int32 id = 1;
+}
+
+//公告
+//@api:2017,@type:req
+message NoticeReq {}
+
+//@api:2017,@type:resp
+message NoticeResp {
+	repeated NoticeInfo list = 1;
+}
+
+message NoticeInfo{
+	string title = 1;
+	string content = 2;	
+	int64 datetime = 3;
+	int32 id       = 4; //邮件的id
+	bool  opened   = 5; //是否已经打开
+}
+
+//排行榜
+//@api:2023,@type:req
+message RankingReq {
+}
+
+//@api:2023,@type:resp
+message RankingResp {
+	int64 selfGold = 1;
+	int32 selfRank = 2;
+	repeated RankingInfo list = 3;
+}
+
+message RankingInfo{
+	string name = 1;
+	int64 userid = 2;	
+	int64 Gold   = 3;
+	string icon  = 4;
+	string signature = 5;
+}
+
+//活动
+//@api:2048,@type:req
+message GetActionListReq {}
+
+//@api:2048,@type:resp
+message GetActionListResp {
+	repeated ActionInfo list = 1;
+}
+
+
+message ActionInfo{
+	int32 actionId = 1;
+	int32 type = 2; //活动类型
+	int64 start = 3;//开始时间
+	int64 end  = 4; //结束时间
+	int64 close = 5; //展示时间
+	string title = 6; //活动标题
+	string content = 7; //活动内容
+	string img = 8; //图片
+	int32  isRun = 9;//活动状态
+}
+
+
+//活动排行榜
+//@api:2049,@type:req
+message ActionRankingReq {
+	int32 actionId = 1;
+}
+
+//@api:2049,@type:resp
+message ActionRankingResp {
+	int32 actionId = 1;
+	int64 selfGold = 2;
+	int32 selfRank = 3;
+	repeated RankingInfo list = 4;
+}
+
+//分销
+//@api:2027,@type:req
+message DistributionReq {}
+
+//@api:2027,@type:resp
+message DistributionResp {
+	int64    userid = 1;
+	Team     team   = 2;
+	repeated Pusher list = 3;
+	Employ   employ  = 4;
+	Achieve  achieve = 5;
+}
+message Team{
+	int64     owner     = 1;  //直属人数
+	int64     incOwner  = 2; //本周增加的直属
+	int64     teamer    = 3; //团队人数
+	int64     incTeamer = 4; //本周增加的团队
+}
+message Pusher{ //直推
+	int64       nextId      = 1;    //直属Id
+	string      nike        = 2;    //呢称
+	int64       nextAchieve = 3;  //直属业绩
+	int64       ownAchieve  = 4;  //直属消费
+
+}
+message Employ{ //佣金
+	double   week       = 1; //本周佣金
+	double   available  = 2; //可领取的佣金
+	double   total      = 3; //总佣金
+	double   next       = 4; //代理佣金
+}
+message Achieve{ //业绩
+	int64 week   = 1; //本周业绩
+	int64 owner  = 2; //直属业绩
+	int64 next   = 3; //代理业绩
+}
+
+//@api:2031,@type:req
+message GetTeamRewardReq {}
+
+//@api:2032,@type:req
+message GetShareRewardReq {}
+
+//@api:2033,@type:req
+message ChargeReq {
+	int32 platform = 1; //1-支付宝 2-微信
+	int32 amount = 2; //订单金额
+}
+//@api:2033,@type:resp
+message ChargeResp {
+	int32 platform = 1; //1-支付宝 2-微信
+	string toPayUrl = 2; //支付链接
+}
+
+//@api:2047,@type:req
+message GetShareRedPkgReq {}
+
+//@api:2047,@type:resp
+message GetShareRedPkgResp {
+	float achieveRedPkg = 1; //
+}
+
+//@api:2034,@type:req
+message CreateClubReq {
+	string name = 1;
+	string desc = 2;
+	int32 gameTypes = 3;
+	int32 origin = 4; //地区
+	int32 clubType = 5;//茶馆的类型 0普通场 1比赛场
+}
+
+//@api:2034,@type:resp
+message CreateClubResp {
+	ClubInfo info = 1;
+}
+
+message ClubInfo {
+	int32 clubId = 1;
+	int32 memberCnt = 2;
+	int32 roomCnt = 3;
+	int32 applyCnt = 4;
+	int32 gameTypes = 5;
+	int64 ownerId = 6;
+	string name = 7;
+	string icon = 8;
+	string desc = 9;
+	string ownerName = 10;
+	int32 origin = 11;//地区
+	int32 selfPerm = 12;//自己在俱乐部的职位
+	int32 clubType = 13;//茶馆的类型 0普通场 1比赛场
+}
+
+//@api:2035,@type:req
+message GetClubListReq {}
+
+//@api:2035,@type:resp
+message GetClubListResp {	
+	repeated ClubInfo list = 1;
+}
+
+//@api:2036,@type:req
+message SearchClubReq {
+	int32 clubId = 1;
+}
+
+//@api:2036,@type:resp
+message SearchClubResp {
+	ClubInfo info = 1;
+}
+
+//@api:2037,@type:req
+message JoinClubReq {
+	int32 clubId = 1;
+}
+
+//修改俱乐部信息
+//@api:2038,@type:req
+message ModifyClubInfoReq {
+	int32 clubId = 1;
+	string name = 2;
+	string desc = 3;
+}
+
+//退出俱乐部
+//@api:2039,@type:req
+message QuitClubReq {
+	int32 clubId = 1;
+}
+//解散俱乐部
+//@api:2040,@type:req 
+message DisbandClubReq {
+	int32 clubId = 1;
+}
+
+//俱乐部申请玩家信息
+message ClubApplicantInfo {
+	int64 userId = 1;
+	string name = 2;
+	string icon = 3;
+}
+
+//拉取俱乐部申请列表
+//@api:2042,@type:req
+message GetClubApplyListReq {
+	int32 clubId = 1;
+}
+
+//审批加入俱乐部
+//@api:2041,@type:req
+message ClubApproveReq {
+	bool agree = 1;
+	int32 clubId = 2;
+	int64 target = 3;
+}
+//@api:2041,@type:resp
+message ClubApproveResp {
+	ClubMemberInfo member = 1;
+}
+
+//@api:2042,@type:resp
+message GetClubApplyListResp {
+	int32 clubId = 1;
+	repeated ClubApplicantInfo list = 2;
+}
+
+//俱乐部成员信息
+message ClubMemberInfo {
+	CLUB_TITLE title = 1;
+	int64 userId = 2; 
+	int64 loginTime = 3;
+	string name = 4;
+	string icon = 5;
+	bool   online = 6;
+}
+
+//获取俱乐部成员列表
+//@api:2043,@type:req
+message GetClubMembersListReq {
+	int32 clubId = 1;
+}
+
+//@api:2043,@type:resp
+message GetClubMembersListResp {
+	int32 clubId = 1;
+	repeated ClubMemberInfo list = 2;
+}
+//设置Club管理员
+//@api:2044,@type:req
+message SetClubAdministratorReq {
+	CLUB_TITLE title = 1;
+	int32 clubId = 2;
+	int64 target = 3;
+}
+//删除俱乐部成员
+//@api:2045,@type:req
+message DeleteClubMemberReq {
+	int32 clubId = 1;
+	int64 target = 2;
+}
+
+//@api:2046,@type:req
+message ModifyClubGameReq {
+	int32 clubId = 1;
+	int32 gameTypes = 2;
+}
+
+//创建俱乐部包间
+//@api:2050,@type:req
+message CreateClubRoomReq{
+	int32 clubId = 1;//俱乐部Id
+	repeated int32 rule = 2; //规则
+	int32 playNum = 3;//游戏人数
+	int32 gameNum = 4;//游戏局数
+	GAME gameType = 5;//游戏种类
+    RoomConfig roomConfig = 6;  //比赛场 特殊规则
+	int64 maxWinSco = 7;    // 大赢家门槛
+	int64 base = 8;   //底分
+	ExpendSpeciThing expendSpeciThing = 9;
+	int32 origin  = 10;//地区
+}
+
+//@api:2050,@type:resp
+message CreateClubRoomResp{
+	int32 uid = 1;//包间的唯一id
+}
+
+//删除俱乐部包间
+//@api:2056,@type:req
+message RemoveClubRoomReq{
+	int32 clubId = 1;//俱乐部Id
+	int32 uid = 2;//包间的唯一ID
+}
+
+//设置俱乐部包间模式
+//@api:2057,@type:req
+message SetClubRoomModeReq{
+	int32 clubId = 1;
+	int32 mode  = 2;//0:表示单包间模式,1:表示多包间模式
+}
+
+//向客户端推送,俱乐部的变化信息
+//@api:2058,@type:resp
+message SendClubChangesResp{
+	int32 type = 1;//变化的类型,1:删除俱乐部，2:修改俱乐部，3:创建包间,4:删除包间,5:修改包间，6:包间桌子信息的变化 7:被踢出茶馆
+	int32 clubId = 2;//俱乐部Id
+	int32 mode  = 3;//俱乐部的模式
+	ClubRoomInfo roomInfo = 4;//包间信息
+	int32 cardNum = 5;//茶馆卡的数量
+}
+
+//包间信息
+message ClubRoomInfo{
+	repeated int32 rule = 1; //规则
+	int32 playNum = 2;//游戏人数
+	int32 gameNum = 3;//游戏局数
+	GAME gameType = 4;//游戏种类
+	repeated ClubRoomDeskInfo deskInfo = 5;//桌子信息
+	string dec = 6;//包间描述
+	int32 uid = 7;//包间的唯一ID
+	int64 maxWinSco = 8;//大赢家分数
+	int64 base = 9;   //底分
+	ExpendSpeciThing expendSpeciThing = 10;
+	int32 origin  = 11;//地区
+}
+
+//包间中桌子的信息
+message ClubRoomDeskInfo{
+	bool isStart = 1;//是否已经开始
+	int32 index  = 2;//桌号
+	int32 curNum = 3;//当前局数
+	int32 totalNum = 4;//总局数
+	repeated DeskPlayer players = 5; //桌上玩家的信息
+}
+//桌上玩家的信息
+message DeskPlayer{
+	int32 DeskId = 1;//玩家的桌号
+	string Name  = 2;//玩家的昵称
+	string Icon  = 3;//玩家的头像
+	bool   online = 4;//是否在线
+}
+
+//获取茶馆的游戏多少天的的消耗记录
+//@api:2059,@type:req
+message CLubDaysConsumeReq{
+	int32 clubId = 1;//茶馆id
+	int32 Day    = 2; //最近多少天
+	int32 payCardType = 3;//
+}
+//@api:2059,@type:resp
+message CLubDaysConsumeResp{
+	int32 clubId = 1;
+	repeated clubDayConsumeInfo consumes = 2;
+}
+
+message clubDayConsumeInfo{
+	string date = 1;//时间
+	int32 gameNum = 2;//局数
+	int32 consumeCard = 3;//消耗的卡
+	int32 gameCount = 4; //总共的场次
+	int32 payCardType = 5;
+}
+
+//获取俱乐部包间信息
+//@api:2051,@type:req
+message ClubRoomListReq{
+	int32 clubId = 1;//俱乐部Id
+}
+//@api:2051,@type:resp
+message ClubRoomListResp{
+	int32 clubId = 1;//俱乐部id
+	int32 mode   = 2;//模式 0表示单包间模式，1表示多包间模式（混合模式）
+	repeated ClubRoomInfo list = 3;//所有的包间信息
+	int32 card  = 4;//茶馆卡的数量
+}
+
+//加入俱乐部包间的桌子
+//@api:2052,@type:req
+message JoinClubDeskReq{
+	int32 clubId = 1;//俱乐部Id
+	int32 roomUid = 2;//包间的id //-1表示服务器分配
+	int32 deskIndex = 3;//0-19:表示指定索引,-1表示服务器分配
+	bool openGps = 4;
+}
+
+//@api:2052,@type:resp
+message JoinClubDeskResp{
+	oneof msg{
+		CreateRoomResp create = 1;
+		JoinRoomResp join = 2;
+	}
+
+}
+
+//修改包间的规则
+//@api:2053,@type:req
+message ModifyClubRoomRuleReq{
+	int32 clubId = 1;//俱乐部Id
+	int32 roomUid = 2;//包间的唯一ID
+	repeated int32 rule = 3; //规则
+	int32 playNum = 4;//游戏人数
+	GAME gameType = 5;//游戏种类
+	int32 gameNum = 6;//游戏局数
+	int64 maxWinSco = 7;    // 大赢家门槛
+	int64 base = 8;   //底分
+	ExpendSpeciThing expendSpeciThing = 9;
+	int32 origin  = 10;//地区
+}
+//@api:2053,@type:resp
+message ModifyClubRoomRuleResp{
+	repeated ClubRoomInfo list = 1;//所有的包间信息
+}
+
+//修改俱乐部房间的描述
+//@api:2054,@type:req
+message ModifyClubRoomDecReq{
+	int32 clubId = 1;//俱乐部Id
+	int32 roomUid = 2;//包间的索引
+	string dec = 3; //描述
+}
+
+//修改包间的规则
+//@api:2055,@type:req
+message ClubRoomDeskInfoReq{
+	int32 clubId = 1;//俱乐部Id
+	int32 roomIndex = 2;//包间的索引
+}
+//@api:2055,@type:resp
+message ClubRoomDeskInfoResp{
+	repeated ClubRoomDeskInfo list = 1;//包间所有桌子信息
+}
+
+//创建茶馆
+//@api:2201,@type:req
+message CreateTeaHouseReq{
+	string name = 1;//名称
+	string remark = 2;//备注(客户端传区域)
+	string introduce= 3;//介绍
+}
+//@api:2201,@type:resp
+message CreateTeaHouseResp{
+	int32 teaHouseId=1;//茶馆Id
+        string name = 2;//名称
+}
+
+//申请加入茶馆
+//@api:2202,@type:req
+message ApplyTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+}
+
+
+//同意加入茶馆
+//@api:2203,@type:req
+message AgreeTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 applyId=2;//申请用户Id
+}
+
+
+//拒绝加入茶馆
+//@api:2204,@type:req
+message RefuseTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 applyId=2;//申请用户Id
+}
+
+
+//茶馆设置信息
+//@api:2205,@type:req
+message TeaHouseSettingInfoReq{
+	int32 teaHouseId=1;//茶馆Id
+}
+//@api:2205,@type:resp
+message TeaHouseSettingInfoResp{
+        int32 teaHouseId=1;//茶馆Id
+        string name=2;//茶馆名称
+	string introduce=3;//茶馆简介
+        int32  quanzzjOpen=4;//圈子战绩(1 公示战绩 0不公示战绩)
+        int32  cyzjOpen=5;//成员战绩(1 公示战绩 0不公示战绩)
+	int32  cyshOpen=6;//成员审核(1 开 0关)
+	int32  cylbOpen=7;//成员列表(1 全部可见 0不可见)
+	int32  deskFrontOpen=8;//空桌前置(1 开 0关)
+	int32  patternOpen=9;//分配模式(1 AA 2 大赢家)
+	int32  purview=10;//管理权限(1 禁赛 2 踢出 4 审批 8 成员战绩 16 成员积分 32 预创权限)
+	int32  blurred=11;//模糊显示(1 开启 0 关闭)
+	int32  autoExit=12;//自动退出(1 开 0关)
+	int32  forbidKick=13;//禁止踢人(1 开 0关)
+	int32  rankMatch=14;//排名赛(1 开启 0关闭)
+        string  complainForbid=15;//举报禁玩
+	int32  autoClean=16;//自动清人(单位时间:天)
+	string forbidIntegral=17;//禁玩积分
+        int32  dyOpen=18;//打烊开关(1 开 0 关闭)
+	string openTime=19;//定时开始时间(小时:分钟)
+	string closeTime=20;//定时关闭时间(小时:分钟)
+	int32  timerOpen=21;//定时开启开关(1 开 0 关闭)
+	int32  timerClosed=22;//定时关闭开关(1 开 0 关闭)
+	int32  displayFullNum=23;//0-不限满桌数量 8-显示8桌(6 3 2 1)等等分别显示对应满桌数量的桌子
+    int32  disbandNum=24;//茶馆解散次数   不限-8888
+}
+//修改茶馆设置
+//@api:2206,@type:req
+message ModifyTeaHouseSettingReq{
+	int32 teaHouseId=1;//茶馆Id
+        string name=2;//茶馆名称
+	string introduce=3;//茶馆简介
+        int32  quanzzjOpen=4;//圈子战绩(1 公示战绩 0不公示战绩)
+        int32  cyzjOpen=5;//成员战绩(1 公示战绩 0不公示战绩)
+	int32  cyshOpen=6;//成员审核(1 开 0关)
+	int32  cylbOpen=7;//成员列表(1 全部可见 0不可见)
+	int32  deskFrontOpen=8;//空桌前置(1 开 0关)
+	int32  patternOpen=9;//分配模式(1 AA 2 大赢家)
+	int32  purview=10;//管理权限(1 禁赛 2 踢出 4 审批 8 成员战绩 16 成员积分 32 预创权限)
+	int32  blurred=11;//模糊显示(1 开启 0 关闭)
+	int32  autoExit=12;//自动退出(1 开 0关)
+	int32  forbidKick=13;//禁止踢人(1 开 0关)
+	int32  rankMatch=14;//排名赛(1 开启 0关闭)
+        string  complainForbid=15;//举报禁玩
+	int32  autoClean=16;//自动清人(单位时间:天)
+	string forbidIntegral=17;//禁玩积分
+	int32  displayFullNum=18;//0-不限满桌数量 8-显示8桌(6 3 2 1)等等分别显示对应满桌数量的桌子
+	int32  disbandNum=19;//茶馆解散次数   不限-8888
+}
+
+
+//申请退出茶馆
+//@api:2207,@type:req
+message ApplyExitTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+}
+
+
+//同意退出茶馆
+//@api:2208,@type:req
+message AgreeExitTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 applyId=2;//申请退出用户Id
+}
+
+
+//拒绝退出茶馆
+//@api:2209,@type:req
+message RefuseExitTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 applyId=2;//申请退出用户Id
+}
+
+
+//踢出茶馆
+//@api:2210,@type:req
+message KickTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 memberId=2;//用户成员Id
+}
+
+
+//解散茶馆
+//@api:2211,@type:req
+message DisbandTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+}
+
+
+//查找用户
+//@api:2212,@type:req
+message FindUserTeaHouseReq{
+	int64 userId=1;//用户Id
+
+}
+//@api:2212,@type:resp
+message FindUserTeaHouseResp{
+        bool  found=1;//true 找到,false 未找到 
+        int64 userId=2;//用户Id
+        string name=3;//昵称 
+	string icon=4;//头像
+}
+
+//邀请加入
+//@api:2213,@type:req
+message InviteTeaHouseReq{
+        int32 teaHouseId=1;//茶馆Id
+	int64 userId=2;//用户Id
+
+}
+
+
+//茶馆信息
+message TeaHouseInfo {
+        int32   teaHouseId=1;//茶馆Id
+        string  name=2;//茶馆名称
+        string  icon=3;//茶馆图标地址
+        string  introduce = 4;//茶馆介绍
+	int32   onlineCount=5;//在线人数
+	int32   totalCount=6;//总人数
+        int64   ownerId = 7;//圈主Id
+	string  ownerName = 8;//圈主名称
+	int32   position=9;//所在职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	int32   createTime=10;//创建时间
+        bool    mineCreate = 11;//是否自己创建(true 自己创建,false 不是自己创建)
+	int32    blurred=12;//模糊显示(1 开启 0 关闭)
+}
+
+//我的茶馆列表
+//@api:2214,@type:req
+message MineTeaHouseListReq{
+        
+
+}
+//@api:2214,@type:resp
+message  MineTeaHouseListResp{
+  repeated TeaHouseInfo list=1;//茶馆列表
+   int32    applyJoinCount=2;//申请加入人数
+}
+//茶馆申请用户
+message ApplyUser {
+	 int64    userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string   icon=3;//用户头像
+	 int32    time=4;//申请时间戳(单位:秒)
+	 int32    complainCount=5;//用户被举报次数
+}
+//茶馆申请列表
+//@api:2215,@type:req
+message ApplyListTeaHouseReq{
+         int32    teaHouseId=1;//茶馆Id
+	 string   searchId=2;//搜索Id
+}
+//@api:2215,@type:resp
+message  ApplyListTeaHouseResp{
+	  int64    ownerId=1;//圈主Id
+	  string    ownerName=2;//圈主昵称
+	  repeated ApplyUser list=3;//申请用户列表
+}
+//茶馆成员
+message TeaHouseUser {
+	 int64     userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string    icon=3;//用户头像
+	 int32     position=4;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	 string    groupName=5;//组名称(队编号_组编号_小组编号_推荐人编号)
+	 bool      online=6;//是否在线
+	 bool      onlyTwoPeople=7;//只玩两人场true玩两人场
+	 bool      forbidGame=8;//是否禁止游戏
+	 int32     offlineTime=9;//离线时间(单位:秒)
+	 int32     status=10;//状态(0 空闲 1 游戏中 2比赛中)
+	 int64     reviewerId=11;//审核人Id
+	 string    reviewerName=12;//审核人
+	 int32     teamId=13;//战队Id
+	 bool      associate=14;//是否关联
+	 string    remark=15;//备注
+}
+//战队编号信息
+message  TeamNoInfo {
+    int32   teamId = 1;//战队Id
+    int32   teamNo = 2;//战队编号
+}
+//茶馆成员列表
+//@api:2216,@type:req
+message MemberListTeaHouseReq{
+         int32    teaHouseId=1;//茶馆Id
+	 string   searchId=2;//搜索Id
+	 int32    pageNum=3;//当前页码数
+	 int32    pageSize=4;//每页显示条数 
+}
+//@api:2216,@type:resp
+message  MemberListTeaHouseResp{
+        int32    pageNum=1;//当前页码数    
+	int32    pageSize=2;//每页显示条数 
+	int32    totalCount=3;//总条数
+	int32    totalPage=4;//总页数
+	int32    teamId=5;//战队Id
+        string   groupName=6;//组名称(队编号_组编号_小组编号_推荐人编号)
+	repeated TeaHouseUser list=7;//成员列表
+	repeated TeamNoInfo   teamNolist=8;//战队编号列表
+}
+
+//茶馆最近出入单条记录
+message RecentOutInUser {
+	 int64     userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string    icon=3;//用户头像
+	 bool      online=4;//是否在线
+	 int32     offlineTime=5;//离线时间(单位:秒)
+	 int32     outInType=6;//退出方式(1 主动退出 2管理员踢出)
+	 int64     reviewerId=7;//审核人Id
+	 string    reviewerName=8;//审核人
+	 int32     operateType=9;//同意拒绝(0 未操作,1 同意 2 拒绝)
+	 int32     time=10;//时间
+}
+//茶馆最近出入列表
+//@api:2217,@type:req
+message RecentOutInListTeaHouseReq{
+         int32    teaHouseId=1;//茶馆Id
+	 string   searchId=2;//搜索Id
+}
+//@api:2217,@type:resp
+message  RecentOutInListTeaHouseResp{
+	repeated RecentOutInUser list=1;//最近出入列表
+}
+
+
+//茶馆打烊设置
+//@api:2218,@type:req
+message DySetTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int32 dyOpen=2;//打烊开关(1 开 0 关闭)
+}
+
+
+//茶馆定时设置
+//@api:2219,@type:req
+message TimerSetTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	string openTime=2;//定时开始时间(小时:分钟)
+	string closeTime=3;//定时关闭时间(小时:分钟)
+	int32  timerOpen=4;//定时开启开关(1 开 0 关闭)
+	int32  timerClosed=5;//定时关闭开关(1 开 0 关闭)
+}
+
+
+//修改茶馆成员备注
+//@api:2220,@type:req
+message ModifyTeaHouseMemberRemarkReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+	 string remark = 3;//备注
+	
+}
+
+//成员备注info
+message MemberPositionInfo{
+      int64   memberId =1 ;//成员Id
+      int32   position=2;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1,被踢或者退出=0)
+      string  name=3;//昵称
+}
+
+//获得茶馆成员备注
+//@api:2221,@type:req
+message TeaHouseGetMemberRemarkReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+}
+//@api:2221,@type:resp
+message TeaHouseGetMemberRemarkResp{
+	 int32   teaHouseId = 1;//茶馆Id
+	 int64   memberId =2 ;//成员Id
+	 string  name  = 3;//玩家的昵称
+	 string  icon  = 4;//玩家的头像
+	 int32   joinWayType=5;//加入方式(1 申请加入,2邀请加入)
+	 int64   reviewerId=6;//审核人Id   
+	 string  remark=7;//成员备注 
+	 int32   joinTime=8;//加入时间戳
+	 int32    position=9;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1,被踢或者退出=0)
+	 repeated MemberPositionInfo bindList=10;//绑定（展示该玩家的所有上级)
+}
+
+//禁止玩牌
+//@api:2222,@type:req
+message TeaHouseForbidGameReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+	 bool   forbidGame=3;//true禁止玩牌,false恢复玩牌
+}
+
+
+//全部禁玩
+//@api:2223,@type:req
+message TeaHouseForbidGameAllReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32  teamId = 2;//战队Id
+	 bool   forbidGame=3;//true禁止玩牌,false恢复玩牌
+}
+
+//只玩二人场
+//@api:2224,@type:req
+message TeaHouseTwoPeopleReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+	 bool   onlyTwoPeople=3;//true只玩二人场,fale全部可玩
+}
+
+//全员二人场
+//@api:2225,@type:req
+message TeaHouseTwoPeopleAllReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32  teamId = 2;//战队Id
+	 bool   onlyTwoPeople=3;//true只玩二人场,fale全部可玩
+}
+
+
+
+//修改包厢限制
+//@api:2226,@type:req
+message TeaHouseSetFloorLimitReq{
+         int32  teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+	 bool   add=3;//true 增加限制,false取消限制
+	 repeated int32 list=4;//包厢列表
+}
+//@api:2226,@type:resp
+message TeaHouseSetFloorLimitResp{
+         int32  teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+         repeated TeaHouseFloorLimitInfo list=3;//包厢列表
+	 repeated TeaHouseFloorLimitInfo limitList=4;//包厢限制列表
+}
+
+//包厢限制
+message TeaHouseFloorLimitInfo {
+	int32   floor =1;//楼层
+	string  name =2;//名称
+	int32   gameType = 3;//游戏种类
+	int32   origin= 4;//区域
+}
+//获得包厢限制
+//@api:2227,@type:req
+message TeaHouseGetFloorLimitReq{
+         int32  teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id 
+}
+//@api:2227,@type:resp
+message TeaHouseGetFloorLimitResp{
+         int32  teaHouseId = 1;//茶馆Id
+	 int64  memberId = 2;//成员Id
+         repeated TeaHouseFloorLimitInfo list=3;//包厢列表
+	 repeated TeaHouseFloorLimitInfo limitList=4;//包厢限制列表
+}
+
+//全部踢出
+//@api:2228,@type:req
+message KickTeamTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+	int32 teamId=2;//战队ID
+}
+//@api:2228,@type:resp
+message KickTeamTeaHouseResp{
+	
+}
+
+//推送茶馆ID变化
+//@api:2229,@type:resp
+message NotifyTeaHouseIdResp{
+        int64   userId = 1;//玩家Id
+	int32   teaHouseId = 2;//茶馆Id
+        string  name = 3;//茶馆名称
+	int32   position=4;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1,被踢或者退出=0)
+        int32   teamId = 5;//战队Id
+	int32   teamNo = 6;//战队编号
+	string  groupName =7;//组名称(队编号_组编号_小组编号_推荐人编号)
+}
+//推送茶馆申请
+//@api:2230,@type:resp
+message NotifyApplyTeaHouseResp{
+	int32     teaHouseId = 1;//茶馆Id
+	int32     applyType = 2;//申请类型1-申请加入 2-申请退出
+        ApplyUser user=3;//申请信息
+}
+
+
+//我的茶馆申请者
+message MineApplyUser {
+	 int64    userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string   icon=3;//用户头像
+	 int32    time=4;//申请时间戳(单位:秒)
+	 int32    complainCount=5;//用户被举报次数
+	 int32    teaHouseId=6;//茶馆Id
+	 int64    ownerId=7;//圈主Id
+	 string    ownerName=8;//圈主昵称
+}
+//我的茶馆申请列表
+//@api:2231,@type:req
+message MineApplyListTeaHouseReq{
+}
+//@api:2231,@type:resp
+message  MineApplyListTeaHouseResp{
+	  repeated MineApplyUser list=1;//申请用户列表
+}
+//主推打烊设置
+//@api:2232,@type:resp
+message  NotifyDySettingResp{
+          int32    teaHouseId = 1;//茶馆Id
+          int32    dyOpen = 2;//打烊开关(1 开 0 关闭)
+}
+//主推解散茶馆
+//@api:2233,@type:resp
+message  NotifyDisbandTeaHouseResp{
+          int32    teaHouseId = 1;//茶馆Id
+}
+
+//获得茶馆定时设置
+//@api:2234,@type:req
+message GetTimerTeaHouseReq{
+	int32 teaHouseId=1;//茶馆Id
+}
+//@api:2234,@type:resp
+message GetTimerTeaHouseResp{
+	int32 teaHouseId=1;//茶馆Id
+	string openTime=2;//定时开始时间(小时:分钟)
+	string closeTime=3;//定时关闭时间(小时:分钟)
+	int32  timerOpen=4;//定时开启开关(1 开 0 关闭)
+	int32  timerClosed=5;//定时关闭开关(1 开 0 关闭)
+}
+
+
+//金币场大赢家抽奖规则
+message WinnerRoomRule {
+	int64  minScore=1;//分数1
+	int64  maxScore=2;//分数2
+	int64  consumeGold=3;//消耗金币
+	int64  bottomGold=4;//抽底
+}
+//金币场包间规则
+message GoldMatchRoomRule {
+        int64  joinGold=1;//加入牌桌金币
+	int64  disbandGold=2;//解散牌桌金币
+	int32  exitType=4;//剩余金币不足类型 1自动解散 2继续游戏
+	int32  lotteryType=5;//抽奖类型 1不抽奖 2所有人抽奖 3大赢家抽奖
+	int64  consumeGold=6;//所有人抽奖消耗金币
+	repeated WinnerRoomRule winnerRuleList = 7; //大赢家抽奖规则
+}
+//创建茶馆包间(添加玩法)
+//@api:2235,@type:req
+message CreateTeaHouseRoomReq{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor =2;//楼层
+	string name =3;//名称(现在可以传空串)
+	int64 base = 4; //底分
+        int32 playNum = 5;//游戏人数
+	int32 gameNum = 6;//游戏局数
+	int32 gameType = 7;//游戏种类
+	int64 winnerScore = 8;//大赢家分数
+	repeated int32 rule = 9; //规则
+	repeated int32 specialRule = 10; //特殊规则(k-v结构)
+	ExpendSpeciThing expendSpeciThing = 11;//特定字段
+	GoldMatchRoomRule goldMatchRule = 12;//金币场包间规则
+	int32 origin  = 13;//地区
+}
+
+
+//移除茶馆包间(移除玩法)
+//@api:2236,@type:req
+message RemoveTeaHouseRoomReq{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor =2;//楼层
+}
+
+//修改茶馆包间名称(修改玩法名称)
+//@api:2237,@type:req
+message ModifyTeaHouseRoomNameReq{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor =2;//楼层
+	string name =3;//名称
+}
+
+//修改茶馆包间关闭入口(修改玩法关闭入口)
+//@api:2238,@type:req
+message ModifyTeaHouseRoomStatusReq{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor =2;//楼层
+	bool  closeStatus =3;//关闭入口(true 开启关闭入口 false未勾选关闭入口)
+}
+
+
+//修改茶馆包间规则(修改玩法规则)
+//@api:2239,@type:req
+message ModifyTeaHouseRoomRuleReq{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor =2;//楼层
+	int64 base = 3; //底分
+	string name =4;//名称(现在可以传空串)
+        int32 playNum = 5;//游戏人数
+	int32 gameNum = 6;//游戏局数
+	int32 gameType = 7;//游戏种类
+	int64 winnerScore = 8;//大赢家分数
+	repeated int32 rule = 9; //规则
+	repeated int32 specialRule = 10; //特殊规则(k-v结构)
+	ExpendSpeciThing expendSpeciThing = 11;//特定字段
+	GoldMatchRoomRule goldMatchRule = 12;//金币场包间规则
+	int32 origin  = 13;//地区
+}
+
+//茶馆包间规则(玩法)
+message TeaHouseRoomRule {
+        int32 floor =1;//楼层
+	string name =2;//名称
+	bool  closeStatus =3;//关闭入口(true 开启关闭入口 false未勾选关闭入口)
+	int64 base = 4; //底分
+        int32 playNum = 5;//游戏人数
+	int32 gameNum = 6;//游戏局数
+	int32 gameType = 7;//游戏种类
+	int64 winnerScore = 8;//大赢家分数
+	repeated int32 rule = 9; //规则
+	repeated int32 specialRule = 10; //特殊规则(k-v结构)
+	ExpendSpeciThing expendSpeciThing = 11;//特定字段
+	GoldMatchRoomRule goldMatchRule = 12;//金币场包间规则
+	int32 origin  = 13;//地区
+}
+
+//茶馆大厅(玩法列表，金币场数据，职位数据)
+//@api:2240,@type:req
+message TeaHouseHallReq{
+	int32 teaHouseId = 1;//茶馆Id
+	
+}
+//@api:2240,@type:resp
+message TeaHouseHallResp{
+	int32   teaHouseId = 1;//茶馆Id
+	string  name = 2;//茶馆名称
+	string  icon=3;//茶馆图标地址
+	string  introduce = 4;//茶馆介绍
+	int32   onlineCount=5;//在线人数
+	int32   totalCount=6;//总人数
+	int64   ownerId = 7;//圈主Id
+	string  ownerName = 8;//圈主名称
+	bool     closeStatus=9;//大厅关闭入口(true 开启关闭入口 false未勾选关闭入口)
+	int32    position=10;//所在职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	int32    roomCard=11;//房卡
+	int32    blurred=12;//模糊显示(1 开启 0 关闭)
+	bool     matchOpen=13;//金币场是否开启
+	int64    gold=14;//金币场金币
+	int32    signMatchStatus=15;//金币场报名状态(0未申请  1 已申请 2 已报名)
+	int64    mineMatchFee = 16;//自己的金币场报名费
+	int32    mineFeeIndex = 17;//自己的金币场报名费索引
+	int32    matchTime=18;//金币场时间戳(申请时间或者加入金币场时间)
+	int64    matchFee = 19;//金币场当前报名费
+	int32    feeRate1 = 20;//金币场当前报名费倍率1
+	int32    feeRate2 = 21;//金币场当前报名费倍率2
+	bool     goldMatchAuth = 22;//金币场授权
+	int32    dyOpen = 23;//打烊开关(1 开 0 关闭)
+	int32    teamId =24;//所在战队ID
+	repeated TeaHouseRoomRule list=25;//包间列表(玩法列表) 
+	int32    applyJoinCount=26;//申请加入人数
+        int32    applyExitCount=27;//申请退出人数
+        int32    applyGoldMathCount=28;//申请金币场人数
+	
+
+}
+
+
+//茶馆包间桌上玩家的信息
+message TeaHouseDeskPlayer{
+        int64  pid  = 1;//玩家唯一Id
+	string name  = 2;//玩家的昵称
+	string icon  = 3;//玩家的头像
+	bool   online = 4;//是否在线
+	bool  isReady=5;//是否准备了
+}
+//茶馆包间桌子信息
+message TeaHouseRoomDesk {
+        int32 floor =1;//楼层(1-50)
+	int32 deskNo =2;//桌子序号(1-20)
+	int32 gameType = 3;//游戏种类
+        int32 playNum = 4;//游戏人数
+	bool  isStart = 5;//是否已经开始
+	int32 curNum = 6;//当前局数
+	int32 totalNum = 7;//总局数
+	int32 origin  = 8;//地区
+        repeated TeaHouseDeskPlayer playerList=9;//玩家列表
+        string name  = 10;//名称
+}
+
+//指定包间桌子列表数据
+//@api:2241,@type:req
+message TeaHouseRoomDeskListReq{
+        int32 teaHouseId = 1;//茶馆Id
+        int32 floor = 2;//楼层
+	
+}
+//@api:2241,@type:resp
+message TeaHouseRoomDeskListResp{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32 floor = 2;//楼层
+	 repeated TeaHouseRoomDesk deskList = 3;//桌子列表
+}
+
+//桌子列表
+//@api:2242,@type:req
+message TeaHouseDeskListReq{
+        int32 teaHouseId = 1;//茶馆Id
+	int32 searchIndex = 2;//查询索引
+	
+}
+//@api:2242,@type:resp
+message TeaHouseDeskListResp{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32 searchIndex = 2;//查询索引
+	 repeated TeaHouseRoomDesk deskList = 3;//桌子列表
+}
+
+//主推增加桌子
+//@api:2243,@type:resp
+message NotifyTeaHouseAddDeskResp{
+         int32 teaHouseId = 1;//茶馆Id
+         TeaHouseRoomDesk desk = 2;//桌子
+}
+//主推移除桌子
+//@api:2244,@type:resp
+message  NotifyTeaHouseRemoveDeskResp{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32 floor = 2;//楼层号(1-50)
+         int32 deskNo = 3;//桌子序号(1-20)
+}
+
+//加入茶馆桌子
+//@api:2245,@type:req
+message JoinTeaHouseDeskReq{
+        int32 teaHouseId = 1;//茶馆Id
+	int32 floor = 2;//楼层号(1-50)
+	int32 deskNo = 3;//桌子序号(1-20)
+	bool openGps = 4;//是否开启GPS
+	
+}
+
+//解散桌子
+//@api:2246,@type:req
+message DisbandTeaHouseDeskReq{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32 floor = 2;//楼层号(1-50)
+	 int32 deskNo = 3;//桌子序号(1-20)
+	
+}
+
+
+
+//主推更新桌子
+//@api:2248,@type:resp
+message  NotifyChangeTeaHouseDeskResp{
+         int32 teaHouseId = 1;//茶馆Id
+         TeaHouseRoomDesk desk = 2;//桌子
+}
+//主推退出桌子
+//@api:2249,@type:resp
+message  NotifyExitTeaHouseDeskResp{
+         int32 teaHouseId = 1;//茶馆Id
+	 int32 floor = 2;//楼层号(1-50)
+	 int32 deskNo = 3;//桌子序号(1-20)
+	 int64 pid=4;//玩家唯一Id
+}
+
+//主推新增包间
+//@api:2250,@type:resp
+message  NotifyAddTeaHouseRoomResp{
+          int32    teaHouseId = 1;//茶馆Id
+          TeaHouseRoomRule roomRule=9;//新增包间          
+}
+
+//主推修改包间
+//@api:2251,@type:resp
+message  NotifyModifyTeaHouseRoomResp{
+          int32    teaHouseId = 1;//茶馆Id
+          TeaHouseRoomRule roomRule=9;//新增包间          
+}
+//主推删除包间
+//@api:2252,@type:resp
+message  NotifyDeleteTeaHouseRoomResp{
+          int32    teaHouseId = 1;//茶馆Id
+         int32     floor = 2;//楼层号(1-50)
+}
+
+//主推修改包间名称
+//@api:2253,@type:resp
+message  NotifyTeaHouseRoomNameResp{
+          int32    teaHouseId = 1;//茶馆Id
+          int32     floor = 2;//楼层号(1-50)
+	  string    name = 3;//包间名称
+}
+
+//主推包间关闭入口状态
+//@api:2254,@type:resp
+message  NotifyTeaHouseRoomStatusResp{
+          int32    teaHouseId = 1;//茶馆Id
+          int32    floor = 2;//楼层号(0-50) 0 代表大厅
+	  bool     closeStatus =3;//关闭入口(true 开启关闭入口 false未勾选关闭入口)
+}
+//主推玩家准备
+//@api:2255,@type:resp
+message  NotifyTeaHousePlayerReadyResp{
+          int32    teaHouseId = 1;//茶馆Id
+          int32    floor = 2;//楼层号(0-50) 
+	  int32    deskNo = 3;//桌子号
+	  int64    pid = 4;//玩家唯一Id
+	  bool     isReady =5;//是否准备
+}
+
+//主推比赛开始和局数
+//@api:2256,@type:resp
+message  NotifyTeaHouseGameNumResp{
+	int32    teaHouseId = 1;//茶馆Id
+	int32    floor = 2;//楼层号(0-50) 
+	int32    deskNo = 3;//桌子号	  
+	bool     isStart = 4;//是否已经开始
+	int32    curNum = 5;//当前局数
+	int32    totalNum = 6;//总局数
+}
+
+///主推亲友圈申请或者退出数量或者金币场数量
+//@api:2257,@type:resp
+message  NotifyTeaHouseApplyCountResp{
+	int32    teaHouseId = 1;//茶馆Id
+	int32    applyType = 2;//申请类型1-申请加入 2-申请退出 3-金币场申请加入
+	int32    applyCount = 3;//申请数量	  
+}
+//战队信息
+message TeaHouseTeamInfo{
+	int32  teamId =1 ;  //战队Id
+	int32  teamNo =2 ;  //战队编号
+	int64  userId  = 3;//玩家唯一Id
+	int32  position=4;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	string name  = 5;//玩家的昵称
+	string icon  = 6;//玩家的头像
+	float  totalGameCount = 7;//总局数
+	float  effectCount = 8;//有效局数
+	float  winCount = 9;//大赢家次数
+	int32  contribute = 10;//贡献度
+	float  contributeRate = 11;//贡献率
+	int32  level=12;//层级
+	int32  createTime= 13;//创建时间(时间戳）
+	int32  zeroTime= 14;//清零时间(时间戳）
+	double score=15;//分数
+	int64  cordon=16;//警戒线
+}
+//战队列表
+//@api:2258,@type:req
+message  TeaHouseTeamListReq{
+	int32    teaHouseId = 1;//茶馆Id
+	int32    teamId =2 ;  //战队Id
+	string   searchId=3;//搜索Id
+	bool     searchUp=4;//true 查询上级 false 查询下级
+	int32    pageNum=5;//当前页码数    
+	int32    pageSize=6;//每页显示条数
+	int32    sortKey=7;//排序 0默认排序 升序(1局数	2大赢家次数 3积分) 降序(-1局数 -2大赢家次数 -3积分)
+
+}
+//@api:2258,@type:resp
+message TeaHouseTeamListResp{
+	int32    teaHouseId = 1;//茶馆Id
+	int32    teamId =2 ;  //战队Id
+	int32    pageNum=3;//当前页码数    
+	int32    pageSize=4;//每页显示条数 
+	int32    totalCount=5;//总条数
+	int32    totalPage=6;//总页数 
+	int32    teamNo =7 ;  //战队编号
+	int64    userId  = 8;//用户Id
+	int32    position=9;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	float    totalGameCount = 10;//总局数
+	float    effectCount = 11;//有效局数
+	float    winCount = 12;//大赢家次数
+	int32    contribute = 13;//贡献度
+	float    contributeRate = 14;//贡献率
+	int32    level=15;//层级
+	int32    peopleCount = 16;//战队人数
+	int32    createPosition=17;//添加战队的position(队长=41,组长=31,小组长=21,推荐人=11,普通成员=1,不能创建普通成员 )
+	string   name  = 18;//玩家的昵称
+	string   icon = 19;//头像
+	double   score=20;//分数
+	repeated TeaHouseTeamInfo list=21;//战队列表
+}
+
+
+//创建战队
+//@api:2259,@type:req
+message  CreateTeaHouseTeamReq{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   parentTeamId =2;//上级战队Id
+	 int64   destUserId =3;//目标用户唯一Id
+	 int32   destPosition=4;//目标用户职位(队长=41,组长=31,小组长=21,推荐人=11)
+	 
+}
+
+
+//分配战队成员
+//@api:2260,@type:req
+message  AssignTeaHouseTeamReq{
+         int32   teaHouseId =1;//茶馆Id
+	 int32   teamId =2;//战队Id
+	 int64   destUserId =3;//目标用户唯一Id
+	 
+}
+
+
+
+//转让战队(队长,组长,小组长,推荐人)
+//@api:2261,@type:req
+message  TransferTeaHouseTeamReq{
+         int32   teaHouseId =1;//茶馆Id
+	 int32   teamId =2;//战队Id
+	 int64   destUserId1=3;//目标用户唯一Id
+	 int64   destUserId2=4;//目标用户唯一Id
+	
+	 
+}
+
+
+//获得贡献率
+//@api:2262,@type:req
+message  TeaHouseGetContribueRateReq{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+	
+}
+//@api:2262,@type:resp
+message TeaHouseGetContribueRateResp{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+         float   contributeRate = 3;//贡献率
+}
+
+///返比设置
+//@api:2263,@type:req
+message  TeaHouseSetContribueRateReq{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+         float  contributeRate = 3;//贡献率
+	 
+}
+//@api:2263,@type:resp
+message TeaHouseSetContribueRateResp{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+         float  contributeRate = 3;//贡献率
+}
+
+//次数清零记录
+message CleanZeroInfo{
+	float   totalCount = 1;//总局数
+	float   effectCount = 2;//有效局数
+	float   winCount = 3;//大赢家次数
+	int32   time=4;//上次清零时间
+	string   name=5;//操作人
+	double  score=6;//分数
+}
+//次数清零记录列表
+//@api:2264,@type:req
+message  TeaHouseCleanZeroListReq{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+	 
+}
+//@api:2264,@type:resp
+message TeaHouseCleanZeroListResp{
+	int32   teaHouseId = 1;//茶馆Id
+	int32   teamId =2 ;//战队Id
+	float   totalCount = 3;//总局数
+	float   effectCount = 4;//有效局数
+	float   winCount = 5;//大赢家次数
+	double  score=6;//分数
+	repeated CleanZeroInfo list= 7;//次数清零记录列表
+	
+}
+
+//次数清零
+//@api:2265,@type:req
+message  TeaHouseSetCleanZeroReq{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+	 
+}
+
+//战队统计
+message  TeaHouseTeamStatInfo{
+         int32   floor =1;//楼层
+	 float   totalCount = 2;//总局数
+         float   effectCount = 3;//有效局数
+         float   winCount = 4;//大赢家次数
+}
+//战队统计明细
+//@api:2266,@type:req
+message  TeaHouseTeamStatListReq{
+         int32   teaHouseId = 1;//茶馆Id
+	 int32   teamId =2 ;//战队Id
+	 int32    pageNum=3;//当前页码数    
+	 int32    pageSize=4;//每页显示条数 
+	
+}
+//@api:2266,@type:resp
+message TeaHouseTeamStatListResp{
+        int32    teaHouseId = 1;//茶馆Id
+	int32    teamId =2 ;//战队Id
+        int32    pageNum=3;//当前页码数    
+	int32    pageSize=4;//每页显示条数 
+	int32    totalCount=5;//总条数
+	int32    totalPage=6;//总页数
+        float    allTotalCount = 7;//共计总局数
+        float    allEffectCount = 8;//共计有效局数
+        float    allWinCount = 9;//共计大赢家次数
+	repeated TeaHouseTeamStatInfo list=10;//战队统计明细
+}
+//战队成员直属清零
+//@api:2267,@type:req
+message  TeaHouseTeamDirectCleanReq{
+	int32   teaHouseId = 1;//茶馆Id
+	int32   teamId =2 ;//战队Id
+	
+}
+
+//圈主设置战队警戒线
+//@api:2268,@type:req
+message  TeaHouseTeamSetCordonReq{
+	int32   teaHouseId = 1;//茶馆Id
+	int32   teamId =2 ;//战队Id
+	int64   cordon =3 ;//警戒线
+
+}
+
+
+//获得金币场开关
+//@api:2281,@type:req
+message GetGoldMatchOpenReq{
+     int32    teaHouseId = 1;//茶馆Id
+}
+//@api:2281,@type:resp
+message GetGoldMatchOpenResp{
+    int32    teaHouseId = 1;//茶馆Id
+    bool     goldMatchOpen=2;//是否开启金币场(true 开,false关闭)
+}
+//修改金币场开关
+//@api:2282,@type:req
+message ModifyGoldMatchOpenReq{
+     int32    teaHouseId = 1;//茶馆Id
+     bool     goldMatchOpen=2;//是否开启金币场(true 开,false关闭)
+}
+//@api:2282,@type:resp
+message ModifyGoldMatchOpenResp{
+    int32    teaHouseId = 1;//茶馆Id
+    bool     goldMatchOpen=2;//是否开启金币场(true 开,false关闭)
+}
+//获得金币场设置
+//@api:2283,@type:req
+message GetGoldMatchSettingReq{
+     int32    teaHouseId = 1;//茶馆Id
+}
+//@api:2283,@type:resp
+message GetGoldMatchSettingResp{
+    int32    teaHouseId = 1;//茶馆Id
+    int64    matchFee = 2;//报名费
+    bool     feeOpen1 = 3;//是否允许报名费倍率1(true允许,false不允许)
+    bool     feeOpen2 = 4;//是否允许报名费倍率2(true允许,false不允许)
+    int32    feeRate1 = 5;//报名费倍率1
+    int32    feeRate2 = 6;//报名费倍率2
+    bool     reviewOpen = 7;//是否开启审核(true审核,false不审核)
+    bool     matchPause = 8;//比赛是否暂停(true暂停,false不暂停)
+}
+
+//修改金币场设置
+//@api:2284,@type:req
+message ModifyGoldMatchSettingReq{
+    int32    teaHouseId = 1;//茶馆Id
+    int64    matchFee = 2;//报名费
+    bool     feeOpen1 = 3;//是否允许报名费倍率1(true允许,false不允许)
+    bool     feeOpen2 = 4;//是否允许报名费倍率2(true允许,false不允许)
+    int32    feeRate1 = 5;//报名费倍率1
+    int32    feeRate2 = 6;//报名费倍率2
+    bool     reviewOpen = 7;//是否开启审核(true审核,false不审核)
+}
+//@api:2284,@type:resp
+message ModifyGoldMatchSettingResp{
+    int32    teaHouseId = 1;//茶馆Id
+    int64    matchFee = 2;//报名费
+    bool     feeOpen1 = 3;//是否允许报名费倍率1(true允许,false不允许)
+    bool     feeOpen2 = 4;//是否允许报名费倍率2(true允许,false不允许)
+    int32    feeRate1 = 5;//报名费倍率1
+    int32    feeRate2 = 6;//报名费倍率2
+    bool     reviewOpen = 7;//是否开启审核(true审核,false不审核)
+}
+//暂停或者恢复金币场
+//@api:2285,@type:req
+message PauseGoldMatchReq{
+    int32    teaHouseId = 1;//茶馆Id
+    bool     matchPause = 2;//比赛是否暂停(true 暂停,false 不暂停)
+}
+
+//申请报名金币场
+//@api:2286,@type:req
+message ApplyGoldMatchReq{
+    int32    teaHouseId = 1;//茶馆Id
+    int64    gold=2;//金币
+    int32    rate=3;//倍率
+}
+
+
+//报名审批申请用户
+message GoldMatchApplyUser {
+	 int64     userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string    icon=3;//用户头像
+	 int32     time=4;//申请时间戳(单位:秒)
+	 int64     gold=5;//金币
+	 string    teamName=6;//战队名
+}
+//报名审批列表
+//@api:2287,@type:req
+message GoldMatchApplyListReq{
+         int32    teaHouseId=1;//茶馆Id
+	 string   searchId=2;//搜索Id或者昵称
+	 int32    index=3;//索引
+	 int32    pageSize=4;//每页显示条数 
+}
+//@api:2287,@type:resp
+message  GoldMatchApplyListResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    index=2;//索引    
+	 int32    pageSize=3;//每页显示条数 
+	 int32    totalCount=4;//总条数
+	 int32    applyCount=5;//报名人数
+	 repeated GoldMatchApplyUser list=6;//报名审批列表
+}
+
+
+//金币场同意审批
+//@api:2288,@type:req
+message AgreeGoldMatchReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 applyId=2;//申请用户Id
+}
+
+//金币场拒绝审批
+//@api:2289,@type:req
+message RefuseGoldMatchReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 applyId=2;//申请用户Id
+}
+
+
+//金币场请离比赛
+//@api:2290,@type:req
+message KickGoldMatchReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 memberId=2;//成员Id
+}
+
+
+//金币场补偿
+//@api:2291,@type:req
+message CompensateGoldMatchReq{
+	int32 teaHouseId=1;//茶馆Id
+	int64 memberId=2;//成员Id
+	bool  add=3;//true 补偿 false 扣除
+	int64 gold=4;//金币
+}
+//@api:2291,@type:resp
+message CompensateGoldMatchResp{
+	int32 teaHouseId=1;//茶馆Id
+	int64 memberId=2;//成员Id
+	int64 gold=3;//成员总金币
+}
+//金币场调整信誉值
+//@api:2292,@type:req
+message AdjustCreditGoldMatchReq{
+        int32 teaHouseId=1;//茶馆Id
+	int32 teamId=2;//战队Id
+	int64 credit=3;//信誉值
+}
+//@api:2292,@type:resp
+message AdjustCreditGoldMatchResp{
+	int32 teaHouseId=1;//茶馆Id
+	int32 teamId=2;//战队Id
+	int64 credit=3;//战队总信誉
+}
+//金币场日志
+message GoldMatchGoldLogInfo{
+	int64   userId=1;//成员Id
+        int32   position=2;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	string  name=3;//昵称
+	string  icon=4;//头像
+	int64   gold=5;//金币
+	int32   teamId=6;//战队Id
+        string  teamName=7;//战队名
+        string  event=8;//事件
+        int64   reviewerId=9;//操作者Id
+        string  reviewerName=10;//操作者昵称
+	string  reviewerIcon=11;//操作者头像
+	int32     time=12;//操作时间
+}
+//金币场日志查询
+//@api:2293,@type:req
+message GoldMatchGoldListReq{
+         int32    teaHouseId=1;//茶馆Id
+	 bool     mineApprove=2;//是否自己审批
+	 string   searchId=3;//搜索Id或者昵称
+	 int32    pageNum=4;//当前页码数
+	 int32    pageSize=5;//每页显示条数 
+}
+//@api:2293,@type:resp
+message  GoldMatchGoldListResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    pageNum=2;//当前页码数    
+	 int32    pageSize=3;//每页显示条数 
+	 int32    totalCount=4;//总条数
+	 int32    totalPage=5;//总页数
+	 repeated GoldMatchGoldLogInfo list=6;//金币场日志列表
+}
+
+//金币场实时榜单
+message GoldMatchRankInfo{
+        int32   rank=1;//排名
+	int64   userId=2;//成员Id
+        int32   position=3;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	string  name=4;//昵称
+	string  icon=5;//头像
+	int64   gold=6;//成员剩余金币
+	int32   matchCount=7;//局数
+	bool    power=8;//是否有权操作
+}
+//金币场实时榜单
+//@api:2294,@type:req
+message GoldMatchRankListReq{
+         int32    teaHouseId=1;//茶馆Id
+	 bool     mineApprove=2;//是否自己审批
+	 string   searchId=3;//搜索Id或者昵称
+	 int32    index=4;//索引    
+	 int32    pageSize=5;//每页显示条数 
+	 int32    totalCount=6;//总条数
+}
+//@api:2294,@type:resp
+message  GoldMatchRankListResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    index=2;//索引    
+	 int32    pageSize=3;//每页显示条数 
+	 int32    totalCount=4;//总条数
+         int32    totalMatchCount=5;//总局数
+	 int64    totalGold=6;//总金币
+         int32    totalPeopleCount=7;//总人数
+	 repeated GoldMatchRankInfo list=8;//金币场实时榜单
+}
+//战队信誉
+message GoldMatchTeamInfo{
+        int32   teamId=1;//战队Id
+        int64   userId=2;//队长Id
+        int32   position=3;//用户职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	string  name=4;//昵称
+	string  icon=5;//头像
+	int64   credit=6;//信誉值
+	bool    power=7;//是否有权操作
+	int64   cordon=8;//警戒线
+}
+
+//金币场战队信誉
+//@api:2295,@type:req
+message  GoldMatchTeamListReq{
+         int32    teaHouseId=1;//茶馆Id
+	 string   searchId=2;//搜索Id或者昵称
+	 int32    index=3;//索引    
+	 int32    pageSize=4;//每页显示条数 
+}
+//@api:2295,@type:resp
+message  GoldMatchTeamListResp{
+	 int32    teaHouseId=1;//茶馆Id
+         int32    index=2;//索引    
+	 int32    pageSize=3;//每页显示条数 
+	 int32    totalCount=4;//总条数
+         bool     creditOpen=5;//金币场战队荣誉开关(true 开,false 关)
+	 repeated GoldMatchTeamInfo list=6;//战队信誉列表
+}
+
+//信誉记录
+message CreditLogInfo{
+        int32   teamId=1;//战队Id
+        int64   userId=2;//操作人Id
+        int32   position=3;//操作人职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	string  name=4;///操作人昵称
+	int64   credit=5;//信誉值
+        int64   beforeCredit=6;//变化之前的信誉值
+	int64   afterCredit=7;//变化之后的信誉值
+	int32   time=8;//时间(时间戳)
+}
+
+//金币场信誉记录
+//@api:2296,@type:req
+message  GoldMatchCreditListReq{
+         int32    teaHouseId=1;//茶馆Id
+	 int32    teamId=2;//战队Id
+	 int32    pageNum=3;//当前页码数
+	 int32    pageSize=4;//每页显示条数 
+}
+//@api:2296,@type:resp
+message  GoldMatchCreditListResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    teamId=2;//战队Id
+         int64    credit=3;//初始信誉值
+	 int32    pageNum=4;//当前页码数    
+	 int32    pageSize=5;//每页显示条数 
+	 int32    totalCount=6;//总条数
+	 int32    totalPage=7;//总页数
+	 repeated CreditLogInfo list=8;//战队信誉列表
+}
+//主推金币场开关
+//@api:2297,@type:resp
+message  NotifyGoldMatchOpenResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 bool     goldMatchOpen=2;//是否开启金币场(true 开,false关闭)
+         
+}
+//主推金币场暂停或者恢复
+//@api:2298,@type:resp
+message  NotifyGoldMatchPauseResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 bool     matchPause=2;//金币场是否暂停(true 暂停,false恢复)
+         
+}
+
+//主推金币场成员金币
+//@api:2299,@type:resp
+message  NotifyGoldMatchGoldResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int64    memberId=2;//成员Id
+	 int64    gold=3;//金币变化
+	 int64    totalGold=4;//拥有金币
+}
+
+//主推金币场战队信誉
+//@api:2300,@type:resp
+message  NotifyGoldMatchCreditResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    teamId=2;//战队Id
+	 int64    credit=3;//信誉变化
+	 int64    totalCredit=4;//拥有信誉
+}
+//修改金币场战队信誉开关
+//@api:2301,@type:req
+message  ModifyCreditOpenReq{
+         int32    teaHouseId=1;//茶馆Id
+	 bool   creditOpen=2;//金币场战队荣誉开关(true 开,false 关)
+}
+
+//主推金币场战队信誉开关
+//@api:2302,@type:resp
+message  NotifyCreditOpenResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 bool   creditOpen=2;//金币场战队荣誉开关(true 开,false 关)
+}
+
+//获得金币场报名或者审批信息
+//@api:2303,@type:req
+message  GetMineGoldMatchReq{
+        int32    teaHouseId=1;//茶馆Id
+}
+//@api:2303,@type:resp
+message  GetMineGoldMatchResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    signMatchStatus=2;//金币场报名状态(0未申请  1 已申请 2 已报名)
+	int64    mineMatchFee = 3;//自己的金币场报名费
+	int32    mineFeeIndex = 4;//自己的金币场报名费索引
+	int32    matchTime=5;//金币场时间戳(申请时间或者加入金币场时间)
+	int64    matchFee = 6;//金币场当前报名费
+	int32    feeRate1 = 7;//金币场当前报名费倍率1
+	int32    feeRate2 = 8;//金币场当前报名费倍率2
+}
+//主推我的金币场信息
+//@api:2304,@type:resp
+message  NotifyMineGoldMatchResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    signMatchStatus=2;//金币场报名状态(0未申请  1 已申请 2 已报名)
+	int64    mineMatchFee = 3;//自己的金币场报名费
+	int32    mineFeeIndex = 4;//自己的金币场报名费索引
+	int32    matchTime=5;//金币场时间戳(申请时间或者加入金币场时间)
+	int64    matchFee = 6;//金币场当前报名费
+	int32    feeRate1 = 7;//金币场当前报名费倍率1
+	int32    feeRate2 = 8;//金币场当前报名费倍率2
+}
+//主推金币场授权
+//@api:2305,@type:resp
+message  NotifyGoldMatchAuthorizeResp{
+          int32    teaHouseId = 1;//茶馆Id
+          bool     goldMatchAuth = 2;//金币场授权(true 开启,false 关闭)
+}
+
+//主推茶馆名称或者介绍
+//@api:2306,@type:resp
+message  NotifyTeaHouseNameResp{
+          int32       teaHouseId = 1;//茶馆Id
+          string      name = 2;//茶馆名称
+          string      introduce = 3;//茶馆介绍
+}
+
+//添加超管或者管理员
+//@api:2307,@type:req
+message  UpgradeTeaHousePositionReq{
+         int32   teaHouseId=1;//茶馆Id
+	 int64   destUserId =2;//目标用户唯一Id
+	 int32   destPosition=3;//目标用户职位(超级管理=61,管理员=51)
+}
+
+//取消茶馆权限(取消超管或者管理员)
+//@api:2308,@type:req
+message  CancelTeaHousePositionReq{
+         int32   teaHouseId=1;//茶馆Id
+	 int64   destUserId =2;//目标用户唯一Id
+}
+
+
+//筛选成员
+message FilterMember {
+	 int64     userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string    icon=3;//用户头像
+	
+}
+//筛选成员
+//@api:2309,@type:req
+message FilterTeaHouseMemberReq {
+	 int32   teaHouseId=1;//茶馆Id
+         int32   teamId=2;//战队Id
+	 string  searchId=3;//搜索Id或者昵称
+	 int32   searchType=4;//1 添加战队 2 转让战队  3 分配成员 
+}
+
+//@api:2309,@type:resp
+message FilterTeaHouseMemberResp {
+	 int32   teaHouseId=1;//茶馆Id
+         repeated FilterMember list = 2;//筛选成员列表
+}
+
+//导入茶馆
+//@api:2310,@type:req
+message  ImportingTeaHouseReq {
+	 int32   teaHouseId=1;//茶馆Id
+         int32   destTeaHouseId=2;//茶馆Id
+}
+
+//可以导入茶馆信息
+message ImportingTeaHouseInfo {
+	 int32   teaHouseId=1;//茶馆Id
+	 string    name=2;//茶馆名称
+	 
+	
+}
+//可以导入的茶馆列表
+//@api:2311,@type:req
+message ImportingTeaHouseListReq {
+	int32   teaHouseId=1;//茶馆Id
+}
+//@api:2311,@type:resp
+message ImportingTeaHouseListResp {
+	repeated ImportingTeaHouseInfo list = 1;//可以导入的茶馆列表
+}
+
+//主推加入茶馆
+//@api:2312,@type:resp
+message  NotifyJoinTeaHouseResp{
+          int32       teaHouseId = 1;//茶馆Id
+}
+//主推退出茶馆
+//@api:2313,@type:resp
+message  NotifyExitTeaHouseResp{
+          int32       teaHouseId = 1;//茶馆Id
+}
+
+//亲友圈邀请的玩家的信息
+message ThPlayerInfo {
+	 int64     userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string    icon=3;//用户头像
+	 bool      online=4;//是否在线
+	 int32     status=5;//状态(0 空闲 1 游戏中 2比赛中)
+}
+
+//(游戏内)亲友圈邀请的玩家列表
+//@api:2314,@type:req
+message InviteThPlayerListReq{
+	int32    teaHouseId=1;//茶馆Id
+	bool     filterStart=2;//是否屏蔽开局玩家
+	int32    pageNum=3;//当前页码数
+	int32    pageSize=4;//每页显示条数 
+}
+//@api:2314,@type:resp
+message  InviteThPlayerListResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    pageNum=2;//当前页码数    
+	int32    pageSize=3;//每页显示条数 
+	int32    totalCount=4;//总条数
+	int32    totalPage=5;//总页数
+	repeated ThPlayerInfo   list=6;//(游戏内)亲友圈邀请的玩家列表
+}
+
+//(游戏内)邀请亲友圈玩家加入游戏
+//@api:2315,@type:req
+message  InviteThPlayerJoinGameReq{
+	int32    teaHouseId=1;//茶馆Id
+	int64    userId=2;//用户Id
+	int32    floor = 3;//楼层号(0-50)
+	int32    deskNo = 4;//桌子号
+}
+
+//(游戏内)一键邀请亲友圈所有在线玩家加入游戏
+//@api:2316,@type:req
+message  InviteThAllPlayerJoinGameReq{
+     int32    teaHouseId=1;//茶馆Id
+     int32    floor = 2;//楼层号(0-50)
+     int32    deskNo = 3;//桌子号
+}
+
+//(游戏内)主推亲友圈游戏邀请
+//@api:2317,@type:resp
+message  NotifyThGameInviteResp{
+	int32    teaHouseId=1;//茶馆Id
+	string   teaHouseName=2;//茶馆名
+	int32    floor = 3;//楼层号(0-50)
+	int32    deskNo = 4;//桌子号
+	int64    userId=5;//用户Id
+	string   name=6;//用户昵称
+	int32    gameType=7;//游戏种类
+	int32    origin=8;//区域
+	bool     openGps=9;//是否开启GPS
+}
+
+//主推茶馆货币变化
+//@api:2318,@type:resp
+message  NotifyTeaHouseMoneyResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    type = 2; // 1-金币场金币 2-房卡
+	int64    value = 3; //剩余值
+}
+
+//主推金币场费用变化
+//@api:2319,@type:resp
+message  NotifyGoldMatchFeeResp{
+    int32    teaHouseId=1;//茶馆Id
+    int64    matchFee = 2;//报名费
+    bool     feeOpen1 = 3;//是否允许报名费倍率1(true允许,false不允许)
+    bool     feeOpen2 = 4;//是否允许报名费倍率2(true允许,false不允许)
+    int32    feeRate1 = 5;//报名费倍率1
+    int32    feeRate2 = 6;//报名费倍率2
+}
+
+//金币场补偿提示
+//@api:2320,@type:resp
+message NotifyGoldCompensateTipsResp{
+	int32 teaHouseId=1;//茶馆Id
+	int64 leaderId=2;//操作人Id
+	string leaderName=3;//操作人昵称
+	bool  add=4;//true 补偿 false 扣除
+	int64 gold=5;//金币
+}
+//请出茶馆桌子
+//@api:2321,@type:req
+message KickTeaHouseDeskReq{
+        int32 teaHouseId = 1;//茶馆Id
+	int32 floor = 2;//楼层号(1-50)
+	int32 deskNo = 3;//桌子序号(1-20)
+        int64 userId   = 4;  //被请出者的UId
+}
+
+//关联用户
+message AssociateUser {
+	 int64     userId=1;//用户Id
+	 string    name=2;//用户昵称
+	 string    icon=3;//用户头像
+}
+
+//茶馆成员关联列表
+//@api:2322,@type:req
+message TeaHouseAssociateListReq {
+	int32    teaHouseId=1;//茶馆Id
+	bool     associate=2;//是否已关联
+	int64    targetUserId=3;//目标用户Id
+	string   searchId=4;//搜索Id
+	int32    pageNum=5;//当前页码数
+	int32    pageSize=6;//每页显示条数 
+}
+//返回茶馆成员关联列表
+//@api:2322,@type:resp
+message TeaHouseAssociateListResp{
+	int32    teaHouseId=1;//茶馆Id
+	bool     associate=2;//是否已关联
+	int64    targetUserId=3;//目标用户Id
+	int32    pageNum=4;//当前页码数    
+	int32    pageSize=5;//每页显示条数 
+	int32    totalCount=6;//总条数
+	int32    totalPage=7;//总页数
+	repeated AssociateUser   list=8;//成员关联列表
+}
+
+//设置成员关联
+//@api:2323,@type:req
+message TeaHouseSetAssociateReq {
+	int32    teaHouseId=1;//茶馆Id
+	bool     associate=2;//是否关联(true 添加关联 false 取消关联)
+	int64    targetUserId=3;//目标用户Id
+	repeated int64   list=4;//成员关联列表
+}
+
+//茶馆换桌子
+//@api:2324,@type:req
+message TeaHouseChangeDeskReq{
+        int32 teaHouseId = 1;//茶馆Id
+	int32 floor = 2;//楼层号(1-50)
+	int32 deskNo = 3;//桌子序号(1-20)
+	bool openGps = 4;//是否开启GPS
+	
+}
+//(新版)指定包间桌子列表数据
+//@api:2325,@type:req
+message TeaHouseRoomDesksReq{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor = 2;//楼层
+	int32 searchIndex = 3;//查询索引
+	
+}
+//@api:2325,@type:resp
+message TeaHouseRoomDesksResp{
+	int32 teaHouseId = 1;//茶馆Id
+	int32 floor = 2;//楼层
+	int32 searchIndex = 3;//查询索引
+	TeaHouseRoomRule rule=4;//包间玩法
+	repeated TeaHouseRoomDesk deskList = 5;//桌子列表
+}
+//茶馆换桌列表
+//@api:2326,@type:req
+message TeaHouseChangeDeskListReq{
+         int32    teaHouseId=1;//茶馆Id
+	 int32    floor = 2;//楼层
+	 int32    pageNum=3;//当前页码数
+	 int32    pageSize=4;//每页显示条数 
+}
+//@api:2326,@type:resp
+message  TeaHouseChangeDeskListResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    floor = 2;//楼层
+	 int32    pageNum=3;//当前页码数    
+	 int32    pageSize=4;//每页显示条数 
+	 int32    totalCount=5;//总条数
+	 int32    totalPage=6;//总页数
+	 repeated TeaHouseRoomDesk list = 7;//桌子列表
+}
+
+//进入茶馆场景
+//@api:2327,@type:req
+message TeaHouseEnterSceneReq{
+         int32    teaHouseId=1;//茶馆Id
+	 int32    floor = 2;//楼层
+}
+
+//退出茶馆场景
+//@api:2328,@type:req
+message TeaHouseQuitSceneReq{
+         int32    teaHouseId=1;//茶馆Id
+}
+//主推场馆场景变化
+//@api:2329,@type:resp
+message  NotifyTeaHouseSceneChangeResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    floor = 2;//楼层
+}
+
+
+//茶馆小黑屋
+message TeaHouseBlackGroupInfo {
+	int32  groupId=1;//小黑屋唯一Id
+	string groupName=2;//小黑屋名称
+	repeated string iconList =3;//头像列表
+}
+
+//茶馆小黑屋列表(分页)
+//@api:2330,@type:req
+message TeaHouseBlackGroupListReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    pageNum=2;//当前页码数
+	int32    pageSize=3;//每页显示条数
+	string   searchId=4;//查询条件Id或者昵称
+}
+//@api:2330,@type:resp
+message  TeaHouseBlackGroupListResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    pageNum=2;//当前页码数    
+	int32    pageSize=3;//每页显示条数 
+	int32    totalCount=4;//总条数
+	int32    totalPage=5;//总页数
+	repeated TeaHouseBlackGroupInfo list =6;//小黑屋列表
+}
+
+
+//茶馆小黑屋成员
+message BlackGroupMemberInfo {
+	 int64   memberId=1 ;//成员Id
+	 string  name=2;//玩家的昵称
+	 string  icon=3;//玩家的头像
+	 int32   position=4;//操作人职位(圈主=71,超级管理=61,管理员=51,队长=41,组长=31,小组长=21,推荐人=11,普通成员=1)
+	 bool    online=5;//是否在线
+}
+
+//茶馆小黑屋(分页)
+//@api:2331,@type:req
+message TeaHouseBlackGroupReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    groupId=2;//小黑屋唯一Id
+	int32    pageNum=3;//当前页码数
+	int32    pageSize=4;//每页显示条数
+}
+//@api:2331,@type:resp
+message  TeaHouseBlackGroupResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    groupId=2;//小黑屋唯一Id
+	string   groupName=3;//小黑屋名称
+	int32    limitCount=4;//限制人数
+	int32    pageNum=5;//当前页码数    
+	int32    pageSize=6;//每页显示条数 
+	int32    totalCount=7;//总条数
+	int32    totalPage=8;//总页数
+	repeated BlackGroupMemberInfo list=9;//成员列表
+}
+//茶馆小黑屋操作
+message BlackGroupOper {
+	 int64   memberId=1 ;//成员Id
+	 bool    add=2;//增加还是删除(true增加,false删除)
+}
+//茶馆小黑屋成员增加和删除
+//@api:2332,@type:req
+message TeaHouseBlackGroupOperReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    groupId=2;//小黑屋唯一Id
+	repeated BlackGroupOper list=3;//操作列表
+}
+
+//主推删除小黑屋
+//@api:2333,@type:resp
+message  NotifyTeaBlackGroupDelResp{
+	 int32    teaHouseId=1;//茶馆Id
+	 int32    groupId=2;//小黑屋唯一Id
+}
+
+//茶馆小黑屋更改名称
+//@api:2334,@type:req
+message TeaHouseBlackGroupRenameReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    groupId=2;//小黑屋唯一Id
+	string   groupName=3;//更改名称
+}
+//小黑屋筛选可添加成员(分页)
+//@api:2335,@type:req
+message TeaHouseBlackFilterReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    groupId=2;//小黑屋唯一Id
+	int32    pageNum=3;//当前页码数
+	int32    pageSize=4;//每页显示条数
+	string   searchId=5;//查询条件Id或者昵称
+}
+//@api:2335,@type:resp
+message  TeaHouseBlackFilterResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    groupId=2;//小黑屋唯一Id
+	int32    pageNum=3;//当前页码数    
+	int32    pageSize=4;//每页显示条数 
+	int32    totalCount=5;//总条数
+	int32    totalPage=6;//总页数
+	repeated BlackGroupMemberInfo list=7;//成员列表
+}
+
+//金币场待邀请成员
+message GoldMatchInviteMemberInfo{
+	int64   userId=1;//成员Id
+	string  name=2;//昵称
+	string  icon=3;//头像
+}
+//金币场邀请列表(分页)
+//@api:2336,@type:req
+message GoldMatchInviteListReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    pageNum=2;//当前页码数
+	int32    pageSize=3;//每页显示条数
+	string   searchId=4;//查询条件Id或者昵称
+}
+//@api:2336,@type:resp
+message  GoldMatchInviteListResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    pageNum=2;//当前页码数    
+	int32    pageSize=3;//每页显示条数 
+	int32    totalCount=4;//总条数
+	int32    totalPage=5;//总页数
+	repeated GoldMatchInviteMemberInfo list=6;//待邀请成员列表
+}
+
+//金币场邀请指定成员
+//@api:2337,@type:req
+message GoldMatchInviteReq{
+	int32    teaHouseId=1;//茶馆Id
+	int64    destUserId=2;//目标成员Id
+	int64    gold=3;//金币
+	int32    rate=4;//倍率
+}
+//茶馆保险箱密码设置
+//@api:2338,@type:req
+message StrongboxPwdSetReq{
+	int32    teaHouseId=1;//茶馆Id
+	string   oldPwd=2;//旧密码
+	string   pwd=3;//密码
+}
+//茶馆保险箱登陆
+//@api:2339,@type:req
+message StrongboxLoginReq{
+	int32    teaHouseId=1;//茶馆Id
+	string   pwd=2;//密码
+}
+//@api:2339,@type:resp
+message  StrongboxLoginResp{
+	int32    teaHouseId=1;//茶馆Id
+	int64    gold=2;//金币(单位:分)
+	string   secretKey=3;//秘钥
+
+}
+ //茶馆保险箱查看余额
+//@api:2340,@type:req
+message StrongboxGetGoldReq{
+	int32    teaHouseId=1;//茶馆Id
+}
+//@api:2340,@type:resp
+message  StrongboxGetGoldResp{
+	int32    teaHouseId=1;//茶馆Id
+	int64    gold=2;//收益(单位:分)
+}
+
+ //茶馆保险箱提取收益
+//@api:2341,@type:req
+message StrongboxWithdrawReq{
+	int32    teaHouseId=1;//茶馆Id
+	int64    outGold=2;//收益(单位:分)
+	string   secretKey=3;//秘钥
+}
+//@api:2341,@type:resp
+message  StrongboxWithdrawResp{
+	int32    teaHouseId=1;//茶馆Id
+	int64    outGold=2;//本次提取收益(单位:分)
+	int64    gold=3;//剩余收益(单位:分)
+}
+
+ //保险箱收益记录
+message StrongboxIncomeLogInfo{
+	int64   gold=1;//收益
+        int64   beforeGold=2;//变化之前的收益
+	int64   afterGold=3;//变化之后的收益
+	int32   time=4;//时间(时间戳)
+	int32   eventType=5;//事件类型1-抽奖增加 2-提取
+}
+//茶馆保险箱收益记录列表
+//@api:2342,@type:req
+message StrongboxIncomeListReq{
+	int32    teaHouseId=1;//茶馆Id
+	int32    searchType=2;//0-全部,1-收入 2-支出
+	int32    pageNum=3;//当前页码数
+	int32    pageSize=4;//每页显示条数
+}
+//@api:2342,@type:resp
+message  StrongboxIncomeListResp{
+	int32    teaHouseId=1;//茶馆Id
+	int32    searchType=2;//0-全部,1-收入 2-支出
+	int32    pageNum=3;//当前页码数    
+	int32    pageSize=4;//每页显示条数 
+	int32    totalCount=5;//总条数
+	int32    totalPage=6;//总页数
+	int64    totalIncome=7;//总收益
+	repeated StrongboxIncomeLogInfo list=8;//收益记录列表
+}
+
+//踢出游戏
+//@api:2401,@type:req
+message KickGameReq{
+	int64 uid   = 1;  //被请出者的UId
+	int32 passwd = 2; //房间号
+}
+//拉取房间列表
+//@api:1004,@type:req
+message GetRoomListReq {
+	GAME gameType = 1; // 游戏类型
+	int32 clubId = 2; //俱乐部ID
+}
+
+//@api:1004,@type:resp
+message GetRoomListResp {
+	GAME gameType = 1;
+	repeated RoomInfo list = 2;
+	bool isFresh = 3;
+	int32 clubId = 4; //俱乐部ID
+}
+
+//@api:2029,@type:req
+message ExchangeReq{
+	int32 type = 1; // 兑换类型:1-gold 2-roomcard 3-diamond			
+	int32 amount = 2; 
+}
+
+//@api:2018,@type:req
+message WithDrawReq{
+	int32 passwd = 1;
+	int64 cnt = 2;
+}
+
+//@api:2019,@type:req
+message DepositReq{
+	int32 passwd = 1;
+	int64 cnt = 2;
+}
+
+//@api:2021,@type:req
+message SetBankPasswdReq{
+	int32 old = 1;
+	int32 new = 2;
+}
+
+//@api:2020,@type:resp
+message BankUpdateNtf{
+	int64 cnt = 1;
+}
+
+//@api:2022,@type:req
+message VerifyBankPasswdReq{
+	int32 passwd = 1;
+}
+
+//@api:2025,@type:req
+message TransferReq{
+	int64 uid = 1;
+	int64 gold = 2;
+	int32 passwd = 3;
+	int32 card = 4;
+}
+
+//@api:2026,@type:req
+message ShareReq{}
+
+//@api:2028,@type:req
+message CloseAccountReq{}
+
+//@api:2028,@type:resp
+message CloseAccountResp{}
+
+//@api:2100, @type:req
+message SendPlayerLocation{
+	string longitude = 1; //经度
+	string latitude = 2; //纬度
+}
+
+
+//@api:1017,@type:resp
+message MJPlayerResultListNtf{
+	repeated MJPlayerResultInfo list = 1;
+}
+
+//@api:1024,@type:resp
+message BigTwoPlayerResultListNtf{
+	int64 huer = 1;//胡牌的玩家
+	int64 dianpaoer = 2;//点炮的人
+	repeated int32 remaincards = 3;//剩下没发完的牌
+	repeated BigTwoResultInfo list = 4;  //玩家牌的信息及输赢
+}
+
+//@api:1025,@type:resp
+message BigTwoPlayerEndResultListNtf{
+	int32 num = 1;//局数
+	repeated BigTwoEndResultInfo list = 2;  //玩家具体输赢及房卡信息
+}
+
+//@api:1026,@type:req
+message GetMultipleFightGradeReq{
+//    GAME gameType =1; //游戏类型
+//	int64 uid = 2;//查询UId
+//	int32 clubId = 3;//俱乐部ID
+//	int32 origin = 4; //地区
+	int32 page = 1; //页数
+}
+
+//@api:1026,@type:resp
+message GetMultipleFightGradeResp{
+	repeated FightGradeInfo list = 1;
+}
+
+//@api:1027,@type:resp
+message GamePlayerResultListNtf{
+	GAME game = 1;
+	oneof reslut{
+		HongZhongMahjongResultNtf result= 2;
+	}
+}
+
+//@api:1030,@type:resp
+message PdkPlayerResultListNtf{
+	int64   winUid = 1;//赢得的玩家
+	int64   base    = 2;//底分
+	int32   round    = 3;//当前局数
+	int64   time    = 4;//时间戳
+	repeated PdkResultInfo list = 5;  //玩家牌的信息及输赢
+}
+//跑的快的结算结果
+message PdkResultInfo{
+    int64   uid = 1;//玩家ID
+	int64   winlose = 2;//胜利失败
+    int32   bombnum = 3;//炸弹数
+	int64   totalscore = 4;//积分
+	int64   bombscore = 5;//炸弹积分
+	repeated int32 deskcards = 6;//已打出的牌ID
+	repeated int32 handcards =7;//手牌ID
+}
+//@api:1031,@type:resp
+message PdkPlayerEndResultListNtf{ //以后都用这个
+	int32 num = 1;//局数
+	repeated PdkEndResultInfo list = 2;  //玩家具体输赢及房卡信息
+}
+//跑的快游戏最终结算结果
+message PdkEndResultInfo{
+    int64   uid = 1;//玩家唯一ID
+	int64   totalScore = 2;//玩家输赢分数
+	int32   totalRoomCard    = 3;//总房卡
+	int32 	consumeRoomCard = 4;//消耗的房卡
+}
+
+//@api:1035,@type:resp
+message FiveDdzPlayerResultListNtf{
+	int32   winType = 1;//0 流局 1 地主胜利 2农民胜利
+	int64   base    = 2;//客户端选择的底分(暂时无用)
+	int64   baseScore   = 3;//底分
+	int32   round    = 4;//当前局数
+	int64   time    = 5;//时间戳
+	repeated DdzResultInfo list = 6;  //玩家牌的信息及输赢
+}
+//五人斗地主的结算结果
+message DdzResultInfo{
+        int64   uid = 1;//玩家ID
+	int64   winlose = 2;//胜利失败(1 胜利 0 失败)
+	int64   totalscore = 3;//积分
+	int32   identity = 4;//身份(0 初始化  1 地主 2 农民 3 暗地主)
+	int32   scoreRate= 5;//倒拉操作值(0 初始化  1 不倒/不拉   2 倒/拉)
+	int32   gengValue=6;//梗(0 初始化  1 梗   2 喊)
+	int32   banker = 7;//庄家(1 庄家 0 非庄家)
+	repeated int32 deskcards = 8;//已打出的牌ID
+	repeated int32 handcards = 9;//手牌ID
+}
+
+//@api:1036,@type:resp
+message  DdzPlayerEndResultListNtf{ //以后都用这个
+	int32 num = 1;//局数
+	repeated DdzEndResultInfo list = 2;  //玩家具体输赢及房卡信息
+}
+//五人斗地主最终结算结果
+message  DdzEndResultInfo{
+        int64   uid = 1;//玩家唯一ID
+	int64   totalScore = 2;//玩家输赢分数
+	int32   totalRoomCard    = 3;//总房卡
+	int32 	consumeRoomCard = 4;//消耗的房卡
+}
+//@api:1042,@type:resp
+message LeShanPdkPlayerResultListNtf{
+	int64   winUid = 1;//赢得的玩家
+	int64   base    = 2;//底分
+	int32   round    = 3;//当前局数
+	int64   time    = 4;//时间戳
+	repeated LeShanPdkResultInfo list = 5;  //玩家牌的信息及输赢
+
+}
+//跑的快的结算结果
+message LeShanPdkResultInfo{
+        int64   uid = 1;//玩家ID
+	int64   winlose = 2;//胜利失败
+        int32   bombnum = 3;//炸弹数
+	int64   totalscore = 4;//积分
+	int64   bombscore = 5;//炸弹积分
+	repeated int32 deskcards = 6;//已打出的牌ID
+	repeated int32 handcards =7;//手牌ID
+	int64   mingTangScore=8;//名堂分
+	bool    isZhaNiao =9;//是否扎鸟
+	repeated int32 mingTang=10;//名堂
+}
+
+//天天拼十
+//@api:1044,@type:resp
+message TTPSEndResultListNtf{
+	int64   roomType = 1;//房间类型
+	int32   roomId    = 2;//房间号
+	int32   round    = 3;//当前局数
+	int64   time    = 4;//时间戳
+	repeated TTPSPlayerResultInfo list = 5;  //玩家牌的信息及输赢
+
+}
+//天天拼十结算结果
+message TTPSPlayerResultInfo{
+	int64   uid = 1;//玩家ID
+	int64   winlose = 2;//胜利失败
+	int64   totalscore = 3;//积分
+	int32   qiangNum   = 4;
+	int32   dangZhuanNum = 5;
+	int32   tuiNum       = 6;
+}
+
+
+//珙县跑的快
+
+//@api:1043,@type:resp
+message GongXianPdkPlayerResultListNtf{
+	int64   winUid = 1;//赢得的玩家
+	int64   base    = 2;//底分
+	int32   round    = 3;//当前局数
+	int64   time    = 4;//时间戳
+	repeated GongXianPdkResultInfo list = 5;  //玩家牌的信息及输赢
+
+}
+//跑的快的结算结果
+message GongXianPdkResultInfo{
+        int64   uid = 1;//玩家ID
+	int64   winlose = 2;//胜利失败
+        int32   bombnum = 3;//炸弹数
+	int64   totalscore = 4;//积分
+	int64   bombscore = 5;//炸弹积分
+	repeated int32 deskcards = 6;//已打出的牌ID
+	repeated int32 handcards =7;//手牌ID
+	bool    isBaoPei=8;//是否包赔
+	bool    isChengFive =9;//是否报单乘5
+
+}
+//红中麻将的每局的结算结果
+message HongZhongMahjongResultNtf{
+	repeated int32 remaincards = 1;//剩下没发完的牌
+	repeated PersonPerGameResult allPerResult = 2;
+	int32 gameNum = 3;//游戏局数
+	repeated int32 maValue = 4;//中码的值
+}
+
+//红中麻将每局每人的结算结果
+message PersonPerGameResult{
+	int64 uid = 1;//玩家
+	repeated int32 mingtang  = 2;//名堂
+	repeated int64 hand  = 3;  //玩家牌
+	int32 fun = 4;//番数
+	int32 guiNum = 5;//归的数量
+	int64 win = 6;//输赢
+	repeated  HongZhongMahjongPutOut putout = 7;  // 摆牌
+	repeated HongZhongMahjongdetailWin details = 8;//具体的详情
+	bool isFengDing = 9;//是否封顶
+}
+
+message HongZhongMahjongPutOut{
+	repeated int32 cards = 1;
+}
+
+//红中麻将输赢详情
+message HongZhongMahjongdetailWin{
+	string type = 1;
+	string name = 2;//谁的输赢
+	int64  winValue = 3;//具体的值
+}
+
+//@api:1028,@type:resp
+message GamePlayerEndResultListNtf{ //以后都用这个
+	int32 num = 1;//局数
+	repeated GameEndResultInfo list = 2;  //玩家具体输赢及房卡信息
+}
+//游戏最终结算结果 //后面都用这个
+message GameEndResultInfo{
+	int64   winlose = 1;//输赢
+	int32   totalRoomCard    = 2;//总房卡
+	int32 	consumeRoomCard = 3;//消耗的房卡
+	int64   uid = 4;//
+	MahjongEndRecord mahjongEndRecord = 5;
+}
+
+//麻将总结算记录
+message MahjongEndRecord{
+	int32 zimoCn  = 1;//自摸次数
+	int32 jiepaoCn = 2; //接炮次数
+	int32 dianpaoCn = 3; //点炮次数
+	int32 angangCn = 4; //暗杠次数
+	int32 minggangCn = 5; //明杠次数
+	int32 chajiaoCn = 6; //查叫次数
+	int32 wujiaoCn = 7;  //被查叫次数
+	int32 huazuCn = 8;  //花猪次数
+	int32 chahuazuCn = 9; //查花猪次数
+}
+
+//大贰的结算结果
+message BigTwoEndResultInfo{
+	int64   winlose = 1;//输赢
+	int32   totalRoomCard    = 2;//总房卡
+	int32 	consumeRoomCard = 3;//消耗的房卡
+	int64   uid = 4;//
+}
+
+//多次牌局的战绩
+message MultipleFightGradeInfo{
+	repeated FightGradeInfo list = 1;
+}
+//抽奖信息
+message LotteryInfo{
+     int64 userId=1;//玩家ID
+     int64 lotteryScore=2;//抽奖分数
+}
+//抽奖结果
+message LotteryResult{
+     int32 lotteryType=1;//0 不抽奖, 1不抽奖,2所有人抽奖,3大赢家抽奖
+     int64 bottomGold=2;//抽底
+}
+//战绩
+message FightGradeInfo{
+	int64 start    = 1;//开始时间
+	int64 end      = 2;//结束时间
+	int32 roomId       = 3;//房间id
+	int32 num 	 = 4;//房间局数
+	repeated PersonFight totalFight   = 5; //总战绩
+	repeated PersonFight detailFight  = 6;//详细战绩
+	repeated string replayIds = 7;//回放的唯一ID
+	int32 clubId   = 8;//俱乐部ID
+	GAME    gameType = 9;//游戏类型
+	ORIGIN  origin   = 10;//地区
+	bool    owner    = 11;//拥有者的战绩
+	MaxWin  maxwin   = 12; //茶馆的大赢家
+	int32   clubRoomId = 13;//茶馆的包间id
+	bool    isTeaHouse = 14;//是否是新茶馆
+	bool    isPerfet   = 15; //是否是完整场
+	int32   gameConsume   = 16;  //消费类型 1:金币  2:积分
+	int32   totalGameNum  = 17;  //总局数
+	int64   ownerId       = 18; //房主
+	repeated LotteryInfo lotteryList= 19; //抽奖列表
+	LotteryResult  lotteryResult=20;//抽奖结果
+	int64 userId  = 21;//玩家id
+	string userName = 22;//玩家昵称
+	GAMEENDRES  endRes  = 23;//结束原因
+ }
+
+message MaxWin {
+//	int32 gameType  = 1; //游戏类型
+//    int32 origin =2; //区域
+	repeated int64 userIds     =1;     //玩家Uid和昵称
+	string roomType = 2; //游戏类型 2人8局
+	bool  isPerfet   = 3;// 是否是完整场
+	int32 payCardType = 4;//付费房卡类型
+}
+
+/*message UserIdAndName{
+	int64 uid = 1;
+	string name = 2;
+	int32 win  = 3;//赢了多少
+}*/
+
+message PersonFight{
+	string name = 1;//玩家昵称
+	repeated int64 fight = 2;//每局的战绩
+	int64 uid = 3;//用户id
+	string icon = 4;//头像
+	int64 gold  = 5;//带入的金币数量
+}
+
+/*
+	平胡 = 1 << (iota)
+	大对子
+	暗七对
+	清一色
+	将对
+	带幺
+
+	天胡 //(自摸)
+	地胡 //(自摸)
+	自摸
+	杠上花 //(自摸)
+	海底捞 //(自摸)
+
+	胡
+	金钩钓
+	杠上炮
+	抢杠
+
+	杠
+	下雨
+	刮风
+	呼叫转移
+*/
+message MJPlayerResultInfo{
+	int32 hu = 1;//玩家的胡牌
+	int32 huInfo = 2;//胡牌的信息
+	int32 gen = 3;//根
+	int32 points = 4;//番数
+	int32 money = 5;//输赢
+	int32 exclude = 6;//缺的花色
+	int64 uid = 7;//玩家uid
+	repeated int32 hand = 8;//玩家的手牌
+	repeated int32 show = 9;//玩家的碰杠牌
+	repeated MJPlayerResultDetailInfo details = 10;//输赢详细列表
+}
+
+message MJPlayerResultDetailInfo{
+	int32 info = 1;//详细info
+	int32 points = 2;//番数
+	int64 uid = 3;//相关玩家的uid
+	int32 money = 4;//输赢
+	int32 gen = 5;//根
+}
+
+//大贰的结算结果
+message BigTwoResultInfo{
+	int64   winlose = 1;
+	int64   base    = 2;//底分
+	int32 	hufan = 3;//胡的番数
+	int32 	huxi  = 4;//胡的胡息
+	int64   uid     = 5;//玩家的id
+	int32   hucard = 6;//胡的牌
+	repeated int32 mingtang  = 7;   //要显示的名堂
+    repeated BigTwoCards hand = 8;//玩家的手牌
+	repeated BigTwoCards putout = 9;//玩家放下去的牌
+	repeated HongZhongMahjongdetailWin details = 10; //玩家的输赢详情
+}
+
+message BigTwoCards{
+	repeated int32 cards = 1;//玩家的手牌
+}
+
+message BigTwoInfo{
+	repeated int32 hand = 1;//手牌
+	repeated int32 nouse = 2;//手牌
+	repeated BigTwoCards putout = 3;//摆下去的牌
+	int32 op =4;//可以的操作
+	repeated int32 bustCards = 5;//爆牌的牌
+}
+
+message BigTwoCardInfo{
+	bool play = 1;//是否是打出的牌
+	int64 uid = 2;//打出者,或者堂出者
+	int32 value = 3;//牌的值
+}
+// 牛牛:
+// 0-wait(等待) 1-ready(准备) 2-deal1(发牌) 3-qiangzhuang(抢庄) 4-随机庄家 5-xiazhu(下注) 6-deal2(发牌2) 7-kaipai(开牌)
+// 诈金花:
+// 0-wait(等待) 1-ready(准备) 2-强制下注 3-发牌 4-闷牌 5-自由操作 6-结果
+// 包剪锤：
+// 0-wait(等待) 1-ready(准备) 2-开始游戏 3-玩家操作 4-结果
+// 房间信息
+message RoomInfo {
+	GAME gameType = 1; //游戏类型，大贰是9，红中是10
+	int64 id = 2;
+	int32 cnt = 3;
+	int32 gsId = 4;//游戏服务器的id
+	int32 clubId = 5;//如果是俱乐部创建的房间不为0
+	int32 type = 6;   // 房间类型 1-金币场; 2-积分场 3-匹配欢乐场 4-匹配积分场 5-茶馆金币场
+	int32 roomId = 7;//房间id
+	int64 base = 8;
+	int64 limit = 9;
+	int32 status = 10;
+	int64 end = 11;
+	int64 now = 12;
+	int64 dealer = 13;//庄家是谁
+	int64 start = 14;
+	int32 total = 15;
+	int32 round = 16;
+	int32 bet = 17;
+	int32 cardNum = 18; // 剩余牌数
+	int32 rule = 19;
+	int32 power = 20; // 底分
+	int64 owner = 21; // 房主
+	int32 curGameNum = 22; // 当前局数
+	int32 GameNum = 23; // 总局数
+	int64 CurPlayer = 24;//大贰当前的打牌者
+	repeated int32 NewRlue = 25;  //新规则使用范围:大贰，宜宾麻将
+	int32 origin = 26;//游戏地区
+	BigTwoCardInfo opcard =27;  //大二可操作的牌
+	repeated int64 applyStatus = 28; //申请退出状态
+	RoomClubDeskInfo clubdesk  = 29;//房间属于哪个俱乐部
+	PaoDeKuaiRoomInfo paodekuai = 30;//跑得快的房间信息
+	int32 benjing   = 31;//宜宾鬼麻将的本金
+	string clubName = 32; //茶馆的名字
+	repeated int64 expand = 33;//扩展字段
+	int64 maxwinsco = 34;//大赢家分数
+	GoldMatchRoomRule goldMatchRoomRule = 35; //金币场的规则
+	repeated int64 autoCountDown = 36;     //托管倒计时时间
+	ExpendSpeciThing expendSpeciThing = 41;//特定字段
+}
+
+//跑得快roomInfo
+message PaoDeKuaiRoomInfo{
+	repeated int32 cardRecord = 1;  //记牌器
+}
+
+//房间在俱乐部中的包间位置
+message RoomClubDeskInfo{
+	int32 roomUid = 1;//包间的Uid
+	int32 deskIndex = 2;//包间中桌子的索引
+}
+// 玩家信息
+message Player {
+	bool  isAuto = 1;//是否是托管
+	bool isView = 2;
+	int32 hu = 3; // 胡牌
+	int32 exclude = 4; //定缺
+	int32 op = 5; //操作
+	int32 huType = 6;//胡的类型
+	int32 cardNum = 7;//手牌数量
+	int32 status = 8; //玩家的状态
+	int32 deskId = 9; //桌号
+	int32 result = 10;
+	int32 reward = 11;
+	int32 bet = 12;
+	int32 power = 13;
+	int32 gVoiceId = 14; //在语音房间中id号
+	int64 start = 15;
+	int64 end = 16;
+	int64 money = 17; //货币的数量
+	int64 uid = 18;  //id
+	string icon = 19; //头像
+	string name = 20; //昵称
+	string ip = 21;  //ip地址
+	repeated int32 cards = 22; //手牌
+	repeated int32 show = 23; // 明牌
+	repeated int32 fold = 24; // 弃牌
+	repeated int32 clubList = 25;//俱乐部列表
+	MJPlayerResultInfo mjResult = 26; //麻将结果列表
+	BigTwoInfo bigtwoInfo = 27;//大贰的一些信息
+	repeated int64 roomCard = 28;  //房卡数量
+	int32 sex = 29;//性别
+	Gps   gps = 30;
+	int32 piao = 31;//飘
+	repeated int64 expand = 32;//扩展
+	bool online  = 33;   //是否在线
+	string gVoiceToken = 34; //在语音房间中gVoiceToken
+	int64  gold=35;//茶馆金币场金币
+	bool isAutoHu = 36;//是否自动胡牌
+	int32 outLineTime = 37;//离线时间
+}
+
+//gps信息
+message Gps {
+	string longitude = 1; //经    度
+	string latitude = 2;	//纬    度
+}
+
+// 创建房间
+//@api:1005,@type:req
+message CreateRoomReq {
+	bool  isView = 1; 	// 所有人可见
+	GAME gameType = 2; 
+	int32 type = 3;  	// 创建房间类型 1-金币场; 2-积分场
+	int64 base = 4;  	// 底分
+	int32 gameNum = 5;  // 游戏局数
+	int32 rule = 6;     //规则
+	int32 clubId = 7;
+	ORIGIN origin = 8;
+	int32 tickectMode = 9;
+	int32 startNum = 10;
+    repeated int32 bigTwoRlue = 11;
+	bool openGps = 12;
+	ExpendSpeciThing expendSpeciThing = 13;
+}
+
+//特殊规则
+message ExpendSpeciThing{
+	oneof expendPerGame{  //每个游戏的特殊规则
+	    NingYuanSpeciRule ningYuanSpeciRule = 1;
+	    Hold hold = 2;
+	}
+}
+
+//宁远的特殊规则
+message NingYuanSpeciRule{
+	int32 addBeiStrip = 1;  //少于多少加倍
+	int32 addFenStrip = 2;  //少于加分的门槛
+	int32 addFen = 3;//具体加多少分
+}
+
+//保留字段
+message Hold{
+
+}
+
+message  RoomConfig{
+    int32 StartScore  =1;                       //参与比赛初始分数
+    int32 KickScore =2;                          //踢出最低分数
+    int32 BottomScore =3;                        //底分
+    int32 GiveAwayStartScore =4;                 //赠送初始分
+    int32 IsFixed =5;                            //是否固定 0否 1是
+    int32 IsScale =6;                            //是否比例 0否 1是
+    int32 FixedScore =7;                         //固定分数
+    float ScaleScore  =8;                       //比例
+    int32 GiveOne =9;                            //赠送区间1
+    int32 GiveTwo =10;                           //赠送区间2
+    int32 GiveThree =11;                         //赠送区间3
+    int32 GuaranteedOne =12;                     //保底1
+    int32 GuaranteedTwo =13;                     //保底2
+    int32 GuaranteedThree =14;                   //保底3
+}
+
+//@api:1005,@type:resp
+message CreateRoomResp {
+	RoomInfo room = 1;
+	Player one = 2;
+
+}
+
+// 加入房间
+//@api:1006,@type:req
+message JoinRoomReq {
+	int32 gsId = 1;
+	int32 roomId = 2;
+	bool openGps = 3;
+}
+
+//@api:1006,@type:resp
+message JoinRoomResp {
+	RoomInfo room = 1;
+	Player one = 2;
+	repeated Player others = 3;
+
+}
+
+//获取房间以及房间玩家的数据
+//@api:1020,@type:req
+message GetRoomDataReq {
+}
+
+//@api:1020,@type:resp
+message GetRoomDataResp {
+	RoomInfo room = 1;
+	Player one = 2;
+	repeated Player others = 3;
+}
+
+// 骂街
+//@api:1018,@type:req
+message TalkToAllReq{
+	int32 id = 1;
+	int32 type = 2;
+	string content = 3;
+	int64 target = 4;//给谁发表情
+}
+
+//@api:1018,@type:resp
+message TalkToAllResp{	
+	int64 uid = 1;
+	int32 id = 2;
+	int32 type = 3;
+	string content = 4;
+	int64 target = 5;//给谁发表情
+}
+
+// 退出房间
+//@api:1007,@type:req
+message QuitRoomReq {}
+
+// 房间列表通知
+//@api:1009,@type:resp
+message RoomListNtf {
+	GAME gameType = 1;
+	int32 clubId = 2;
+	repeated RoomInfo list = 3;
+}
+
+// 有人加入房间
+//@api:1013,@type:resp
+message JoinRoomNtf {
+	Player other = 1;
+}
+
+// 有人离开房间
+//@api:1014,@type:resp
+message QuitRoomNtf {
+	int64 uid = 1;
+	ERROR error = 2;
+}
+
+// 匹配
+//@api:1008,@type:req
+message MatchReq {
+	GAME gameType = 1;
+	int32 matchType = 2;
+}
+
+// 绑定
+//@api:1040,@type:req
+message BindRecommenterReq {
+	string code = 1;
+}
+
+// 绑定
+//@api:1041,@type:req
+message BindReommentInfoReq {
+
+}
+
+// 绑定信息
+//@api:1041,@type:resp
+message BindReommentInfoResp {
+	string code = 1;
+	string mycode = 2;
+	int32  recommentNum = 3;
+	int32  recommentCardNum = 4;
+}
+
+
+//@api:1008,@type:resp
+message MatchResp {
+	RoomInfo room = 1;
+	Player one = 2;
+	repeated Player others = 3;
+}
+
+// 退出
+//@api:2003,@type:req
+message LogoutReq{}
+
+//@api:2003,@type:resp
+message LogoutResp{}
+
+// 通用回复
+//@api:2001,@type:resp
+message CommonResp{
+	PROTO api = 1;
+	ERROR err = 2;
+}
+
+// 心跳包
+//@api:2000,@type:req
+message HeartReq{}
+
+//@api:2000,@type:resp
+message HeartResp{}
+
+// 绑定
+//@api:2030,@type:req
+message BindReq{
+	PLATFORM platform = 1;
+	string code  = 2;
+	string account = 3;
+	string pwd = 4;
+	string token = 5;
+	string refreshToken = 6;
+}
+
+// 货币更新
+//@api:1012,@type:resp
+message MoneyUpdateNtf{
+	repeated MoneyInfo list = 1;
+}
+
+//@api:1021,@type:req
+message GetPlayerScoreReq{}
+
+//@api:1021,@type:resp
+message GetPlayerScoreResp{
+	repeated ScoreInfo list = 1;
+	int64 data = 2;
+}
+
+message ScoreInfo {
+	repeated int64 values = 1;
+	int64 total = 2;
+	int64 uid = 3;
+	string name = 4;
+	string icon = 5;
+}
+
+// 货币信息
+message MoneyInfo{
+	int32 type = 1; // 1-gold 2-roomcard 3-diamond 4-bank
+	int64 value = 2;
+	ORIGIN origin = 3;
+}
+
+// 游戏内货币更新
+//@api:1019,@type:resp
+message GameMoneyUpdateNtf{
+	int64 value = 1;
+	int64 uid = 2;
+}
+
+//玩家分享总人数获赠的金币
+//@api:1022,@type:resp
+message ShareNumNtf{
+	int32 total = 1;
+	int32 achieve = 2;
+	int32 canOpen = 3;
+}
+// 获取比赛场玩家列表
+message PlayFieldClubMemberReq{
+	int32 clubId = 1;
+	int64 userId = 2;
+}
+message PlayFieldClubMemberResp {
+	int32 clubId = 1;
+	repeated ClubMemberInfoTree list = 2;
+}
+message ClubMemberInfoTree {
+	CLUB_TITLE title = 1;
+	int64 id    =2;
+	int64 superiorId      =3;
+	 int64 integral     =4;
+	int32 grade	       =5;
+	float proportion    =6;
+	repeated ClubMemberInfoTree list   =7;
+
+}
+//修改分成比例
+message SetProportionReq{
+int32 clubId = 1;
+int64 userId = 2;
+int64 target = 3;
+float proportion = 4;
+}
+//修改积分
+message SetIntegralReq{
+int32 clubId = 1;
+int64 userId = 2;
+int64 target = 3;
+int64 integral = 4;
+}
+//修改茶馆分成模式
+message SetClubModeReq{
+int32 clubId = 1;
+int32 splitModeType = 2;
+int64 userId = 3;
+}
+
+//比赛场设置权限
+message PlayFieldPermissionReq{
+int32 clubId = 1;
+int64 userId = 2;
+int64 target = 3;
+uint32 newLevel = 4;
+}
+//绑定实时语音ID
+//@api:1023,@type:req
+message BindPlayerGVoiceIDReq {
+	int32 gVoiceId = 1;
+}
+
+//@api:1023,@type:resp
+message BindPlayerGVoiceIDResp {
+	int64 uid = 1;
+	int32 gVoiceId = 2;
+}
+
+//@api:1029,@type:req
+message SetGpsInfoReq {
+    Gps gps = 1;
+	int64 uid = 2;
+}
+
+//@api:1029,@type:resp
+message SetGpsInfoResp {
+	Gps gps = 1;
+	int64 uid = 2;
+}
+
+//@api:1032,@type:req
+message GetClubMaxWinReq{
+	GAME gameType =1; //游戏类型
+	int64 uid = 2;//查询UId
+	int32 clubId = 3;//俱乐部ID
+	int64 date = 4; //时间戳
+	int32 page = 5; //当前多少
+	int32 payCardType = 6; //付费类型
+	int32 origin = 7;//地区
+}
+
+//@api:1032,@type:resp
+message GetClubMaxWinResp{
+	repeated ClubMaxWinInfo list = 1;
+	int32 curPage = 2;
+	int32 totoalPage = 3;
+	int32 allWinCn = 4; //合计大赢家次数
+	int32 allWinPoint = 5; //所有赢的分数
+	int32 allGames = 6;  //所有参与的场数
+	int32 allPerfetGames = 7; //所有完整场数
+	int64 timesteamp = 8;//告诉客户端当前服务器时间
+}
+
+message ClubMaxWinInfo{
+	string game=1; //游戏类型
+	int64  uid=2;
+	string name = 3;
+	int32  maxCn = 4;//大赢家次数
+	int64  win=5;   //大赢家的次数
+	string roomType = 6;  //游戏类型
+	int32  totalGames = 7; //总共的场数
+	int32  perfetGames = 8; //完整场数
+	int32  gameType  = 9;  //游戏类型
+	int32  payCardType = 10; //付费类型
+	int32 origin  = 11;//地区
+}
+
+//@api:1033,@type:req
+message GetClubMaxFightReq{
+	GAME gameType =1; //游戏类型
+	int64 uid = 2;//查询UId
+	int32 clubId = 3;//俱乐部ID
+	int64 date = 4; //时间戳
+	int32 page = 5; //当前多少
+	string roomType = 6;//房间类型
+	int32 origin    = 7;//地区
+}
+
+//@api:1033,@type:resp
+message GetClubMaxFightResp{
+	repeated FightGradeInfo list = 1;
+	int32 curPage = 2;
+	int32 totoalPage = 3;
+}
+
+//@api:1034,@type:req
+message GetRoomInfoReq{
+	int32 roomId  = 1;
+}
+
+//@api:1034,@type:resp
+message GetRoomInfoResp{
+	repeated int32 rules = 1;
+	int32 origin    = 2;//游戏区域
+	int32 gameType = 3;//游戏类型
+}
+
+//@api:1039,@type:req
+message CommitAgentReq{
+	string origin = 1;  //地区
+	string phone = 2;   //手机号
+	string wx    = 3;   //微信号
+}
+
+
+// 牛牛:
+// 0-wait(等待) 1-ready(准备) 2-deal1(发牌) 3-qiangzhuang(抢庄) 4-随机庄家 5-xiazhu(下注) 6-deal2(发牌2) 7-kaipai(开牌) 8-展示结果
+// 诈金花:
+// 0-wait(等待) 1-ready(准备) 2-强制下注 3-发牌 4-闷牌 5-自由操作 6-计算结果 7-结果 8-弃牌 9-比牌输
+// 包剪锤：
+// 0-wait(等待) 1-ready(准备) 2-开始游戏 3-玩家操作 4-结果
+// 麻将
+// 0-wait(等待) 1-ready(准备) 2-发牌 3-换三张1 4-换三张2 5-定缺1 6-定缺2 7-自由出牌 8-结束动画 9-查叫 10-结果 11-胡牌
+// 三公：
+// 0-wait(等待) 1-ready(准备) 2-抢庄 3-随机庄家 4-下注 5-发牌 6-开牌 7-展示结果
+// 玩家当前状态
+//@api:1015,@type:resp
+message UserStatusNtf{
+	int64 id = 1;
+	GAME gameType = 2;
+	int32 status = 3; 
+	int64 end = 4;
+	int64 start = 5;
+}
+
+// 牛牛:
+// 0-wait(等待) 1-ready(准备) 2-deal1(发牌) 3-qiangzhuang(抢庄) 4-随机庄家 5-xiazhu(下注) 6-deal2(发牌2) 7-kaipai(开牌)
+// 诈金花:
+// 0-wait(等待) 1-ready(准备) 2-强制下注 3-发牌 4-闷牌 5-自由操作 6-计算结果 7-展示结果
+// 包剪锤：
+// 0-wait(等待) 1-ready(准备) 2-开始游戏 3-玩家操作 4-结果
+// 麻将
+// 0-wait(等待) 1-ready(准备) 2-发牌 3-换三张1 4-换三张2 5-定缺1 6-定缺2 7-自由出牌 8-结束动画 9-查叫 10-结果 
+// 三公：
+// 0-wait(等待) 1-ready(准备) 2-抢庄 3-随机庄家 4-下注 5-发牌 6-开牌 7-计算结果 8-展示结果
+// 游戏当前状态
+//@api:1010,@type:resp
+message GameStatusNtf{
+	GAME gameType = 1;
+	int32 status = 2;
+	int64 end = 3;
+	int64 start = 4;
+	int64 oper  = 5;
+}
+
+// 通知玩家操作
+//@api:1016,@type:resp
+message UserOPNtf{
+	int64 id = 1;
+	GAME gameType = 2;
+	OP op = 3;
+}
+
+// 玩家操作
+//@api:1011,@type:req
+message UserOpReq{
+	GAME gameType = 1;
+	OP  op = 2;
+}
+
+
+//请求跑马灯公告列表
+//@api:1037,@type:req
+message NoticeListReq {}
+
+//返回跑马灯公告列表
+//@api:1037,@type:resp
+message NoticeListResp {
+  
+}
+//itemType 1 请求返回 2 主推返回
+//跑马灯公告主推和请求返回
+//@api:1038,@type:resp
+message NoticeListPushResp {
+        int32    itemType = 1;
+	repeated NoticeItem list = 2;
+}
+//战绩详情
+message OnePersonFight{
+	int64   uid     =1;                   //玩家id
+	int32     teamId  =2;   //战队Id
+	string  unionId =3; //微信unionId
+	repeated int64 fight   =4;     //战绩(详细战绩存放每小局的分数,总战绩里存放该玩家总局数的分数和)
+	string icon   =5; //玩家头像地址
+	string  name=6;  //玩家名字
+}
+
+message TeamTeaHouseRecordResp{
+	int64   uid=1;//玩家id
+	int32   teaHouseId=2;//茶馆ID
+	string  icon=3; //玩家头像地址
+	string  name=4;  //玩家名字
+	string  teamGroup=5;//战队分组
+	int64   integralNum=6;//积分数
+	int64   winCount=7; //大赢家次数
+	int32   gameNumCount=8;//牌局数
+	int32   teamId=9;//战队id
+	int32   teamNo=10;//战队编号
+	int32   disbandCount=11;//中途解散次数
+ }
+//战队战绩请求实体
+//@api:2277,@type:req
+message TeamTeaHouseRecordReq{
+       int64  timeType =1;  //时间类型
+       int64  selectUserId =2;//搜索id
+       int32  teaHouseId =3; //茶馆id
+       int32  teamId=4;//战队Id
+       bool   searchUp=5;//是否向上查
+       int32   recordType =6;//1金币场 2-普通场 
+	   int32   sortType=7;//排序类型 1-大赢家 2-积分 3牌局
+	   int32   pageSize =8;
+	    int32   pageNum =9;
+}
+//战队战绩返回实体
+//@api:2277,@type:resp
+message TeamTeaHouseRecordListResp{
+      repeated TeamTeaHouseRecordResp list   =1; 
+      int32   teamId=2;//战队id
+	  int32 pageNum=3;
+      int32 pageSize=4;
+      int32 totalNum=5;
+      int32 totalPage=6;
+}
+//圈子战绩实体
+message CircleTeaHouseRecord{
+     //  int64 start=1;    //对局开始时间
+     //  int32     roomId  =2;   //房间Id
+     //  int32 gameNum=3;                   //局数
+     //  string  unionId =4; //微信unionId
+    //   repeated OnePersonFight detailFight   =5;     //战绩(详细战绩存放每小局的分数,总战绩里存放该玩家总局数的分数和)
+     //        int32  gameType =6;//游戏类型
+     //  bool isDisband =7;     //是否中途解散
+     //  string fractionStr  =8;   //分数 
+
+        int64 uid     =1;                   //玩家id
+	int32 roomId  =2;   //房间Id
+	string unionId =3; //微信unionId
+	repeated FGUser usrList=4;     //用户信息列表
+	repeated FGDetail detailList=5; //详细战绩列表
+	string icon   =6; //玩家头像地址
+	string name=7;  //玩家名字
+	int64 start  =8;//开始时间
+	bool  isDisband =9;     //是否中途解散
+	int32 gameNum=10;                   //局数
+	int32 bigWin=11;//0-无大赢家 1-大赢家 2-并列
+	int32 origin=12;//地区
+	int32 gameType=13;//游戏类型
+	string fractionStr  =14;   //分数 
+	repeated OnePersonFight  totalFight=15;   //总战绩
+	repeated string replayIds = 16;//回放的唯一ID
+       
+}
+
+//圈子战绩请求实体
+//@api:2276,@type:req
+message CircleTeaHouseRecordReq{
+      int64  timeType =1;  //时间类型
+      int32   pageSize =2;
+      int64   selectUserId =3;//搜索id
+      int32  teaHouseId =4; //茶馆id
+      int32  roomId =5;//房间Id
+      int32   pageNum =6;
+      int32 boutType=7;//0 今日场次 1 完整场次 2 中途解散
+      int32     gameType  =8;   //玩法类型
+      int32   recordType =10;//1金币场 2-普通场 
+      int32     originType  =11;   //地区类型
+      
+}
+//圈子战绩返回实体
+//@api:2276,@type:resp
+message CircleTeaHouseRecordResp{
+     int32 pageNum=1;
+     int32 pageSize=2;
+     int32 totalNum=3;
+     int32 totalPage=4;
+     int32 todayCount=5; //今日场次
+     int32 disbandNum=6; //中途解散
+     int32 completeNum=7; //完整场次
+     repeated  CircleTeaHouseRecord list=8;//战绩列表
+    
+}
+//战绩详情返回实体
+//@api:2275,@type:resp
+message DetailTeaHouseRecordResp{
+     int64   uid     =1;                   //玩家id
+     int32     roomId  =2;   //房间Id
+     string  unionId =3; //微信unionId
+     repeated int32 fight   =4;     //战绩(详细战绩存放每小局的分数,总战绩里存放该玩家总局数的分数和)
+     string  name=5;  //玩家名字
+     int32     gameType  =6;   //玩法类型
+}
+//战绩详情请求实体
+//@api:2275,@type:req
+message DetailTeaHouseRecordReq{
+     int64  timeType =1;  //时间类型
+     int32   pageSize =2;
+     int64   selectUserId =3;//搜索id
+     int32  teaHouseId =4; //茶馆id
+     int32  roomId =5;//房间Id
+     int32   pageNum =6;
+     int32   recordType =7;//1普通场 2金币场
+}
+//最近战绩返回实体
+//@api:2274,@type:resp
+message RecentTeaHouseRecordResp{
+     int32 pageNum=1;
+     int32 pageSize=2;
+     int32 totalNum=3;
+     int32 totalPage=4;
+     repeated  MyTeaHouseRecord list=5;//最近战绩列表
+}
+//最近战绩请求实体
+//@api:2274,@type:req
+message RecentTeaHouseRecordReq{
+     int64  timeType =1;  //时间类型
+     int32   pageSize =2;
+     int64   selectUserId =3;//搜索id
+     int32  teaHouseId =4; //茶馆id
+     int32  roomId =5;//房间Id
+     int32   pageNum =6;
+     int32   recordType =7;//1普通场 2金币场
+}
+
+//成员战绩
+message MemberTeaHouseRecord{
+     int64   uid     =1;                   //玩家id
+     string icon   =2; //玩家头像地址
+     string  name=3;  //玩家名字
+     string           teamGroup        =4;   //战队分组
+     int32         disbandCount        =5; //中途解散场次
+     float         winCount        =6; //大赢家次数
+     int32        gameNumCount    =7;  //牌局数
+     int64           integralNum       =8;         //积分数
+}
+//成员战绩
+message SelectMemberTeaHouse{
+     string selectValue   =1; //选项
+}
+//成员战绩返回实体
+//@api:2273,@type:resp
+message MemberTeaHouseRecordResp{
+     int32 pageNum=1;
+     int32 pageSize=2;
+     int32 totalNum=3;
+     int32 totalPage=4;
+     float         totalWinCount          =5; //大赢家总次数
+     int64 totalIntegralNum=6; //总积分数
+     int32           totalGamblingNum   =7; //牌局总数
+     repeated MemberTeaHouseRecord  list    =8; //数据列表
+	 repeated SelectMemberTeaHouse  selectList    =9; //数据列表
+}
+//成员战绩请求实体
+//@api:2273,@type:req
+message MemberTeaHouseRecordReq{
+     int64  timeType =1;  //时间类型
+     int32   pageSize =2;
+     int64   selectUserId =3;//搜索id
+     int32  teaHouseId =4; //茶馆id
+     int32  roomId =5;//房间Id
+     int32  gameType =6;//游戏类型
+     int32   pageNum =7;
+     int32   recordType =8;//1普通场 2金币场
+     int32     originType  =9;   //地区类型
+	 int32   sortType=10;//排序类型 1-大赢家 2-积分 3牌局
+	 string   teamGroup=11;//战队分组
+}
+
+//我的茶馆战绩
+message MyTeaHouseRecord{
+    int64   uid     =1;                   //玩家id
+    int32     roomId  =2;   //房间Id
+    string  unionId =3; //微信unionId
+    repeated OnePersonFight detailFight   =4;     //战绩(详细战绩存放每小局的分数,总战绩里存放该玩家总局数的分数和)
+    string icon   =5; //玩家头像地址
+    string  name=6;  //玩家名字
+    int64 start  =7;//开始时间
+    bool isDisband =8;     //是否中途解散
+    int32 gameNum=9;                   //局数
+    int32 bigWin=10;//0-无大赢家 1-大赢家 2-并列
+    repeated OnePersonFight  totalFight=11;   //总战绩
+}
+//战绩用户
+message FGUser{
+	int64   uid=1;                   //玩家id
+	int32   teamId =2;   //战队Id
+	string  unionId=3; //微信unionId
+	string  icon=4; //玩家头像地址
+	string  name=5;  //玩家名字
+}
+//战绩详情
+message FGDetail{
+       repeated int64 fight   =4;     //依次是第1人第2人的战绩
+}
+
+//我的茶馆战绩
+message MyThRecord{
+	int64 uid     =1;                   //玩家id
+	int32 roomId  =2;   //房间Id
+	string unionId =3; //微信unionId
+	repeated FGUser usrList=4;     //用户信息列表
+	repeated FGDetail detailList=5; //详细战绩列表
+	string icon   =6; //玩家头像地址
+	string name=7;  //玩家名字
+	int64 start  =8;//开始时间
+	bool  isDisband =9;     //是否中途解散
+	int32 gameNum=10;                   //局数
+	int32 bigWin=11;//0-无大赢家 1-大赢家 2-并列
+	int32 origin=12;//地区
+	int32 gameType=13;//游戏类型
+	repeated OnePersonFight  totalFight=14;   //总战绩
+	repeated string replayIds = 15;//回放的唯一ID
+}
+//茶馆战绩请求实体
+//@api:2272,@type:req
+message TeaHouseRecordReq{
+    int64  timeType =1;  //时间类型
+    int32   pageSize =2;
+    int64   selectUserId =3;//搜索id
+    int32  teaHouseId =4; //茶馆id
+    int32  roomId =5;//房间Id
+    int32  gameType =6;//游戏类型
+    int32   pageNum =7;
+    int32   recordType =8;//1普通场 2金币场
+    int32     originType  =9;   //地区类型
+	int32     selectType  =10;   //成员战绩查看战绩使用--1,其它值为查看我的战绩使用
+}
+//我的茶馆战绩返回实体
+//@api:2272,@type:resp
+message MyTeaHouseRecordResp{
+    int32 pageNum=1;
+    int32 pageSize=2;
+    int32 totalNum=3;
+    int32 totalPage=4;
+    float         totalWinCount          =5; //大赢家总次数
+    int64 totalIntegralNum=6; //总积分数
+    int32           totalGamblingNum   =7; //牌局总数
+    repeated MyThRecord  list    =8; //详细战绩
+}
+//金币场数据请求实体
+//@api:2278,@type:req 
+message GoldMatchDateLogReq{
+	int32            teaHouseId       =1;   //茶馆ID
+	int32            dateNo       =2;   //期号
+	int32            teamId       =3;   //战队Id
+	int32   pageSize =4;
+	int32   pageNum =5;
+	int64  timeType =6;  //时间类型
+	int64   selectUserId =7;//搜索id
+}
+//金币场数据下拉查询
+message GoldMatchDateTeamIdInfo{
+	int32 teamId =1; //战队id
+	string teamIdStr =2;//战队id Str
+}
+//金币场数据实体
+message GoldMatchDateLogInfo{
+	int64  	 uid              =1;          //玩家id
+	string 	icon   =2; //玩家头像地址
+	string 	 name=3;  //玩家名字
+	int64 signUpGold=4;   //报名金币
+	int64 lotteryGold=5;   //报名金币
+	int64 breakGold=6;   //退赛金币
+	int64 makeUpGold=7;   //补偿金币
+	int64 punishGold=8;   //处罚金币
+	int32 lotteryNum=9;   //报名人数
+	int64 bigWinNum=10;   //报名金币
+	int64 currentGold=11; //当前金币
+	string teamGroup=12; //战队分组
+	int32 position=13; //当前层级
+	int64  contribute=14;  //贡献
+    int64  backContribute=15;  //返点贡献
+	int64  FuGold=16;  //负分
+}
+//金币场统计实体
+message GoldMatchSumResultResp{
+	int64 signUpGold=1;   //报名金币
+	int64 lotteryGold=2;   //报名金币
+	int64 breakGold=3;   //退赛金币
+	int64 makeUpGold=4;   //补偿金币
+	int64 punishGold=5;   //处罚金币
+	int32 lotteryNum=6;   //报名人数
+	int64 bigWinNum=7;   //报名金币
+	int64 currentGold=8; //当前金币
+	int64  contribute=9;  //贡献统计
+    int64  backContribute=10;  //返点贡献统计
+	int64  backFuFen=11;  //负分统计
+}
+//金币场数据返回实体
+//@api:2278,@type:resp 
+message GoldMatchDateLogResp{
+	int32 pageNum=1;
+	int32 pageSize=2;
+	int32 totalNum=3;
+	int32 totalPage=4;
+	repeated GoldMatchDateLogInfo  list    =5; //金币场数据实体
+	repeated GoldMatchDateTeamIdInfo  teamList    =6; //金币场数据下拉
+	GoldMatchSumResultResp sumResp  =7;//金币场统计实体
+}
+//获取记录总分
+//@api:2279,@type:req 
+message RecordTotalScoreReq{
+	int32            teaHouseId       =1;   //茶馆ID
+	int32            roomId       =2;   //房间Id
+}
+message RecordTotalScore{
+	int64   uid     =1;                   //玩家id
+    bool isMax =2;     //是否大赢家
+    string icon   =3; //玩家头像地址
+    string  name=4;  //玩家名字
+	int64 integralNum=5;//分数
+}
+//获取记录总分
+//@api:2279,@type:resp 
+message RecordTotalScoreResp{
+	int32  gameType =1;//游戏类型
+    int32     roomId  =2;   //房间Id
+    int64 start  =3;//开始时间    
+	repeated RecordTotalScore  list    =4; //
+}
+
+//拉取分包消息
+//@api:2402,@type:req
+message FenBaoReq{
+	int32 configId = 1;//分包Id
+}
+//@api:2402,@type:resp
+message FenBaoResp{
+	int32 configId = 1;//分包Id
+	string gameName = 2;//游戏名
+	string version = 3;//版本号
+}
+//实名认证消息
+//@api:2403,@type:req
+message ShiMingReq{
+	string name = 1;//姓名
+	string idName = 2;//身份证号码
+}
+
+//获取手机校验码
+//@api:2501,@type:req
+message GetPhoneValidCodeReq{
+	int32 type     = 1;//类型  1:绑定 2:修改密码 3:修改手机
+	string phoneNo = 2;//手机号
+}
+
+
+//绑定手机
+//@api:2502,@type:req
+message BindPhoneReq{
+	string phoneNo = 1;//手机号
+	string secret  = 2;//密码
+	string validCode = 3;//手机校验码
+	PLATFORM  plateForm = 4;//平台
+}
+
+//修改手机登录密码
+//@api:2503,@type:req
+message ModifyPhoneLoginSecretReq{
+	string phoneNo = 1;//手机号
+	string secret  = 2;//密码
+	string validCode = 3;//手机校验码
+}
+
+//修改绑定手机号码
+//@api:2504,@type:req
+message ModifyPhoneLoginReq{
+	string sourcePhoneNo = 1;//手机号
+	string targePhoneNo = 2;//手机号
+	string validCode = 3;//手机校验码
+}
+
+
+//noticeType  播放地方 1 游戏外跑马灯 2 游戏里面跑马灯 3 游戏里面和外面都播放跑马灯
+//playCount  播放次数  -1循环播放
+//colorType颜色类型 1红色，2 橙色,3黄色，4绿色,5青色,6蓝色,7紫色
+//gapTime间隔时间 单位秒
+//content 播放内容
+//url 链接
+message NoticeItem{
+        int32   noticeType = 1;
+	int32   playCount = 2;
+	int32   colorType = 3;	
+	int32   gapTime = 4;
+	string  content = 5;
+	string  url = 6;
+}
+// 牛牛: 
+// k = 0;  准备
+// k = 1; 退出
+// k = qiangzhuang(3); v[0]= x x代表倍数
+// k = xiazhu(4); v[0]=x x代表倍数
+// k = kaipai(6); 
+// k = 游戏开始(7)
+// k = 托管(8);
+// k = 取消托管(9); 
+// k = 10, v[0]表示倍数 v[1]表示后面长度 v[2] = 庄家 v[3...] 表示参与随机的人
+// k = 11, v[0-3], 前4张牌
+// k = 12, v[0]第5张牌 
+// k = 13, v[0] 表示有几个人 (v[1] uid v[2] 表示自己输赢，正为赢，负为输)
+// k = 14, v[0] 当前局数
+// 没牛 = iota
+// 牛一
+// 牛二
+// 牛三
+// 牛四
+// 牛五
+// 牛六
+// 牛七
+// 牛八
+// 牛九
+// 牛牛
+// 金牛
+// 炸弹牛
+// 五小牛
+
+// 诈金花:
+// k = 0; 准备
+// k = 1; 退出
+// k = 2; 下注(跟注，加注，跟到底) v[0] = x 代表下注额 v[1] 下注总额
+// k = 3; 看牌 v[0] - v[2]为牌 v[3] 牌型
+// k = 4; 比牌 v[0] 玩家uid v[1]下注额
+// k = 5; 弃牌 v[0] 玩家uid
+// k = 6; 谁是庄家
+// k = 7; 比牌结果 v[0] 该玩家输掉了 v[1]谁发起的比牌
+// k = 8; 自由操作状态下，该谁来操作  v[0] 玩家uid
+// k = 9; 托管(9);
+// k = 10; 结果展示  v[i*5]玩家uid  v[i*5 + 1]玩家输赢类型 v[i*5 + 2]第一张牌 v[i*5 + 3]第二张牌 v[i*5 + 4]第三张牌
+// k = 11; v[0] 当前轮数
+// k = 12; 游戏开始
+// k = 13, v[0] 当前局数
+// k = 15; 计算结果 v[i*2]玩家uid v[i*2 + 1]玩家输赢的钱(正为赢，负为输)
+// 单张 = iota
+// 对子 
+// 顺子
+// 金花
+// 顺金
+// 豹子
+
+//包剪锤：
+// k = 0; 准备
+// k = 1; 退出
+// k = 2; 设置底分(v[0]表示底分)
+// k = 3; 开始游戏
+// k = 4; 玩家操作(v[0] = x代表玩家操作, 0:未操作 1:认输 2:剪刀 3:石头 4:布)
+// k = 5; 看结果 v[0]表示几个人(v[1 + (i-1)*3]表示第i个人的uid v[2 + (i-1)*3]表示第i个人的操作 v[3 + (i-1)*3]表示第i个人的输赢)
+
+// 麻将
+// k = 1 << 0; 准备
+// k = 1 << 1; 退出
+// k = 1 << 2; 操作
+// k = 1 << 3; 发牌 v[0]-v[12]/v[13]
+// k = 1 << 4; 打牌 v[0]打出得牌
+// k = 1 << 5; 碰
+// k = 1 << 6; 胡 v[0]谁出得牌 v[1]胡得牌 v[2]胡的类型(1-天胡(自摸),2-地胡(自摸),3-自摸,4-胡, 5-胡(一炮多响)) v[3](抢杠 == 1) v[4] - v[n-1]
+// k = 1 << 7; 暗杠
+// k = 1 << 8; 明杠 v[0] 杠得牌 
+// k = 1 << 9; 过
+// k = 1 << 10; 定缺 通知自己的花色(v[0]花色)  通知其他人(v[0] 人数 (v[1]=uid, v[2]=花色))
+// k = 1 << 11; 刮风 v[0]扣钱 v[1]-v[n-1]扣钱得uid  
+// k = 1 << 12; 下雨 v[0]扣钱 v[1]-v[n-1]扣钱得uid
+// k = 1 << 13; 摸牌 v[0]剩余得牌数 v[1] 摸得手牌  v[2] 开始是操作码 
+// k = 1 << 14; 庄家
+// k = 1 << 15; 换三张 v[0](1-顺时针,2-逆时针 3-对家换)   v[1]-v[3]三张
+// k = 1 << 16; 点杠 v[0]牌 v[1]uid 
+// k = 1 << 17; 呼叫转移 v[0]金额(> 0)  v[1](来源uid)
+// k = 1 << 18; 胡扣钱(包括查叫) v[0] uid,v[1] 钱(>0 +  <0 -)
+// k = 1 << 19; 游戏开始
+// k = 1 << 20, v[0] 当前局数
+
+// 大贰
+// k = 1 << 0; 准备
+// k = 1 << 1; 退出
+// k = 1 << 2; 庄家
+// k = 1 << 3; 发牌
+// k = 1 << 4; CAN三拢四坎　
+// k = 1 << 5; 三拢四坎　
+// k = 1 << 6; 拢
+// k = 1 << 7; CAN爆牌
+// k = 1 << 8; 爆牌
+// k = 1 << 9; 摸牌
+// k = 1 << 10; 堂出
+// k = 1 << 11; 打牌
+// k = 1 << 12; CAN吃牌
+// k = 1 << 13; 吃牌
+// k = 1 << 14; CAN碰
+// k = 1 << 15; 碰
+// k = 1 << 16; CAN招
+// k = 1 << 17; 招
+// k = 1 << 18; CAN胡
+// k = 1 << 19; 胡
+// k = 1 << 20; 过　
+// k = 1 << 21, v[0] 当前局数
+
+// 三公: 
+// k = 0; 准备
+// k = 1; 退出
+// k = 2; 抢庄 v[0]是否抢庄：1为抢庄，0为不抢庄
+// k = 3; 下注
+// k = 5;  开牌 v[0~2]玩家的三张牌，v[3]牌型：0~9代表对应的点，10代表混三公，11代表小三公，12代表大三公
+// k = 游戏开始(6)
+// k = 托管(8);
+// k = 取消托管(9); 
+// k = 10; v[0]庄家 v[1] 表示参与随机的人
+// k = 11; 发牌 v[0-2], 3张牌
+// k = 12; 结果 v[i*4]玩家uid v[i*4 + 1]第一张牌 v[i*4 + 2]第二张牌 v[i*4 + 3]第三张牌
+// k = 13; v[i*2]玩家uid v[i*2 + 1]玩家输赢的钱(正为赢，负为输)
+// k = 14; v[0] 当前局数
+
+// 红中麻将
+// k = 1 << 0; 准备
+// k = 1 << 1; 退出
+// k = 1 << 2; 操作
+// k = 1 << 3; 发牌 v[0]-v[12]/v[13] //其他玩家13张牌，庄家14张牌
+// k = 1 << 4; 庄家
+// k = 1 << 5; CAN换三张
+// k = 1 << 6; 换三张v[0]-v[2]要换的三张牌
+// k = 1 << 7; CAN定缺
+// k = 1 << 8; 定缺 v[0] 0:条,1:筒，2:万
+// k = 1 << 9; CAN打牌
+// k = 1 << 10; 打牌 v[0] 打那张牌
+// k = 1 << 11; CAN飞
+// k = 1 << 12; 飞 v[0] 飞那张牌
+// k = 1 << 13; CAN提
+// k = 1 << 14; 提 v[0] 提那张牌
+// k = 1 << 15; CAN碰
+// k = 1 << 16; 碰 v[0] 碰那张牌
+// k = 1 << 17; CAN胡
+// k = 1 << 18; 胡 	//胡 v[0]谁出得牌 v[1]胡得牌 v[2]胡的类型(1-天胡(自摸),2-地胡(自摸),3-自摸,4-胡, 5-胡(一炮多响)) v[3](抢杠 == 1) v[4] - v[n-1]
+// k = 1 << 19; CAN杠
+// k = 1 << 20; 杠 //客户端发给服务器 v[0]代表杠哪一个 服务器发给客户端v[0]代表杠的类型,1:暗杠，2:明杠,3:点杠,v[1]杠的值
+// k = 1 << 21, 过
+// k = 1 << 22, 刮风
+// k = 1 << 23, 下雨
+// k = 1 << 24, 摸牌 v[0] 代表摸的牌
+// k = 1 << 25, 点杠
+// k = 1 << 26, 呼叫转移
+// k = 1 << 27, 胡扣钱
+// k = 1 << 28, 开始
+// k = 1 << 29,	局数
+// k = 1 << 30, 销毁
+message OP {
+	int32 k = 1;
+	repeated int64 v = 2;
+	bool isAuto = 3;  //是不是自动,如果是自动 是服务器发送的
+}
+
+// gate 通信测试协议
+message TEST_GATE_REQ {
+	int64 start = 1;
+}
+
+// gs 通信测试协议
+message TEST_GS_REQ {
+	int64 id = 1;
+}
+
+message TEST_GS_RESP {
+	string data = 1;
+}

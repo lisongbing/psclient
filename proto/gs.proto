@@ -1,0 +1,245 @@
+// gate和gs的通信协议
+syntax = "proto3";
+
+package protocol;
+
+import "const.proto";
+import "gate.proto";
+
+enum IPCService {
+	IPC_unused = 0;
+	Login =  1; // to login
+	Logout = 2; // to login
+	Kickout = 3; // to gate
+	LoginOK = 4; // to gate
+	LoginFailed = 5; // to gate
+	Settle = 6; // to gata
+	Notify = 7; // to gate
+	Forward = 8; // to login
+	CreateOK = 9; // to gate
+	CreateFailed = 10; // to gate
+	JoinOK = 11; // to gate
+	ChangeMoney = 12; // to gate/gs
+	Quit = 13; // to gs
+	ShareAchieve = 14;//to gate
+	RoomList = 15; // to gate
+	QuitOK = 16; // to gate
+	JoinFailed = 17; // to gate
+	TransferOK = 18; // to gate 
+	IncomeOK = 19; // to gate
+	QuitFailed = 20; // to gate
+	BindGetMoney = 21; //to gate
+	PayOK = 22; // to gate
+	QuitClub = 23; // to gate
+	JoinClub = 24; // to gate
+	GetRedPkg = 25; //to gate
+	Active = 26; // to gate/gs
+	ModifyActive = 27; // to gate/gs
+	SetFightGrade = 28;//to gate 获取战绩
+
+	// sys
+	CreateClub = 1000; // to gate
+	DismissClub = 1001; // to gate
+	AgreeClub = 1002; // to gate
+	KickClub = 1003; // to gate
+	ApplyClub = 1004; // to gate
+	PerClub = 1005; // to gate
+	RefuseClub = 1006; // to gate	
+	ModifyClubInfo = 1007; // to gate
+	ModifyClubGame = 1008; // to gate
+	ClubGame = 1009; // to gate
+	SetCreateClubPerm = 1010; //设置创建俱乐部权限
+	CreateClubRoom = 1011; // to gate 创建俱乐部包间
+	ModifyClubRoomDec =1012;//修改包间的描述
+	ModifyClubRoomRule = 1013;//修改包间的规则
+	CreatClubRoomDesk = 1014;//创建包间桌子
+	JoinClubRoomDesk = 1015;//加入包间桌子
+	ChangeClubRoomDeskInfo = 1016;//修改包间桌子信息
+	ChangeClubRoomCards = 1017;//修改俱乐部卡
+	QuitClubRoomDesk = 1018;//退出俱乐部桌子
+	ClubChangeNotice = 1019;//俱乐部变换
+	CreatClubRoomDeskFail = 1020;//加入俱乐部包间失败
+	ModifyClubDeskPlayerReadyStatus = 1021;//玩家的状态
+	ChangeTeaHouseMoney=1022; //更改茶馆用户的货币
+	ClearRoomIdForce   = 1023;//强制清除房间id
+}
+
+// 游戏消费类型
+enum GameConsume {
+	unused = 0;
+	gold = 1;//欢乐场
+	score = 2;//积分场
+	matchGold = 3;//匹配欢乐场
+	matchScore = 4;//匹配积分场
+	teaHouseGold =5;//茶馆金币场
+}
+
+
+// gate和gs的通信协议
+message MSG{
+	PROTO api = 1;
+	int64 idx = 2;
+	bytes data = 3;
+	int64 start = 4;
+}
+
+message Account{
+	int64 id = 1;
+	string uuid = 2;
+	string refreshtoken = 3;
+	string token = 4;
+	string name = 5;
+	PLATFORM Platform = 6;
+	int64    inviter  = 7;
+	repeated IPCObject objs = 8;
+	string os  = 9;//操作系统
+}
+
+message ID {
+	int64 id = 1;
+	int64 uid = 2;
+}
+
+message IPCObject {
+	IPCService serviceId = 1;
+	repeated ID ids = 2;
+	bool isPersistence = 3;
+	bytes data = 4;
+}
+
+message club{
+	int32 id = 1;
+	string name = 2;
+}
+
+message IPCRoom {
+ 	bool  isView = 1;   // 所有人可见
+	GameConsume consumeType = 2;
+	GAME  gameType = 3;
+	int64 base = 4;     // 底分
+ 	int32 gameNum = 5;  // 游戏局数
+	int32 rule = 6;
+ 	int64 limit = 7;    // 进入门槛
+ 	int32 need = 8;     // 消耗
+	club club = 9;   //俱乐部
+    ORIGIN origin = 10;   //游戏区域
+    int32 tickectMode = 11; //门票模式
+    int32 startNum = 12; //参与游戏的人数
+	repeated int32 bigTwoRlue = 13;  //大二的游戏规则
+	int32 roomUid = 14; //包间的唯一Id
+	int32 deskIndex = 15; //桌子的索引
+	int64 clubOwer  = 16; //俱乐部的所有者
+	ExpendSpeciThing expendSpeciThing = 17; //特殊规则
+	GoldRule goldRule = 18;  //金币场规则
+}
+
+//金币场规则
+message GoldRule{
+	int64 JoinGold = 1; //金币场加入牌桌金币
+	int64 DisbandGold = 2;//金币场解散牌桌金币
+	int32 ExitType = 3;           //金币场剩余金币不足类型 1自动解散 2继续游戏
+	int32 LotteryType = 4;     //金币场抽奖类型 1不抽奖 2所有人抽奖 3大赢家抽奖
+	int64 ConsumeGold = 5;     //金币场所有人抽奖消耗金币
+	repeated WinnerRule BigWinnerRoomRule  = 6; //大赢家抽奖规则
+}
+
+message WinnerRule{
+	int64 MinScore  = 1;//分数1
+	int64 MaxScore  = 2;//分数2
+	int64 ConsumeGold = 3;//消耗金币
+	int64 BottomGold=4;//抽底
+}
+
+message IPCCreateRoomReq {
+	IPCRoom room = 1;
+	Player  one = 2;
+
+}
+
+message IPCJoinOKInfo {
+	int32 gsId = 1;
+	int32 passwd = 2;
+}
+
+message IPCJoinRoomReq{
+	int32 passwd = 1;
+	Player one = 2;
+}
+
+message IPCMatchReq {
+	IPCRoom room = 1;
+	Player one = 2;
+}
+
+message MoneyUpdateInfo {
+	repeated ServerMoneyInfo list = 1;
+}
+
+message PayInfo {
+	double amount = 1;
+}
+
+//加入俱乐部的房间
+message IPCJoinClubRoomDeskReq {
+	int32 roomId = 1;//房间号
+	IPCRoom room = 2;
+	Player  one = 3;
+	int32  deskId = 4;//座位号
+	string name = 5;//昵称
+	string icon = 6;//头像
+	int64  uid  = 7;//玩家的uid
+	bool  creatBackCard = 8;//创建失败要退卡
+	ExpendSpeciThing expendSpeciThing = 9; //特殊规则
+	bool isTeaHouse  = 10;//是不是新茶馆
+	int64 maxWinSco = 11;//大赢家分数
+}
+//解散房间
+message IPCDisBankGameReq{
+	int32 roomId = 1;//房间号
+}
+// 服务使用货币更新
+message ServerMoneyInfo {
+	int32 type = 1; // 1-gold 2-roomcard 3-diamond 4-bank
+	int64 value = 2;
+	int64 clubId = 3;
+	string reason = 4;
+	ORIGIN origin = 5;
+}
+
+message SetLevelInfo{
+	int64 userid = 1;
+	int64 nextid = 2;
+}
+
+message ModifyGoldInfo{
+	int64 userid = 1;
+	int64 money  = 2;
+}
+
+message ActionDataInfo{
+	int64 uid = 1;
+	int64 aid = 2;
+    int64 actionData = 3;  //活动分数
+	int64 position = 4;     //排名
+}
+
+message ToDatabase{
+	repeated ActionDataInfo list = 1;
+}
+
+service Service {
+	rpc Stream(stream MSG) returns (stream MSG);
+}
+
+//茶馆货币更新
+message TeaHouseMoneyUpdateInfo {
+	int32 type = 1; // 1-金币场金币
+	int64 value = 2;//值
+	string reason = 3;
+}
+
+// 茶馆货币更新主推
+message  NotifyChangeTeaHouseMoney{
+	 int32 teaHouseId = 1;//茶馆Id
+         repeated TeaHouseMoneyUpdateInfo list=2;//货币变化列表
+}
