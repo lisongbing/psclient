@@ -44,9 +44,9 @@ cc.Class({
         }
     },
 
-    close: function () {
+    close: function (iscls) {
         if (this.socket) {
-            this.socket.closeSocketTwo();
+            this.socket.closeSocketTwo(iscls);
         }
     },
 });

@@ -34,7 +34,7 @@ export default class TeaQingClass extends cc.Component {
 
         this.seachNode.active = true;
 
-        let headerImage = cc.find("com_img9_10", this.seachNode).getComponent(cc.Sprite);
+        let headerImage = cc.find("Node_headMask/Sprite_head", this.seachNode).getComponent(cc.Sprite);
         // @ts-ignore
         cc.g.utils.setHead(headerImage, userInfo.icon);
         // if (userInfo.icon.length > 4) {

@@ -126,6 +126,52 @@ cc.Class({
         spr.spriteFrame = cc.g.hallMgr.inGameMenu.dlgSetting.bg[parseInt(gmbg)];
     },
 
+    
+    upGamesCom: function () {
+        cc.log('upGamesCom');
+
+        this.upDeskGameName();
+    },
+    upDeskGameName: function () {
+        cc.log('upDeskGameName');
+        
+        let gft = cc.find("Node_gmfreetip", this.node);
+        if (!gft) {
+            gft = cc.find("Node_Bg_Tips", this.node);
+            if (!gft) {
+                cc.log('No Node_gmfreetip!');
+                return;
+            }
+        }
+
+        let Sprite_gn = cc.find("Sprite_gn", gft);
+        if (!Sprite_gn) {
+            cc.log('No Sprite_gn!');
+            return;
+        }
+
+        let gncom = Sprite_gn.getComponent(cc.Sprite);
+        if (!gncom) {
+            cc.log('No Sprite_gn.getComponent!');
+            return;
+        }
+
+        Sprite_gn.active = false;
+        
+        let ri = this.gameMgr.roomInfo;
+        if (cc.g.areaInfo[ri.origin]) {
+            let frmnm = `com_dgn_${ri.gameType}_${ri.origin}`
+            cc.log(frmnm);
+            let frm = cc.g.atlas.com1.getSpriteFrame(frmnm);
+            if (frm) {
+                gncom.spriteFrame = frm;
+                Sprite_gn.active = true;
+            } else {
+                cc.warn('No '+ frmnm);
+            }
+        }
+    },
+
     // 灯泡提示的响应  通过 inGameMenu 里的按钮触发
     OnInGMTip: function (player) {
         cc.log(this.dbgstr('灯泡提示的响应'));

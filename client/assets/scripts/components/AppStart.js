@@ -250,6 +250,10 @@ cc.Class({
             default: null,
             type: cc.SpriteAtlas,
         },
+        comAtlas1: {
+            default: null,
+            type: cc.SpriteAtlas,
+        },
     },
 
     onLoad: function () {
@@ -274,6 +278,8 @@ cc.Class({
 
         cc.g.atlas.com0 = this.comAtlas0;
         cc.g.atlas.com0.addRef();
+        cc.g.atlas.com1 = this.comAtlas1;
+        cc.g.atlas.com1.addRef();
 
         cc.g.utils.setCanvasFit();
 

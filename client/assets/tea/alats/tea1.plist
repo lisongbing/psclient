@@ -7,11 +7,11 @@
             <key>tea1_9_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,539},{149,187}}</string>
+                <string>{{821,86},{149,187}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{149,187}}</string>
                 <key>sourceSize</key>
@@ -20,11 +20,11 @@
             <key>tea1_9_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,192},{105,96}}</string>
+                <string>{{115,614},{105,96}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{105,96}}</string>
                 <key>sourceSize</key>
@@ -33,11 +33,11 @@
             <key>tea1_9_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{645,362},{33,56}}</string>
+                <string>{{742,406},{33,56}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{33,56}}</string>
                 <key>sourceSize</key>
@@ -46,11 +46,11 @@
             <key>tea1_9_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,60},{333,130}}</string>
+                <string>{{60,2},{333,130}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{333,130}}</string>
                 <key>sourceSize</key>
@@ -59,7 +59,7 @@
             <key>tea1_9_4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{609,584},{66,75}}</string>
+                <string>{{38,647},{66,75}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,11 +72,11 @@
             <key>tea1_anz0_bxx.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{337,60},{47,31}}</string>
+                <string>{{60,337},{47,31}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{47,31}}</string>
                 <key>sourceSize</key>
@@ -85,11 +85,11 @@
             <key>tea1_back0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{337,141},{45,41}}</string>
+                <string>{{141,337},{45,41}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{45,41}}</string>
                 <key>sourceSize</key>
@@ -98,7 +98,7 @@
             <key>tea1_btn_add.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{606,652},{98,98}}</string>
+                <string>{{312,611},{98,98}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -115,7 +115,7 @@
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{383,56}}</string>
                 <key>sourceSize</key>
@@ -124,7 +124,7 @@
             <key>tea1_btn_qx.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{611,221},{23,23}}</string>
+                <string>{{84,614},{23,23}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>tea1_btn_rili.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{657,752},{36,36}}</string>
+                <string>{{192,268},{36,36}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>tea1_close_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{585,884},{52,52}}</string>
+                <string>{{742,553},{52,52}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>tea1_gn_10_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,764},{226,42}}</string>
+                <string>{{656,382},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -176,11 +176,11 @@
             <key>tea1_gn_10_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{381,568},{226,42}}</string>
+                <string>{{676,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -189,11 +189,11 @@
             <key>tea1_gn_11_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,720},{226,42}}</string>
+                <string>{{612,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -202,11 +202,11 @@
             <key>tea1_gn_11_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,676},{226,42}}</string>
+                <string>{{632,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -215,11 +215,11 @@
             <key>tea1_gn_11_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,632},{226,42}}</string>
+                <string>{{568,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -228,11 +228,11 @@
             <key>tea1_gn_11_4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,588},{226,42}}</string>
+                <string>{{588,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -241,11 +241,11 @@
             <key>tea1_gn_12_5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,544},{226,42}}</string>
+                <string>{{544,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -254,11 +254,11 @@
             <key>tea1_gn_13_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,500},{226,42}}</string>
+                <string>{{500,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -267,11 +267,11 @@
             <key>tea1_gn_14_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,524},{226,42}}</string>
+                <string>{{524,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -280,11 +280,11 @@
             <key>tea1_gn_15_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,480},{226,42}}</string>
+                <string>{{480,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -293,11 +293,11 @@
             <key>tea1_gn_16_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,436},{226,42}}</string>
+                <string>{{456,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -306,11 +306,11 @@
             <key>tea1_gn_18_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,456},{226,42}}</string>
+                <string>{{436,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -319,11 +319,11 @@
             <key>tea1_gn_19_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,392},{226,42}}</string>
+                <string>{{412,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -332,11 +332,11 @@
             <key>tea1_gn_20_11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,412},{226,42}}</string>
+                <string>{{368,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -345,11 +345,11 @@
             <key>tea1_gn_21_11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,348},{226,42}}</string>
+                <string>{{392,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -358,11 +358,11 @@
             <key>tea1_gn_21_16.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,368},{226,42}}</string>
+                <string>{{348,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -371,11 +371,11 @@
             <key>tea1_gn_21_17.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,304},{226,42}}</string>
+                <string>{{324,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -384,11 +384,11 @@
             <key>tea1_gn_21_18.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,324},{226,42}}</string>
+                <string>{{304,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -397,11 +397,11 @@
             <key>tea1_gn_22_11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{382,260},{226,42}}</string>
+                <string>{{280,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -410,11 +410,11 @@
             <key>tea1_gn_23_8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,280},{226,42}}</string>
+                <string>{{260,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -423,11 +423,11 @@
             <key>tea1_gn_4_6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,236},{226,42}}</string>
+                <string>{{236,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -436,11 +436,11 @@
             <key>tea1_gn_9_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,192},{226,42}}</string>
+                <string>{{192,2},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -449,11 +449,11 @@
             <key>tea1_gn_9_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{383,216},{226,42}}</string>
+                <string>{{216,383},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -462,11 +462,11 @@
             <key>tea1_gn_9_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{384,172},{226,42}}</string>
+                <string>{{172,384},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -475,11 +475,11 @@
             <key>tea1_gn_9_4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{385,128},{226,42}}</string>
+                <string>{{128,385},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
@@ -488,24 +488,37 @@
             <key>tea1_gn_9_5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{386,84},{226,42}}</string>
+                <string>{{84,386},{226,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{226,42}}</string>
                 <key>sourceSize</key>
                 <string>{226,42}</string>
             </dict>
-            <key>tea1_ksks.png</key>
+            <key>tea1_idyq.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{387,2},{258,80}}</string>
+                <string>{{270,611},{108,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{108,40}}</string>
+                <key>sourceSize</key>
+                <string>{108,40}</string>
+            </dict>
+            <key>tea1_ksks.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,387},{258,80}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{258,80}}</string>
                 <key>sourceSize</key>
@@ -514,11 +527,11 @@
             <key>tea1_paixu0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{611,246},{13,23}}</string>
+                <string>{{192,306},{13,23}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{13,23}}</string>
                 <key>sourceSize</key>
@@ -527,7 +540,7 @@
             <key>tea1_paixu1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{337,274},{10,17}}</string>
+                <string>{{207,306},{10,17}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -540,7 +553,7 @@
             <key>tea1_play1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{645,503},{55,37}}</string>
+                <string>{{742,514},{55,37}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -553,7 +566,7 @@
             <key>tea1_play2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{337,184},{44,44}}</string>
+                <string>{{184,337},{44,44}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -566,11 +579,11 @@
             <key>tea1_pm1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{639,925},{50,39}}</string>
+                <string>{{884,614},{50,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{50,39}}</string>
                 <key>sourceSize</key>
@@ -579,11 +592,11 @@
             <key>tea1_pm2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{639,884},{50,39}}</string>
+                <string>{{843,614},{50,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{50,39}}</string>
                 <key>sourceSize</key>
@@ -592,7 +605,7 @@
             <key>tea1_pm3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{605,752},{50,39}}</string>
+                <string>{{862,573},{50,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -605,11 +618,11 @@
             <key>tea1_tag0_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{215,814},{183,74}}</string>
+                <string>{{658,610},{183,74}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{183,74}}</string>
                 <key>sourceSize</key>
@@ -618,7 +631,7 @@
             <key>tea1_tag0_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{381,655},{202,74}}</string>
+                <string>{{454,611},{202,74}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -631,7 +644,7 @@
             <key>tea1_tag1_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{645,182},{178,56}}</string>
+                <string>{{763,182},{178,56}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -644,7 +657,7 @@
             <key>tea1_tag2_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{647,2},{178,56}}</string>
+                <string>{{763,2},{178,56}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -657,7 +670,7 @@
             <key>tea1_tuijian.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{569,731},{34,67}}</string>
+                <string>{{2,647},{34,67}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -670,11 +683,11 @@
             <key>tea1_txt_bmjbc.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{88,806},{187,41}}</string>
+                <string>{{821,237},{187,41}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{187,41}}</string>
                 <key>sourceSize</key>
@@ -683,11 +696,11 @@
             <key>tea1_txt_bxx.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{585,800},{113,40}}</string>
+                <string>{{928,573},{113,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{113,40}}</string>
                 <key>sourceSize</key>
@@ -696,11 +709,11 @@
             <key>tea1_txt_bxxz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,374},{150,40}}</string>
+                <string>{{779,362},{150,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{150,40}}</string>
                 <key>sourceSize</key>
@@ -709,11 +722,11 @@
             <key>tea1_txt_caozuo.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{610,542},{76,40}}</string>
+                <string>{{412,611},{76,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{76,40}}</string>
                 <key>sourceSize</key>
@@ -722,7 +735,7 @@
             <key>tea1_txt_cpgn.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,332},{150,40}}</string>
+                <string>{{843,364},{150,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -735,7 +748,7 @@
             <key>tea1_txt_cpxq.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{501,814},{151,40}}</string>
+                <string>{{567,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -748,7 +761,7 @@
             <key>tea1_txt_csql.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{459,814},{151,40}}</string>
+                <string>{{525,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -761,11 +774,11 @@
             <key>tea1_txt_dfzcy.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{610,261},{147,33}}</string>
+                <string>{{658,686},{147,33}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{147,33}}</string>
                 <key>sourceSize</key>
@@ -774,11 +787,11 @@
             <key>tea1_txt_dyqyq.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{381,731},{186,40}}</string>
+                <string>{{700,406},{186,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{186,40}}</string>
                 <key>sourceSize</key>
@@ -787,11 +800,11 @@
             <key>tea1_txt_fjzt.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{444,967},{151,40}}</string>
+                <string>{{483,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{151,40}}</string>
                 <key>sourceSize</key>
@@ -800,11 +813,11 @@
             <key>tea1_txt_glid.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{585,842},{112,40}}</string>
+                <string>{{970,573},{112,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{112,40}}</string>
                 <key>sourceSize</key>
@@ -813,7 +826,7 @@
             <key>tea1_txt_grxx.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{417,814},{151,40}}</string>
+                <string>{{441,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -826,11 +839,11 @@
             <key>tea1_txt_gxdtz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{131,806},{187,40}}</string>
+                <string>{{821,280},{187,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{187,40}}</string>
                 <key>sourceSize</key>
@@ -839,7 +852,7 @@
             <key>tea1_txt_jifen.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{645,397},{104,55}}</string>
+                <string>{{213,612},{104,55}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -849,14 +862,27 @@
                 <key>sourceSize</key>
                 <string>{104,55}</string>
             </dict>
-            <key>tea1_txt_jsqyq.png</key>
+            <key>tea1_txt_jrpz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{173,806},{186,40}}</string>
+                <string>{{692,230},{150,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{150,40}}</string>
+                <key>sourceSize</key>
+                <string>{150,40}</string>
+            </dict>
+            <key>tea1_txt_jsqyq.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{821,322},{186,40}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{186,40}}</string>
                 <key>sourceSize</key>
@@ -865,7 +891,7 @@
             <key>tea1_txt_jsxq.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{375,814},{151,40}}</string>
+                <string>{{399,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -878,7 +904,7 @@
             <key>tea1_txt_ksks.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{46,764},{152,40}}</string>
+                <string>{{843,2},{152,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -891,7 +917,7 @@
             <key>tea1_txt_mmdl.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{333,814},{151,40}}</string>
+                <string>{{357,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -904,11 +930,11 @@
             <key>tea1_txt_mmsz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,290},{150,40}}</string>
+                <string>{{650,230},{150,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{150,40}}</string>
                 <key>sourceSize</key>
@@ -917,11 +943,11 @@
             <key>tea1_txt_qyqsz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{614,84},{135,29}}</string>
+                <string>{{412,689},{135,29}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{135,29}}</string>
                 <key>sourceSize</key>
@@ -930,7 +956,7 @@
             <key>tea1_txt_sousuo.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{337,230},{42,43}}</string>
+                <string>{{734,362},{42,43}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -943,11 +969,11 @@
             <key>tea1_txt_szjjx.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{46,806},{189,40}}</string>
+                <string>{{821,44},{189,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{189,40}}</string>
                 <key>sourceSize</key>
@@ -956,7 +982,7 @@
             <key>tea1_txt_szsc.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,498},{150,39}}</string>
+                <string>{{862,447},{150,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -969,7 +995,7 @@
             <key>tea1_txt_tjmx.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,728},{149,41}}</string>
+                <string>{{862,488},{149,41}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -982,11 +1008,11 @@
             <key>tea1_txt_tzxy.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{368,773},{151,39}}</string>
+                <string>{{609,230},{151,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{151,39}}</string>
                 <key>sourceSize</key>
@@ -995,11 +1021,11 @@
             <key>tea1_txt_tzxzmd.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{381,612},{223,41}}</string>
+                <string>{{720,2},{223,41}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{223,41}}</string>
                 <key>sourceSize</key>
@@ -1008,11 +1034,11 @@
             <key>tea1_txt_wxts.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,457},{150,39}}</string>
+                <string>{{821,447},{150,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{150,39}}</string>
                 <key>sourceSize</key>
@@ -1021,11 +1047,11 @@
             <key>tea1_txt_xgbz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{291,967},{151,40}}</string>
+                <string>{{315,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{151,40}}</string>
                 <key>sourceSize</key>
@@ -1034,7 +1060,7 @@
             <key>tea1_txt_xyjl.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,416},{150,39}}</string>
+                <string>{{843,406},{150,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1047,7 +1073,7 @@
             <key>tea1_txt_xzdz.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{291,814},{151,40}}</string>
+                <string>{{273,230},{151,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1060,11 +1086,11 @@
             <key>tea1_txt_xzsj.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{543,811},{148,40}}</string>
+                <string>{{862,531},{148,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{148,40}}</string>
                 <key>sourceSize</key>
@@ -1073,11 +1099,11 @@
             <key>tea1_txt_xzxd.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{610,410},{119,33}}</string>
+                <string>{{807,686},{119,33}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{119,33}}</string>
                 <key>sourceSize</key>
@@ -1086,11 +1112,11 @@
             <key>tea1_txt_yacs.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{215,771},{151,41}}</string>
+                <string>{{230,230},{151,41}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{151,41}}</string>
                 <key>sourceSize</key>
@@ -1099,7 +1125,7 @@
             <key>tea1_wenhao.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{337,93},{46,46}}</string>
+                <string>{{93,337},{46,46}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1112,7 +1138,7 @@
             <key>tea1_xiala.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{521,773},{36,36}}</string>
+                <string>{{192,230},{36,36}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1130,9 +1156,9 @@
             <key>realTextureFileName</key>
             <string>tea1.png</string>
             <key>size</key>
-            <string>{706,1010}</string>
+            <string>{1017,721}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:6972bec511c516fcc4aa7cf235026290$</string>
+            <string>$TexturePacker:SmartUpdate:c275f6f2fcacefe9f3b6b992f96f39f5$</string>
             <key>textureFileName</key>
             <string>tea1.png</string>
         </dict>
