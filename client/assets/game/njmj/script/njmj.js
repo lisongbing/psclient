@@ -394,8 +394,6 @@ cc.Class({
         // 提示文字
         this.Node_Bg_Tips = cc.find("Node_Bg_Tips", r);
         this.Node_Bg_Tips.active = true;
-        // 提示地址
-        this.Sprite_Area = cc.find("Node_Bg_Tips/Sprite_Area", r).getComponent(cc.Sprite);
 
         // 显示碰杠
         this.Node_PengGang = cc.find("Node_PengGang", r);
@@ -529,7 +527,6 @@ cc.Class({
     },
     initAreaDatas: function () {
         let ri = this.gameMgr.roomInfo;
-        this.Sprite_Area.spriteFrame = this.comtxtAtlas2.getSpriteFrame('com_imgfi_dq' + cc.g.areaInfo[ri.origin].id);
         this.initPaiCount();
     },
     initPaiCount: function () {
@@ -702,6 +699,8 @@ cc.Class({
         this.resetDatas();
 
         cc.g.hallMgr.inGameMenu.upteagold();
+
+        this.upGamesCom();
         
         let ri = this.gameMgr.roomInfo;
         // 更新局数

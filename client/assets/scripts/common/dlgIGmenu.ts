@@ -53,6 +53,11 @@ export default class NewClass extends cc.Component {
     // 
     onBtnSet (event, customEventData) {
         // @ts-ignore
+        // cc.g.networkMgr.close(true);
+        // cc.game.restart();
+        // return;
+
+        // @ts-ignore
         cc.g.utils.btnShake();
 
         // @ts-ignore

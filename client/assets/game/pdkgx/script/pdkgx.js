@@ -172,8 +172,6 @@ cc.Class({
 
         // 第一次空闲的提示
         this.Node_gmfreetip = cc.find("Node_gmfreetip", r);
-        this.Node_gmftdiqu = cc.find("Node_gmfreetip/New Node/Sprite_area", r).getComponent(cc.Sprite);
-        this.Node_gmftdiqu.node.active = false;
         
         // 第一次空闲的一些按钮
         this.Node_gmfreeBtns = cc.find("Node_gmfreeBtns", r);
@@ -357,17 +355,13 @@ cc.Class({
 
         cc.g.hallMgr.inGameMenu.upteagold();
 
+        this.upGamesCom();
+
         let ri = this.pGame.roomInfo;
 
         // 准备按钮
         this.Node_gmfreeBtns.active = true
         this.ButtonReady.active = (ri.status == DEF.RMSTA.Free.v) && (! this.pGame.uidPlayers[this.pGame.selfUID].isReady);
-        // if (cc.g.areaInfo[ri.origin]) {
-        //     this.Node_gmftdiqu.spriteFrame = cc.g.atlas.com0.getSpriteFrame('com_imgfi_dq'+cc.g.areaInfo[ri.origin].id);
-        //     this.Node_gmftdiqu.node.active = true;
-        // } else {
-        //     this.Node_gmftdiqu.node.active = false;
-        // }
 
 
         this.Button_qyqyq.active = ri.clubId > 0;

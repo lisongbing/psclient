@@ -36,20 +36,20 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 260,
-      "height": 100
+      "width": 313,
+      "height": 104
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 1
+      "y": 0.5
     },
     "_trs": {
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
         0,
-        0,
+        -52,
         0,
         0,
         0,
@@ -115,20 +115,20 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 260,
-      "height": 100
+      "width": 313,
+      "height": 104
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 1
+      "y": 0
     },
     "_trs": {
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
         0,
-        0,
+        -52,
         0,
         0,
         0,
@@ -179,8 +179,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 255.5,
-      "height": 95.4
+      "width": 313,
+      "height": 104
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -191,8 +191,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        129.66,
-        -49.734,
+        155.4,
+        51.9,
         0,
         0,
         0,
@@ -232,7 +232,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "9aeb1c3f-eff7-40a1-8dd6-8c7123b13ca5"
+      "__uuid__": "6f01d806-1102-4cce-93e2-e44f2bb3a6a9"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -300,8 +300,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        48.708,
-        -51.234,
+        47.234,
+        59.4,
         0,
         0,
         0,
@@ -407,8 +407,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        64.288,
-        -74.809,
+        47.702,
+        25.505000000000003,
         0,
         0,
         0,
@@ -497,15 +497,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 101,
-      "g": 59,
-      "b": 45,
+      "r": 226,
+      "g": 201,
+      "b": 175,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 84,
-      "height": 37.8
+      "width": 75,
+      "height": 31.5
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -516,8 +516,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        89.563,
-        -34.312,
+        99.717,
+        74.346,
         0,
         0,
         0,
@@ -556,10 +556,10 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "名字啧",
-    "_N$string": "名字啧",
-    "_fontSize": 28,
-    "_lineHeight": 30,
+    "_string": "哎咿呀",
+    "_N$string": "哎咿呀",
+    "_fontSize": 25,
+    "_lineHeight": 25,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -605,15 +605,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 101,
-      "g": 59,
-      "b": 45,
+      "r": 226,
+      "g": 201,
+      "b": 175,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 93.43,
-      "height": 37.8
+      "width": 83.42,
+      "height": 31.5
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -624,8 +624,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        89.563,
-        -69.268,
+        98.659,
+        41.504000000000005,
         0,
         0,
         0,
@@ -664,10 +664,10 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "123565",
-    "_N$string": "123565",
-    "_fontSize": 28,
-    "_lineHeight": 30,
+    "_string": "939589",
+    "_N$string": "939589",
+    "_fontSize": 25,
+    "_lineHeight": 25,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -736,8 +736,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        227.062,
-        -18.658,
+        278.45,
+        89.028,
         0,
         0,
         0,
@@ -852,9 +852,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 247,
-      "g": 104,
-      "b": 77,
+      "r": 255,
+      "g": 226,
+      "b": 34,
       "a": 255
     },
     "_contentSize": {

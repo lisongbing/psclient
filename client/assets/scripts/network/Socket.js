@@ -246,7 +246,7 @@ Socket.prototype = {
         }
     },
 
-    closeSocketTwo() {
+    closeSocketTwo(iscls) {
         if(this.ws == null) {
             return;
         }
@@ -256,6 +256,10 @@ Socket.prototype = {
         this.cbQueue = {};
         this.endHeart();
         this.needRelogin = true
+
+        if (iscls) {
+            instance = null;
+        }
     },
 
     showWait() {
