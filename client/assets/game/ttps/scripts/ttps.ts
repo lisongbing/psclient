@@ -203,6 +203,12 @@ export default class TTPS extends gameBaselib.gameBase {
         this.gameMgr.xiazhu(parseInt(customEventData));
     }
 
+    onButtonSitDown(e:cc.Event.EventTouch,customEventData:string){
+        cc.log(this.dbgstr('坐下 onButtonSitDown'),e,customEventData);
+        this.gameMgr.audio.btnEnter();
+        this.gameMgr.sitDown();
+    }
+
     onDestroy(){
         this.gameMgr.gameScript = null;
         this.playersScript = null;

@@ -87,7 +87,11 @@ export default class TeaJrcj extends cc.Component {
         this.clickType = clickType;
         this.doRemoveAllItems();
         let dataArr = item.playerList
-
+        if (dataArr && dataArr.length && item.gameType == GMID.TTPS){
+            this.node.getChildByName('Button').getChildByName('WatchButton').active = true;
+        }else{
+            this.node.getChildByName('Button').getChildByName('WatchButton').active = false;
+        }
         if (item.isStart) {
             this.jieSanButton.node.active = true;
 
@@ -175,7 +179,7 @@ export default class TeaJrcj extends cc.Component {
 
     }
 
-    doAddGame() {
+    doAddGame(e:cc.Event.EventTouch,custom:string) {
         cc.dlog('加入游戏...')
         this.doClosePop()
         // @ts-ignore
@@ -183,7 +187,7 @@ export default class TeaJrcj extends cc.Component {
         if (this.clickType == 1) {
             TeaClass.instance.doRealEnterTeaHall(this.saveItem, 0);
         } else if (this.clickType == 2) {
-            TeaClass.instance.doRealEnterGameHall(this.saveItem);
+            TeaClass.instance.doRealEnterGameHall(this.saveItem,custom);
         }
     }
 

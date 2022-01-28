@@ -2182,7 +2182,7 @@ export default class TeaClass extends cc.Component {
         }
     }
 
-    doRealEnterGameHall(item: any) {
+    doRealEnterGameHall(item: any,custom:string) {
         cc.dlog('doRealEnterGameHall-->' + JSON.stringify(item))
         // this.getTeaJrcjPopPreNode().active = false;
         // 暂时屏蔽
@@ -2197,10 +2197,10 @@ export default class TeaClass extends cc.Component {
         // } else {
         //     this.goToGame(item);
         // }
-        this.goToGame(item);
+        this.goToGame(item,custom);
     }
 
-    goToGame(item: any) {
+    goToGame(item: any,custom:string) {
         cc.dlog('goToGame');
 
         let f = ()=>{
@@ -2219,7 +2219,7 @@ export default class TeaClass extends cc.Component {
                 cc.g.hallMgr.joinTeaHouse(this.teaHouseId, item.floor, item.deskNo, true,  (resp)=>{
                     // @ts-ignore
                     cc.dlog('joinTeaHouse', resp)
-                });
+                },custom);
             } else {
                 let Canvas = cc.director.getScene().getChildByName('Canvas');
                 // @ts-ignore
@@ -2244,7 +2244,7 @@ export default class TeaClass extends cc.Component {
                     cc.g.hallMgr.joinTeaHouse(this.teaHouseId, item.floor, item.deskNo, true,  (resp)=>{
                         // @ts-ignore
                         cc.dlog('joinTeaHouse', resp)
-                    });
+                    },custom);
                 });
             }
         }

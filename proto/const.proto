@@ -105,7 +105,8 @@ enum PROTO {
 	NOTIFY_LS_PDK_PLAYER_RESULT_LIST = 1042;//乐山跑的快玩家结果ntf
 	NOTIFY_GX_PDK_PLAYER_RESULT_LIST = 1043;//珙县的快玩家结果ntf
 	NOTIFY_TTPS_END_RESULT_LIST = 1044;//拼十玩家结果ntf
-
+	SITDOWN_ROOM     = 1045; //坐下
+	WATCHER_QUIT_ROOM = 1046;//旁观者退出房间
 
 	CREATE_TEA_HOUSE = 2201;//创建茶馆
 	APPLY_TEA_HOUSE  = 2202;//申请加入茶馆
@@ -250,6 +251,7 @@ enum PROTO {
 	STRONGBOX_GET_GOLD=2340;//(茶馆金币场)茶馆保险箱--查看余额
 	STRONGBOX_WITHDRAW=2341;//(茶馆金币场)茶馆保险箱--提取收益
 	STRONGBOX_INCOME_LIST=2342;//(茶馆金币场)茶馆保险箱--收益记录
+	TEA_HOUSE_MEMBER_SET_CORDON=2343;//设置成员警戒线
 
 	KICK_GAME = 2401;   //踢出游戏(服务端使用,客户请跳过)
 	FEN_BAO=2402;//拉取分包
@@ -484,6 +486,16 @@ enum ERROR{
 	STRONGBOX_APP_KEY_NOT_RIGHT=1427;//密码不正确(保险箱)
 	STRONGBOX_GOLD_NOT_ENOUGH=1428;//收益不足(保险箱)
 	TALK_TOO_FAST=1429;//说话太快请稍后再试
+	LOGIN_BUSY=1430;//登陆繁忙,请稍后再试
+	LOGIN_REPEAT=1431;//重复登陆
+	LOGIN_FULL=1432;//登陆人数已满
+	LOGIN_NEED_QUEUE=1433;//请排队登陆
+	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK1= 1434;//队长信誉积分不足请联系上级
+	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK2= 1435;//组长信誉积分不足请联系上级
+	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK3= 1436;//小组长信誉积分不足请联系上级
+	CREDIT_NOT_ENOUGH_NOT_JOIN_DESK4= 1437;//推荐人信誉积分不足请联系上级
+	YOUR_CREDIT_NOT_ENOUGH_NOT_JOIN_DESK= 1438;//自己信誉积分不足请联系上级
+
 }
 
 
