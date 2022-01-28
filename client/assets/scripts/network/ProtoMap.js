@@ -139,6 +139,12 @@ module.exports = {
 			1044: {
 				resp:PB.TTPSEndResultListNtf,
 			},
+			1045: {
+				resp:PB.SitDownRoomResp,
+			},
+			1046: {
+				resp:PB.WatcherQuitRoom,
+			},
 			2000: {
 				req:PB.HeartReq,
 				resp:PB.HeartResp,

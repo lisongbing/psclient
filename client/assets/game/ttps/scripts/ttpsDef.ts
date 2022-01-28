@@ -181,9 +181,14 @@ export default class TTPSDef{
             v: 1 << 15,
             s: '跳过',
         },
-        OP_RS:{// 100
+        OP_RS:{// 
             v: 1 << 16,
             s: '认输',
+        },
+
+        OP_SitDown:{// 
+            v: 1 << 17,
+            s: '坐下',
         },
     };
     

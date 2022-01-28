@@ -243,6 +243,18 @@ export default class TTPSMgr extends gameBaseMgrlib.gameBaseMgr {
         cc.g.networkMgr.addHandler(PB.PROTO.GET_ROOM_IFON, (resp) => {
             this.gameScript.startLoadAllView();
         });
+
+        //坐下
+        cc.g.networkMgr.addHandler(PB.PROTO.SITDOWN_ROOM, (resp) => {
+            this.init(resp.room,resp.one,resp.others);
+            this.gameScript.startLoadAllView();
+        });
+
+        //旁观者离开房间
+        cc.g.networkMgr.addHandler(PB.PROTO.WATCHER_QUIT_ROOM, (resp) => {
+            cc.log("旁观自己玩家离开房间");
+            cc.g.hallMgr.backToHall();
+        });
     }
 
     // 界面加载完成
@@ -395,6 +407,11 @@ export default class TTPSMgr extends gameBaseMgrlib.gameBaseMgr {
     //开牌
     kaiPaiOp(cards:number[]) {
         this.sendOp(TTPSDef.PlayerOpt.OP_KP.v, cards);
+    }
+
+     //坐下
+    sitDown(){
+        this.sendOp(TTPSDef.PlayerOpt.OP_SitDown.v, []);
     }
 
     // 更新玩家操作

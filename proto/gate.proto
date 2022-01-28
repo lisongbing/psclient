@@ -30,6 +30,7 @@ message LoginReq{
 	int64  inviter = 9;
 	string os      = 10;//手机的操作系统
 	string clientVersion = 11;//客户端的版本
+	bool  isReconnect =12 ;//是否是断线重连(true 断线重连,false 正常登陆)
 }
 
 //@api:2002,@type:resp 
@@ -761,6 +762,8 @@ message  MemberListTeaHouseResp{
         string   groupName=6;//组名称(队编号_组编号_小组编号_推荐人编号)
 	repeated TeaHouseUser list=7;//成员列表
 	repeated TeamNoInfo   teamNolist=8;//战队编号列表
+	int32    totalPeople  =9;//总人数
+	int32    totalOnline  =10;//总在线人数
 }
 
 //茶馆最近出入单条记录
@@ -1001,12 +1004,13 @@ message WinnerRoomRule {
 }
 //金币场包间规则
 message GoldMatchRoomRule {
-        int64  joinGold=1;//加入牌桌金币
+	int64  joinGold=1;//加入牌桌金币
 	int64  disbandGold=2;//解散牌桌金币
-	int32  exitType=4;//剩余金币不足类型 1自动解散 2继续游戏
-	int32  lotteryType=5;//抽奖类型 1不抽奖 2所有人抽奖 3大赢家抽奖
-	int64  consumeGold=6;//所有人抽奖消耗金币
-	repeated WinnerRoomRule winnerRuleList = 7; //大赢家抽奖规则
+	int32  exitType=3;//剩余金币不足类型 1自动解散 2继续游戏
+	int32  lotteryType=4;//抽奖类型 1不抽奖 2所有人抽奖 3大赢家抽奖
+	int64  consumeGold=5;//所有人抽奖消耗金币
+	repeated WinnerRoomRule winnerRuleList = 6; //大赢家抽奖规则
+	int64  ticket=7;//门票
 }
 //创建茶馆包间(添加玩法)
 //@api:2235,@type:req
@@ -1198,7 +1202,7 @@ message JoinTeaHouseDeskReq{
 	int32 floor = 2;//楼层号(1-50)
 	int32 deskNo = 3;//桌子序号(1-20)
 	bool openGps = 4;//是否开启GPS
-	
+	bool isWatch = 5;//是否是观战
 }
 
 //解散桌子
@@ -1722,6 +1726,16 @@ message GoldMatchTeamInfo{
 	int64   credit=6;//信誉值
 	bool    power=7;//是否有权操作
 	int64   cordon=8;//警戒线
+	int64   gold=9;//积分
+	float   contributeRate=10;//反比(需要前端四舍五入)
+	int64   tdayDraw=11;//今日抽奖(整队)
+	int64   tdayActualDraw=12;//今日实际抽奖(整队)
+	int64   tdayPresonDraw=13;//今日个人抽奖(整队)
+	int64   ydayDraw=14;//昨日抽奖(整队)
+	int64   ydayActualDraw=15;//昨日实际抽奖(整队)
+	int64   ydayPresonDraw=16;//昨日个人抽奖(整队)
+	int64   teamGold=17;//战队积分
+
 }
 
 //金币场战队信誉
@@ -2340,6 +2354,15 @@ message  StrongboxIncomeListResp{
 	repeated StrongboxIncomeLogInfo list=8;//收益记录列表
 }
 
+//亲友圈设置成员警戒线
+//@api:2343,@type:req
+message  TeaHouseMemberSetCordonReq{
+	int32   teaHouseId = 1;//茶馆Id
+	int64   memberId =2 ;//成员Id
+	int64   cordon =3 ;//警戒线
+
+}
+
 //踢出游戏
 //@api:2401,@type:req
 message KickGameReq{
@@ -2668,6 +2691,7 @@ message MultipleFightGradeInfo{
 message LotteryInfo{
      int64 userId=1;//玩家ID
      int64 lotteryScore=2;//抽奖分数
+     int64 ticket=3;//门票
 }
 //抽奖结果
 message LotteryResult{
@@ -2845,6 +2869,8 @@ message RoomInfo {
 	GoldMatchRoomRule goldMatchRoomRule = 35; //金币场的规则
 	repeated int64 autoCountDown = 36;     //托管倒计时时间
 	ExpendSpeciThing expendSpeciThing = 41;//特定字段
+	repeated int64   randomZjs = 42;//随机庄家的所有人
+	int32 watchDeskId     = 43;//观战的桌子号
 }
 
 //跑得快roomInfo
@@ -2896,6 +2922,9 @@ message Player {
 	int64  gold=35;//茶馆金币场金币
 	bool isAutoHu = 36;//是否自动胡牌
 	int32 outLineTime = 37;//离线时间
+	int32 lastTZNum   = 38;//上次推注局数
+	int32 lastWinValue = 39;//上次赢的钱
+	bool isWatch     = 40;   //是否是观战
 }
 
 //gps信息
@@ -2982,6 +3011,13 @@ message JoinRoomResp {
 
 }
 
+//@api:1045,@type:resp
+message SitDownRoomResp {
+	RoomInfo room = 1;
+	Player one = 2;
+	repeated Player others = 3;
+}
+
 //获取房间以及房间玩家的数据
 //@api:1020,@type:req
 message GetRoomDataReq {
@@ -3033,6 +3069,13 @@ message JoinRoomNtf {
 // 有人离开房间
 //@api:1014,@type:resp
 message QuitRoomNtf {
+	int64 uid = 1;
+	ERROR error = 2;
+}
+
+//观战者离开房间
+//@api:1046,@type:resp
+message WatcherQuitRoom {
 	int64 uid = 1;
 	ERROR error = 2;
 }
@@ -3440,6 +3483,9 @@ message CircleTeaHouseRecord{
 	string fractionStr  =14;   //分数 
 	repeated OnePersonFight  totalFight=15;   //总战绩
 	repeated string replayIds = 16;//回放的唯一ID
+	int32 endRes   =17;       //房间解散原因
+	repeated  int64  uidGolds=18; //玩家入场金币
+	MyThRecordRoomInfo roomInfo = 19;//房间金币变化详情
        
 }
 
@@ -3583,7 +3629,21 @@ message FGUser{
 message FGDetail{
        repeated int64 fight   =4;     //依次是第1人第2人的战绩
 }
-
+//我的战绩金币详情
+message MyThRecordGold{
+	int64 uid     =1;   //玩家id
+	string name  =2;   //玩家昵称
+	string icon   =3; //玩家头像地址
+	int64 startGold =4; //起始金币
+	int64 winGold =5; //输赢金币
+}
+//我的战绩房间金币详情
+message MyThRecordRoomInfo{
+	int32 roomId     =1;   //房价id
+	int64 startTime  =2;//时间
+	string dissolveReason  =3;   //房间解散原因
+	repeated MyThRecordGold  list=5;   //玩家金币详情
+}
 //我的茶馆战绩
 message MyThRecord{
 	int64 uid     =1;                   //玩家id
@@ -3601,6 +3661,7 @@ message MyThRecord{
 	int32 gameType=13;//游戏类型
 	repeated OnePersonFight  totalFight=14;   //总战绩
 	repeated string replayIds = 15;//回放的唯一ID
+	MyThRecordRoomInfo roomInfo = 16;//房间金币变化详情
 }
 //茶馆战绩请求实体
 //@api:2272,@type:req

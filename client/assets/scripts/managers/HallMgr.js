@@ -2282,12 +2282,16 @@ cc.Class({
             }
         });
     },
-    joinTeaHouse: function (teaHouseId, floor, deskNo, openGps, callback) {
+    joinTeaHouse: function (teaHouseId, floor, deskNo, openGps, callback,isWatch) {
         let req = pbHelper.newReq(PB.PROTO.JOIN_TEA_HOUSE_DESK);
         req.teaHouseId = teaHouseId;
         req.floor = floor;
         req.deskNo = deskNo;
         req.openGps = openGps;
+        if (isWatch){
+            req.isWatch = true;
+        }
+        
         cc.g.networkMgr.send(PB.PROTO.JOIN_TEA_HOUSE_DESK, req, (resp)=>{
             // @ts-ignore
             if (!resp.err || resp.err == PB.ERROR.OK) {
