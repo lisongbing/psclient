@@ -176,6 +176,7 @@ cc.Class({
 
                     if (i==1) {
                         this.votetime = ri.applyStatus[0];
+                        this.gm.askJiesanUid = this.d.uid;
                     }
                     
                     break;
@@ -508,6 +509,8 @@ cc.Class({
         this.pg.upOperate();
     },
     onOutCard: function (va, isClt) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.Button_chupai, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
 
         let v = [];
@@ -591,6 +594,8 @@ cc.Class({
 
     // 过
     pass: function (va) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.Button_pass, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
 
         let v = [];

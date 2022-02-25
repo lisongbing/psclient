@@ -112,7 +112,14 @@ export default class TeaZdLbShuJu extends cc.Component {
         name.string = cc.g.utils.getFormatName(pItem.name, 5*2) //pItem.name;//
 
         let nameId = this.ID_Label;
-        nameId.string = pItem.userId
+        // 4	成员全部可见，不能把ID显示出来（圈主和超管能看到所有id,有职位的玩家只能看到自己这条链id）
+        if (TeaClass.instance.position == 71 || TeaClass.instance.position == 61) {
+            nameId.string = pItem.userId
+        } else if (pItem.showUserId) {
+            nameId.string = pItem.userId
+        } else {
+            nameId.string = ''
+        }
 
         let nameGroup = this.Label_Group;
         // 队-组-小组-推荐

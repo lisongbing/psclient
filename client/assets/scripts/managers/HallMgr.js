@@ -513,6 +513,7 @@ cc.Class({
 
     //获取东东列表 
     getActivityList: function () {
+        cc.log('getActivityList');
         let req = pbHelper.newReq(PB.PROTO.GET_ACTION_LIST);
         cc.g.networkMgr.send(PB.PROTO.GET_ACTION_LIST, req);
     },

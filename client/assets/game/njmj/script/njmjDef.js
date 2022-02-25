@@ -22,7 +22,7 @@ MajhDef.SendCardPos = [
     {
         moveBy: {
             x: 0,
-            y: 40
+            y: 0,//40
         },
         moveTo: {
             x: 79,

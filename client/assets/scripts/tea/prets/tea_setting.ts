@@ -82,6 +82,7 @@ export default class NewClass extends cc.Component {
             if (e=='jscs') {
                 r[e + 'tog3'] = cc.find('tc/toggle3', n).getComponent(cc.Toggle);
                 r[e + 'tog4'] = cc.find('tc/toggle4', n).getComponent(cc.Toggle);
+                r[e + 'tog5'] = cc.find('tc/toggle5', n).getComponent(cc.Toggle);
             }
         });
 
@@ -245,12 +246,14 @@ export default class NewClass extends cc.Component {
                 //
                 if (sd.disbandNum==8888) {
                     r['jscs' + 'tog1'].check();
-                } else if (sd.disbandNum==2) {
+                } else if (sd.disbandNum==0) {
                     r['jscs' + 'tog2'].check();
-                } else if (sd.disbandNum==3) {
+                } else if (sd.disbandNum==2) {
                     r['jscs' + 'tog3'].check();
-                } else if (sd.disbandNum==5) {
+                } else if (sd.disbandNum==3) {
                     r['jscs' + 'tog4'].check();
+                } else if (sd.disbandNum==5) {
+                    r['jscs' + 'tog5'].check();
                 }
         
                 // 管理权限
@@ -499,10 +502,12 @@ export default class NewClass extends cc.Component {
             if (i==0) {
                 let jsnum = 8888;
                 if (r[nd[i] + 'tog2'].isChecked) {
-                    jsnum = 2;
+                    jsnum = 0;
                 } else if (r[nd[i] + 'tog3'].isChecked) {
-                    jsnum = 3;
+                    jsnum = 2;
                 } else if (r[nd[i] + 'tog4'].isChecked) {
+                    jsnum = 3;
+                } else if (r[nd[i] + 'tog5'].isChecked) {
                     jsnum = 5;
                 }
                 // @ts-ignore

@@ -1,6 +1,6 @@
 
 
-let dir = 'ddz5' + '/';
+let dir = 'pdkgx' + '/';
 
 let sex = ['', 'nan', 'nv'];
 
@@ -102,8 +102,9 @@ cc.Class({
             SAN2:6, //三带二
             FJ:7,   //飞机
             FJCB:8,  //飞机带翅膀
-            ZD:9,  //炸弹
-            AAA:10, //三A炸
+            SID3:9,  //四带三
+            ZD:10,  //炸弹
+            AAA:11, //三A炸
         };
 
         // 单牌
@@ -124,6 +125,12 @@ cc.Class({
             return;
         }
 
+        // 
+        if (type == CT.ZD) {
+            cc.g.audioMgr.playSFX(codesType('si' + values[0], sex));
+            return;
+        }
+
         // 其他
         if (!this.tpName) {
             this.tpName = {
@@ -133,15 +140,17 @@ cc.Class({
                 6:['three2','three2',],
                 7:['Plane1','Plane2',],
                 8:['Plane1','Plane2',],
-                9:['bomb1','bomb2',],
+                9:['4d3','4d3',],
+                //9:['bomb1','bomb2',],
                 10:['bomb1','bomb2',],
+                11:['bomb1','bomb2',],
             };
         }
 
         if (this.tpName[type]) {
             cc.g.audioMgr.playSFX(codesType(this.tpName[type][0], sex));
         } else {
-            cc.error('提醒！ 没有找到牌型对应的音效', type);
+            cc.warn('提醒！ 没有找到牌型对应的音效', type);
         }
     },
 });

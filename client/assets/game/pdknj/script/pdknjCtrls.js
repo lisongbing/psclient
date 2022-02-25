@@ -440,9 +440,6 @@ let LocSettleFinalView = cc.Class({
     //
     initView: function () {
         let r = this.root;
-        
-        // // 地区
-        // this.Label_area = cc.find("Label_area", r).getComponent(cc.Label);
 
         // // 房间号
         // this.Label_roomID = cc.find("Label_roomID", r).getComponent(cc.Label);
@@ -534,6 +531,7 @@ let LocSettleFinalView = cc.Class({
         // // 总局数
         // this.Label_rouds.string = sd.num;
 
+        this.upInfo();
 
         // 调整滑动区域大小
         let pnum = sd.player.length;
@@ -545,6 +543,29 @@ let LocSettleFinalView = cc.Class({
         }
 
         this.upPlyaers();
+    },
+    upInfo: function () {
+        cc.log("upInfo")
+
+        let ri = GM.roomInfo;
+
+        let r = this.root;
+        
+        // 地区
+        let Node_ri = cc.find("Node_ri", r);
+        if (!Node_ri) {
+            return;
+        }
+
+        let Label_diqu = cc.find("Label_diqu", Node_ri).getComponent(cc.Label);
+        //Label_diqu.string = (GM.xiaojjs ? '珙县跑得快' : '珙县跑得快(中途解散)');
+        Label_diqu.string = '内江跑得快';
+
+        let Label_room = cc.find("Label_room", Node_ri).getComponent(cc.Label);
+        Label_room.string = `房间号:  ${ri.roomId}  局数: ${ri.curGameNum}/${ri.GameNum}`;
+
+        let Label_time = cc.find("Label_time", Node_ri).getComponent(cc.Label);
+        Label_time.string = cc.g.utils.getFormatTimeXXX(null, 'Y|.|M|.|D| |h|:|m|:|s|');
     },
 
     //
@@ -564,6 +585,13 @@ let LocSettleFinalView = cc.Class({
             // 大赢家
             cc.find("dyj", r).active = (d.winlose == sd.maxsco);
 
+            // 申请解散
+            let jiesan=cc.find("jiesan", r);
+            jiesan.active = false;
+            if (!GM.xiaojjs && GM.askJiesanUid) {
+                jiesan.active = eq64(GM.askJiesanUid, d.uid);
+            }
+            
             // 头像
             let Sprite_head = cc.find("head", r).getComponent(cc.Sprite);
             if (d.icon.length > 4) {
@@ -1323,6 +1351,8 @@ let LocPlayerView = cc.Class({
         // 离线图片
         this.Sprite_offline = cc.find("Sprite_offline", hr);
         this.Sprite_offline.active = false;
+        this.Sprite_offline.time = cc.find("Sprite_offline/bg/time", hr).getComponent(cc.Label);
+        this.Sprite_offline.time.string='0';
         // 剩余牌数背景
         this.Sprite_cardNumBg = cc.find("Sprite_cardNum", hr).getComponent(cc.Sprite);
         this.Sprite_cardNumBg.node.active = false;
@@ -1531,6 +1561,13 @@ let LocPlayerView = cc.Class({
             this.Label_cardNum.string = 0;
             this.optAnm.stop();
             this.warnAnm && this.warnAnm.stop();
+
+            if (this.offlineSch) {
+                this.Sprite_offline.active = false;
+                this.unschedule(this.offlineSch, this);
+                this.offlineSch = null;
+            }
+
             return;
         }
 
@@ -1798,7 +1835,7 @@ let LocPlayerView = cc.Class({
                 5:['sdai','xzha',],
                 6:['sdai','xzha',],
                 7:['sdai','xzha',],
-                8:['feiji','feiji',],
+                8:['sdai2','sdai2',],
                 9:['feiji','feiji',],
                 10:['feiji','feiji',],
                 11:['zd','zd',],
@@ -1814,13 +1851,14 @@ let LocPlayerView = cc.Class({
 
         GM.audio.pai(info.val, this.player.outType, this.player.d.sex);
 
-        if (this.player.outType==DEF.ComType.FJ || this.player.outType==DEF.ComType.FJCB) {
+        let ot = this.player.outType;
+        if (ot==DEF.ComType.FJ || ot==DEF.ComType.FJCB) {
             PG.comPubAnm('feij');
-        } else if (this.player.outType>=DEF.ComType.ZD) {
+        } else if (ot==DEF.ComType.ZD || ot==DEF.ComType.AAA) {
             PG.comPubAnm('zhadan');
-        } else if (this.player.outType==DEF.ComType.SHUN) {
+        } else if (ot==DEF.ComType.SHUN) {
             PG.comPubAnm('shunzi');
-        } else if (this.player.outType==DEF.ComType.LIAND) {
+        } else if (ot==DEF.ComType.LIAND) {
             PG.comPubAnm('liandui');
         }
 
@@ -1840,7 +1878,37 @@ let LocPlayerView = cc.Class({
             return;
         }
 
+        let tstr=()=>{
+            this.offlinetime = this.offlinetime||0;
+
+            let m = this.offlinetime/60;
+            let s = this.offlinetime%60;
+
+            m = Math.floor(m);
+
+            m = m>9 ? m : ('0'+m);
+            s = s>9 ? s : ('0'+s);
+
+            return `${m}:${s}`;
+        }
+
         this.Sprite_offline.active = !this.player.d.online;
+        this.offlinetime = this.player.d.outLineTime || 0;
+        this.Sprite_offline.time.string = tstr();
+
+        if (this.offlineSch) {
+            this.unschedule(this.offlineSch, this);
+            this.offlineSch = null;
+        }
+
+        if (this.Sprite_offline.active) {
+            this.offlineSch = ()=>{
+                ++this.offlinetime;
+                this.Sprite_offline.time.string = tstr();
+            };
+
+            this.schedule(this.offlineSch, 1);
+        }
     },
 
     // 开始游戏

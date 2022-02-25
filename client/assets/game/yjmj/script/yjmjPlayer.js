@@ -1012,6 +1012,7 @@ cc.Class({
     },
     //胡
     doHu: function (v) {
+        
         this.d.status = LG_Sta.WaitPlay.v;
         if (this.pg) {
             this.pg.clearTgTishi(this.d.uid);
@@ -1043,6 +1044,8 @@ cc.Class({
         }
     },
     guo: function (v) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.Button_Guo, ()=>this.pg.Node_HuTiGangView);
+
         if (this.pg) {
             this.pg.clearTgTishi(this.d.uid);
         }

@@ -1,6 +1,6 @@
 
 
-let dir = 'hzmj' + '/';
+let dir = 'mjnj' + '/';
 
 let sex = ['', 'nan', 'nv'];
 
@@ -101,6 +101,14 @@ cc.Class({
     // 发牌
     faPai: function () {
         cc.g.audioMgr.playSFX(sound('fapai'));
+    },
+    // 出牌
+    chupai: function () {
+        cc.g.audioMgr.playSFX(sound('chupai'));
+    },
+    // 点牌
+    dianpai: function () {
+        cc.g.audioMgr.playSFX(sound('dianpai'));
     },
 
     // 摆牌

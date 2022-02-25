@@ -38,7 +38,7 @@ cc.Class({
         // // 碰牌
         // this.gangCards = []
 
-        this.isAutoHu = false;
+        // this.isAutoHu = false;
 
         // 默认缺的牌
         this.queIndex = -1;
@@ -269,10 +269,10 @@ cc.Class({
         // 11 1 点炮 21 2点炮 31 3点炮
         this.huType = this.d.huType;
 
-        if (this.isSelf) {
-            // 自动胡牌
-            this.isAutoHu = this.d.isAutoHu
-        }
+        // if (this.isSelf) {
+        //     // 自动胡牌
+        //     this.isAutoHu = this.d.isAutoHu
+        // }
 
         // 可以的操作
         this.obks = null;
@@ -296,6 +296,7 @@ cc.Class({
 
                     if (i==1) {
                         this.votetime = ri.applyStatus[0];
+                        this.gm.askJiesanUid = this.d.uid;
                     }
 
                     break;
@@ -358,19 +359,13 @@ cc.Class({
         if ((this.gm != null) && (this.gm.gameScript != null) && (roomstatus > 2)) {
             this.gm.gameScript.doReciveReConnectPiao(this.view, this.piao);
         }
-
-        // if (this.isAutoHu) {
-        //     if ((this.gm != null) && (this.gm.gameScript != null)) {
-        //         this.gm.gameScript.doReconAutoHu();
+        //
+        // if ((this.gm != null) && (this.gm.gameScript != null)) {
+        //     let index = this.view.index
+        //     if (index == 0) {
+        //         this.gm.gameScript.doReconAutoHu(this.isAutoHu);
         //     }
         // }
-
-        if ((this.gm != null) && (this.gm.gameScript != null)) {
-            let index = this.view.index
-            if (index == 0) {
-                this.gm.gameScript.doReconAutoHu(this.isAutoHu);
-            }
-        }
     },
 
     // 关联视图
@@ -807,11 +802,11 @@ cc.Class({
                         if (this.pg.needCallBack) {
                             this.pg.checkDaPaiStatus();
                         }
-                        if (this.pg.isAutoHu) {
-                            if (this.pg.checkCanPlayMj()) {
-                                this.pg.doPlayMj(this.view, parseInt(v[0]));
-                            }
-                        }
+                        // if (this.pg.isAutoHu) {
+                        //     if (this.pg.checkCanPlayMj()) {
+                        //         this.pg.doPlayMj(this.view, parseInt(v[0]));
+                        //     }
+                        // }
 
                         if (this.pg.checkCanPlayMj()) {
                             this.pg.doPlayMj(this.view, parseInt(v[0]));

@@ -499,10 +499,10 @@ let MajhPlayerView = cc.Class({
     startSendCard(){
         this.handCardView.setData();
         this.handCardView.upHandCardPosition();
-        if (!this.pPage.isbpm) {
-            this.handCardView.setAniHcGroups();
-            this.handCardView.animatSendCard();
-        }
+        // if (!this.pPage.isbpm) {
+        //     this.handCardView.setAniHcGroups();
+        //     this.handCardView.animatSendCard();
+        // }
         // this.handCardView.setAniHcGroups();
         // this.handCardView.animatSendCard();
         // this.handCardView.showSendCard();
@@ -1654,7 +1654,10 @@ let MajhHandCardView = cc.Class({
     // 点击
     onTouchstart: function (event) {
         let tg = this.touchInfo(event, 0);
-        if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay || this.pPage.isAutoHu) {
+        // if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay || this.pPage.isAutoHu) {
+        //     return
+        // }
+        if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay) {
             return
         }
 
@@ -1671,7 +1674,10 @@ let MajhHandCardView = cc.Class({
     // 移动
     onTouchmove: function (event) {
         let tg = this.touchInfo(event, 1);
-        if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay || this.pPage.isAutoHu) {
+        // if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay || this.pPage.isAutoHu) {
+        //     return
+        // }
+        if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay) {
             return
         }
 
@@ -1719,7 +1725,10 @@ let MajhHandCardView = cc.Class({
     },
     jugDaiPai: function (event) {
         let tg = this.touchInfo(event, 3);
-        if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay || this.pPage.isAutoHu) {
+        // if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay || this.pPage.isAutoHu) {
+        //     return
+        // }
+        if (parseInt(tg.code) == 50 || tg.zezao || this.pPage.isAutoPlay) {
             return
         }
 
@@ -1756,6 +1765,11 @@ let MajhHandCardView = cc.Class({
             tg.uMoved = false;
             tg.zIndex = tg.ozIndex;
             // this.touchMoveCode = null;
+
+            if (!tg.isSelected || tg.y<=0) {
+                this.pPage.gameMgr.audio.dianpai();
+            }
+
             this.pPage.onClickQiPaiBtnClicked(tg)
         }
     }
@@ -3274,6 +3288,31 @@ let D2SettleFinalView = cc.Class({
         this.Button_backhall.on('touchend', this.backhall, this);
     },
 
+    upInfo: function () {
+        cc.log("upInfo")
+
+        let ri = this.pg.gameMgr.roomInfo;
+
+        let r = this.root;
+
+        // 地区
+        let Node_ri = cc.find("Node_ri", r);
+        if (!Node_ri) {
+            return;
+        }
+
+        Node_ri.active = true
+
+        let Label_diqu = cc.find("Label_diqu", Node_ri).getComponent(cc.Label);
+        Label_diqu.string = '内江麻将'//cc.g.areaInfo[ri.origin].name + '麻将';
+
+        let Label_room = cc.find("Label_room", Node_ri).getComponent(cc.Label);
+        Label_room.string = `房间号:  ${ri.roomId}  局数: ${ri.curGameNum}/${ri.GameNum}`;
+
+        let Label_time = cc.find("Label_time", Node_ri).getComponent(cc.Label);
+        Label_time.string = cc.g.utils.getFormatTimeXXX(null, 'Y|.|M|.|D| |h|:|m|:|s|');
+    },
+
     /* ------------------------------------------------------------------------------------------------------------ */
 
     //
@@ -3288,6 +3327,11 @@ let D2SettleFinalView = cc.Class({
         // 总局数
         this.Label_rouds.string = sd.num;
 
+        this.upInfo();
+
+        // 地区
+        // this.Label_diqu.string = (this.pg.gameMgr.xiaojjs ? '内江麻将' : '内江麻将(中途解散)');
+
         this.hboxPlayer = cc.find("Node_All_View/All_View_Layout", this.root);
         // this.hboxPlayer.removeAllChildren(true)
         let list = sd.list
@@ -3299,6 +3343,14 @@ let D2SettleFinalView = cc.Class({
                 // 大赢家
                 let Sprite_bigwin = cc.find("Sprite_bigwin", SpriteNode);
                 let Sprite_bg = cc.find("light", SpriteNode);
+
+                // 申请解散
+                let jiesan = cc.find("jiesan", SpriteNode);
+                jiesan.active = false;
+                if (!this.pg.gameMgr.xiaojjs && this.pg.gameMgr.askJiesanUid) {
+                    jiesan.active = eq64(this.pg.gameMgr.askJiesanUid, allPerResultItem.uid);
+                }
+
                 // 大赢家
                 // Sprite_bigwin.active = (allPerResultItem.winlose > 0) ? true : false
                 Sprite_bigwin.active = allPerResultItem.bigWin ? true : false
@@ -3336,7 +3388,6 @@ let D2SettleFinalView = cc.Class({
         
                     Sprite_head.spriteFrame = spriteFrame;
                 }
-
 
                 // // 头像
                 // if (pd.icon.length > 4) {

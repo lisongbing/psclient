@@ -198,6 +198,7 @@ cc.Class({
 
                     if (i==1) {
                         this.votetime = ri.applyStatus[0];
+                        this.gm.askJiesanUid = this.d.uid;
                     }
                     
                     break;

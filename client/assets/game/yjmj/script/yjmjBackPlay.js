@@ -54,7 +54,7 @@ let MJBackPlay = cc.Class({
         gm.bpfGetSpeed = ()=>this.speed;
 
         this.isPause = isPause;
-        this.interval = interval ? interval : 1.5;
+        this.interval = interval ? interval : 0.5;
         this.step = 0;
         this.speed = 1;
         this.msgQue = [];

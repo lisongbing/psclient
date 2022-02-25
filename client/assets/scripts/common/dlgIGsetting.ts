@@ -5,22 +5,37 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+
 let uping = false;
 
 const {ccclass, property} = cc._decorator;
 
+@ccclass('bgSpr')
+class bgSpr { 
+    @property(cc.SpriteFrame)
+    bg = null
+    @property(cc.String)
+    Id = ''
+}
+
 @ccclass
 export default class NewClass extends cc.Component {
 
-    @property([cc.SpriteFrame])
-    bg: cc.SpriteFrame[] = [];
+    @property([bgSpr])
+    bg: bgSpr[] = [];
 
-    togbg:any = [];
+    bgFrm:any = {};
+
+    togbg:any = {};
     togCfg:any = {};
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         let r = this.node;
+
+        for (let i = 0; i < this.bg.length; i++) {
+            this.bgFrm[this.bg[i].Id] = this.bg[i].bg;
+        }
 
         // 配置项
         let togn = ['sound','music','sfx','jietu','zhendong','daoju',];
@@ -33,8 +48,10 @@ export default class NewClass extends cc.Component {
         for (let i = 0; i < 6; i++) {
             let tog = cc.find('Toggle'+i, p).getComponent(cc.Toggle);
             tog.node.active = false;
-            this.togbg.push(tog);
+            this.togbg[i] = tog;
         }
+
+        this.togbg['a0'] = this.togbg['0'];
     }
 
     start () {
@@ -67,7 +84,9 @@ export default class NewClass extends cc.Component {
         (ison==1) ? this.togCfg['daoju'].check() : this.togCfg['daoju'].uncheck();
 
 
-        this.togbg.forEach(e => e.node.active = false);
+        for (const key in this.togbg) {
+            this.togbg[key].active = false
+        }
 
         // @ts-ignore
         let gmbg = cc.sys.localStorage.getItem(`${cc.g.hallMgr.curGameType}_deskbg`);
@@ -82,7 +101,11 @@ export default class NewClass extends cc.Component {
         }
         for (let i = 0; i < GMGrp.poker.length; i++) {
             if (GMGrp.poker[i] == cc.g.hallMgr.curGameType) {
-                gmbg = gmbg || '0';
+                let defpk = '0';
+                if (GMGrp.poker[i]==GMID.PDKNJ || GMGrp.poker[i]==GMID.PDKGX) {
+                    defpk = 'a0';
+                }
+                gmbg = gmbg || defpk;
                 this.togbg[0].node.active = true;
                 this.togbg[1].node.active = true;
                 this.togbg[2].node.active = true;
@@ -90,8 +113,9 @@ export default class NewClass extends cc.Component {
             }
         }
         for (let i = 0; i < GMGrp.zipai.length; i++) {
+            let defzp = '0';
             if (GMGrp.zipai[i] == cc.g.hallMgr.curGameType) {
-                gmbg = gmbg || '0';
+                gmbg = gmbg || defzp;
                 this.togbg[0].node.active = true;
                 this.togbg[1].node.active = true;
                 this.togbg[2].node.active = true;
@@ -99,7 +123,7 @@ export default class NewClass extends cc.Component {
             }
         }
 
-        gmbg = gmbg || 0;
+        gmbg = gmbg || '0';
         
         this.togbg[gmbg].check();
 
@@ -233,6 +257,14 @@ export default class NewClass extends cc.Component {
         cc.log('onTogBg', data);
 
         if (uping) return;
+
+        // @ts-ignore
+        let t = cc.g.hallMgr.curGameType;
+
+        // @ts-ignore
+        if (t==GMID.PDKNJ || t==GMID.PDKGX) {
+            data = 'a0';
+        }
 
         // @ts-ignore
         let gmbg = `${cc.g.hallMgr.curGameType}_deskbg`;

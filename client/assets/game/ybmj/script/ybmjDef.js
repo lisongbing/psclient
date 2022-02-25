@@ -48,10 +48,10 @@ MajhDef.SendCardPos = [
     {
         moveBy: {
             x: 0,
-            y: 40
+            y: 0//40
         },
         moveTo: {
-            x: 79,
+            x: 75,
             y: 0
         }
     },
@@ -72,7 +72,7 @@ MajhDef.SendCardPos = [
             y: 20
         },
         moveTo: {
-            x: 27,
+            x: 25,//27,
             y: 0
         }
     },
@@ -118,7 +118,7 @@ MajhDef.twoQiCardPos = [
         },
         moveTo: {
             x: 30,
-            y: 33
+            y: 30 //32
         }
     },
     {

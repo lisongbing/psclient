@@ -3,6 +3,8 @@ let DEF = require('pdknjDef');
 let jokor = 52;
 let JOKOR = 53;
 
+let _si2 = false;
+let _si3 = false;
 
 /*
 1    单牌 
@@ -47,7 +49,46 @@ cc.Class({
 
         this.is2 = gm.isPDK2;   // 是不是2人跑得快
 
+        this.doSpcRule();
+
         //this.gm.__tipbig = true;
+    },
+
+    up: function (gm) {
+        cc.log(this.dbgstr('up'));
+
+        this.gm = gm;
+
+        this.is2 = gm.isPDK2;   // 是不是2人跑得快
+
+        this.doSpcRule();
+    },
+
+    doSpcRule:function(){
+        {/*
+            2 _si2
+            3 _si2
+        */}
+
+        _si2 = false;
+        _si3 = false;
+
+        let rule = this.gm.roomInfo.NewRlue;
+        for (let i = 0; i < rule.length; ++i) {
+            let r = rule[i];
+            
+            switch (r) {
+                case 2: _si2 = true; break;
+                case 3: _si3 = true; break;
+
+                default:
+                    break;
+            }
+        }
+
+        cc.log(`
+        _si2=${_si2} _si3=${_si3}
+        `);
     },
 
     /* =================================================================================================================== */
@@ -352,7 +393,19 @@ cc.Class({
             r && com.push(r);
             if (ctype==ComType.SAN1 && r) return com;
         }
-        
+
+        // 3AD2
+        if ((!ctype && _si2) || ctype==ComType.SID2) {
+            r = this.checkAAA23(ifo, 2);
+            r && com.push(r);
+            if (r) return com;
+        }
+        // 3AD3
+        if ((!ctype && _si3) || ctype==ComType.SID3) {
+            r = this.checkAAA23(ifo, 3);
+            r && com.push(r);
+            if (r) return com;
+        }
 
         // 三带2 三带一对
         if (!ctype || (ctype==ComType.SAN2 || ctype==ComType.SAND)) {
@@ -389,7 +442,7 @@ cc.Class({
         if (!ctype || (ctype==ComType.SID2 || ctype==ComType.SID3)) {
             r = this.checkSi(ifo);
             r && com.push(r);
-            if (ctype==ComType.SID2 || ctype==ComType.SID3 && r) return com;
+            if ((ctype==ComType.SID2 || ctype==ComType.SID3) && r) return com;
         }
         
         return com;
@@ -855,6 +908,48 @@ cc.Class({
 
         return res;
     },
+
+    // 3A带2  3A带3
+    checkAAA23: function (ifo, num) {
+        let codes = ifo.codes;
+        let vals = ifo.val;
+
+        let len = vals.length;
+
+        let vi = this.getValsInfo(vals);
+        let gui = vi.gui;
+        let vni = vi.vni;
+        let vk = vi.vk;
+
+        let res = {};
+        res.codes = cc.g.clone(codes);
+        res.lv = 15;
+        if (num==2) {
+            res.type = ComType.AAA2;
+            res.desc = '3A带2';
+        } else if (num==3) {
+            res.type = ComType.AAA3;
+            res.desc = '3A带3';
+        } else {
+            return null;
+        }
+        
+        if (!vni[1] || (vni[1] + gui != 3)) {
+            cc.log('checkAAA23 A不是三张');
+            return;
+        }
+        
+        if (num==2 && len!=5) {
+            return null;
+        }
+        if (num==3 && len!=6) {
+            return null;
+        }
+
+        if (res.lv) {
+            return res;
+        }
+    },
     
     // 获取有鬼牌改变后的牌
     getChangeFace: function (mainVals, codes, ctype) {
@@ -1106,8 +1201,39 @@ cc.Class({
             coms = coms.concat(takeres);
         }
 
+        // 3A带2  3A带3
+        if (ctype == ComType.SID2 || ctype == ComType.SID3) {
+            let res = this.findSameNum(dis, vk, vni, 3);
+
+            let nres = []
+            res.forEach(e => {
+                let v = (Math.floor(e[0]/4) + 1);
+                if (v==1) {
+                    aaa = [e];
+                    nres = [e];
+                }
+            });
+            res = nres;
+
+            if (aaa) {
+                if (ctype == ComType.SID2) {
+                    res.forEach(e => {
+                        let take = this.findTake(sourceCodes, e, 2, 0);
+                        take && addResTake(e.concat(take));
+                    });
+                } else if (ctype == ComType.SID3) {
+                    res.forEach(e => {
+                        let take = this.findTake(sourceCodes, e, 3, 0);
+                        take && addResTake(e.concat(take));
+                    });
+                }
+
+                coms = coms.concat(takeres);
+            }
+        }
+
         //ZD
-        if (ctype<=ComType.ZD) {
+        if (ctype==ComType.AAA2 || ctype==ComType.AAA3 || ctype<=ComType.ZD) {
             let zd = this.findSameNum(dis, (ctype==ComType.ZD) ? vk : null, vni, 4);
             if (zd.length>0) {
                 //coms = coms.concat();

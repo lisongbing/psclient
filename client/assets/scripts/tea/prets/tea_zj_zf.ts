@@ -55,13 +55,16 @@ export default class ZjZongFen extends cc.Component {
     }
 
     findMax(dataArr) {
-        let i, max = dataArr[0].fight[0];
+        // @ts-ignore
+        let max = i64v(dataArr[0].fight[0]);
 
         if(dataArr.length < 2) return max;
 
-        for (i = 0; i < dataArr.length; i++) {
-            if (dataArr[i].fight[0] > max) {
-                max = dataArr[i].fight[0];
+        for (let i = 0; i < dataArr.length; i++) {
+            // @ts-ignore
+            let num = i64v(dataArr[i].fight[0])
+            if (num > max) {
+                max = num;
             }
         }
         return max;
@@ -89,7 +92,8 @@ export default class ZjZongFen extends cc.Component {
                 let IDLabel = cc.find("Node_Content/IDLabel", cardNode).getComponent(cc.Label);
                 IDLabel.string = pItem.uid
 
-                let fight = pItem.fight[0];
+                // @ts-ignore
+                let fight = i64v(pItem.fight[0]);
                 
                 let ScoreLabel = cc.find("Node_Content/ScoreLabel", cardNode).getComponent(cc.Label);
                 // ScoreLabel.string = score

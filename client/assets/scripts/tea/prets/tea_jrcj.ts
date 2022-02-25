@@ -9,7 +9,6 @@ import TeaClass from "../tea";
 
 const {ccclass, property} = cc._decorator;
 
-
 @ccclass
 export default class TeaJrcj extends cc.Component {
 
@@ -87,11 +86,7 @@ export default class TeaJrcj extends cc.Component {
         this.clickType = clickType;
         this.doRemoveAllItems();
         let dataArr = item.playerList
-        if (dataArr && dataArr.length && item.gameType == GMID.TTPS){
-            this.node.getChildByName('Button').getChildByName('WatchButton').active = true;
-        }else{
-            this.node.getChildByName('Button').getChildByName('WatchButton').active = false;
-        }
+
         if (item.isStart) {
             this.jieSanButton.node.active = true;
 
@@ -155,7 +150,7 @@ export default class TeaJrcj extends cc.Component {
         nameLabel.string = cc.g.utils.getFormatName(item.name, 3*2);
 
         let IdLabel = cc.find("Node_Content/IdLabel", cardNode).getComponent(cc.Label);
-        IdLabel.string = item.pid
+        IdLabel.string = ''//item.pid
 
         // // 气泡名字
         // let jueName = cc.find("Node_Content/JuLabel", cardNode).getComponent(cc.Label);
@@ -179,7 +174,7 @@ export default class TeaJrcj extends cc.Component {
 
     }
 
-    doAddGame(e:cc.Event.EventTouch,custom:string) {
+    doAddGame() {
         cc.dlog('加入游戏...')
         this.doClosePop()
         // @ts-ignore
@@ -187,7 +182,7 @@ export default class TeaJrcj extends cc.Component {
         if (this.clickType == 1) {
             TeaClass.instance.doRealEnterTeaHall(this.saveItem, 0);
         } else if (this.clickType == 2) {
-            TeaClass.instance.doRealEnterGameHall(this.saveItem,custom);
+            TeaClass.instance.doRealEnterGameHall(this.saveItem);
         }
     }
 
