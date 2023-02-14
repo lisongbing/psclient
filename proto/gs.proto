@@ -197,6 +197,7 @@ message IPCJoinClubRoomDeskReq {
 	bool isTeaHouse  = 10;//是不是新茶馆
 	int64 maxWinSco = 11;//大赢家分数
 	bool isCreate = 12;//是否是创建
+	bool isWatch  = 13;//是否是观战
 }
 //解散房间
 message IPCDisBankGameReq{

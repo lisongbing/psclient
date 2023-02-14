@@ -472,7 +472,12 @@ export default class Player extends cc.Component {
                 )
                 .call(() => {
                     console.log('All tweens finished.');
-                    cardsScript.setKanPai();
+                    if (eq64(this.gameMgr.ttpsRoomInfo.watchDeskId,-1)){
+                        cardsScript.setKanPai();
+                    }else{
+                        cardsScript.hideKLPNode();
+                    }
+                    
                 })
                 .start()
         }
@@ -502,7 +507,7 @@ export default class Player extends cc.Component {
     }
 
     dingZhuan(index:number,para:number[],self:PlayerInfo,uidToPlayerInfo:Map<string,PlayerInfo>,totalNum:number){
-        this.gameMgr.audio.randomDealer();
+        this.schedule(this.gameMgr.audio.randomDealer,1,para[1] - 1);
         let randomZjs:number[] = [];
         for (let i = 2; i < para.length;i++){
             let uid:number = para[i];
@@ -517,7 +522,7 @@ export default class Player extends cc.Component {
                         .blink(para[1], 6)
                         .call(() => {
                             this.afterDingZAction(para[0],index,self,uidToPlayerInfo,totalNum);  
-                            this.gameMgr.audio.stopRandomDealer(this.gameMgr.audio.effid);  
+                            //this.gameMgr.audio.stopRandomDealer(this.gameMgr.audio.effid);  
                             this.gameMgr.audio.dingzhuan();                     
                         })
                         .start()
@@ -546,7 +551,7 @@ export default class Player extends cc.Component {
                             .blink(para[1], 6)
                             .call(() => {
                                 this.afterDingZAction(para[0],index,self,uidToPlayerInfo,totalNum); 
-                                this.gameMgr.audio.stopRandomDealer(this.gameMgr.audio.effid); 
+                               // this.gameMgr.audio.stopRandomDealer(this.gameMgr.audio.effid); 
                                 this.gameMgr.audio.dingzhuan();                      
                             })
                             .start()
@@ -630,6 +635,10 @@ export default class Player extends cc.Component {
 
     showXZBT(show:boolean){
         let node = this.node.parent.getChildByName('XZBT');
+        if (!eq64(this.gameMgr.ttpsRoomInfo.watchDeskId,-1)){
+            node.active = false;
+            return;
+        }
         node.active = show;
         if (show){
             let maxPower = this.qzxzLogic.XZMaxBei(this.gameMgr.selfPlayer,this.gameMgr.uidPlayers,this.gameMgr.ttpsRoomInfo);
@@ -888,7 +897,7 @@ export default class Player extends cc.Component {
                     this.hideArea4();  
                 }else{
                     if (this.gameMgr.ttpsRoomInfo.getStatus() == this.ttpsDef.RMSTA.Free.v){
-                        this.showStartBtn();
+                        this.showStartBtn(eq64(this.gameMgr.ttpsRoomInfo.watchDeskId,-1));
                     }else{
                         this.hideArea4();  
                     }
@@ -937,9 +946,9 @@ export default class Player extends cc.Component {
         }
     }
 
-    showStartBtn(){
+    showStartBtn(show:boolean){
         let area4:cc.Node = this.node.getChildByName("Player1").getChildByName('Area4'); 
-        area4.getChildByName('Button_ready').active = true;    
+        area4.getChildByName('Button_ready').active = show && !this.gameMgr.ttpsRoomInfo.getCurGameNum();    
     }
 
     handlerRoomStatus(){
@@ -984,6 +993,10 @@ export default class Player extends cc.Component {
 
     showQZBT(show:boolean){
         let qz:cc.Node = this.node.parent.getChildByName('QZBT');
+        if (!eq64(this.gameMgr.ttpsRoomInfo.watchDeskId,-1)){
+            qz.active = false;
+            return;
+        }
         let maxPower:number = this.qzxzLogic.QZMaxBei(this.gameMgr.selfPlayer,this.gameMgr.uidPlayers,this.gameMgr.ttpsRoomInfo);
         let ruleMaxPower:number = 1;
         this.gameMgr.ttpsRoomInfo.getRules().forEach(r =>{

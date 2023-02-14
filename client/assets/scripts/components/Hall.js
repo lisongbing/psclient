@@ -839,8 +839,8 @@ cc.Class({
     //点击创建房间
     onClickCreateRoom: function (evt, grpName) {
         cc.log('onClickCreateRoom');
-        cc.g.global.hint('权限不足');
-        return;
+        // cc.g.global.hint('权限不足');
+        // return;
         cc.g.utils.btnShake();
         
         let dlg = this.showMenu('createRoomDlg');

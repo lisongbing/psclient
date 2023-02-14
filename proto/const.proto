@@ -107,6 +107,7 @@ enum PROTO {
 	NOTIFY_TTPS_END_RESULT_LIST = 1044;//拼十玩家结果ntf
 	SITDOWN_ROOM     = 1045; //坐下
 	WATCHER_QUIT_ROOM = 1046;//旁观者退出房间
+	WATCHER_CAHNGE_POS = 1047;//观战切换位置
 
 	CREATE_TEA_HOUSE = 2201;//创建茶馆
 	APPLY_TEA_HOUSE  = 2202;//申请加入茶馆

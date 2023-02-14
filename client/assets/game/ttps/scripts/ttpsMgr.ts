@@ -199,7 +199,7 @@ export default class TTPSMgr extends gameBaseMgrlib.gameBaseMgr {
     initRoomInfo(){
         this.ttpsRoomInfo = null;
         let roomInfo = this.roomInfo;
-        this.ttpsRoomInfo = new RoomInfo(roomInfo.randomZjs,roomInfo.roomId,roomInfo.status,roomInfo.NewRlue,roomInfo.total,roomInfo.clubId,roomInfo.Type,
+        this.ttpsRoomInfo = new RoomInfo(roomInfo.watchDeskId,roomInfo.randomZjs,roomInfo.roomId,roomInfo.status,roomInfo.NewRlue,roomInfo.total,roomInfo.clubId,roomInfo.Type,
             roomInfo.base,roomInfo.limit,roomInfo.curGameNum,roomInfo.GameNum,roomInfo.dealer);
     }
 
@@ -241,6 +241,7 @@ export default class TTPSMgr extends gameBaseMgrlib.gameBaseMgr {
         });
 
         cc.g.networkMgr.addHandler(PB.PROTO.GET_ROOM_IFON, (resp) => {
+            this.init(resp.room,resp.one,resp.others);
             this.gameScript.startLoadAllView();
         });
 
@@ -254,6 +255,13 @@ export default class TTPSMgr extends gameBaseMgrlib.gameBaseMgr {
         cc.g.networkMgr.addHandler(PB.PROTO.WATCHER_QUIT_ROOM, (resp) => {
             cc.log("旁观自己玩家离开房间");
             cc.g.hallMgr.backToHall();
+        });
+
+        //旁观者换位置房间
+        cc.g.networkMgr.addHandler(PB.PROTO.WATCHER_CAHNGE_POS, (resp) => {
+            cc.log("旁观切换桌子");
+            this.init(resp.room,resp.one,resp.others);
+            this.gameScript.startLoadAllView();
         });
     }
 
@@ -361,6 +369,9 @@ export default class TTPSMgr extends gameBaseMgrlib.gameBaseMgr {
 
     // 玩家退出
     playerQuited(player:any):void {
+        if (!eq64(this.ttpsRoomInfo.watchDeskId,-1)){
+            return;
+        }
         super.playerQuited(player);//不能删除
 
         if (eq64(this.selfPlayer.getUid(), player.uid)) {//如果是自己

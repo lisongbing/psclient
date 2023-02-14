@@ -5,7 +5,7 @@ var cfg_dbg = {
     gameConfigUrl: '',//'https://conf.7csht8s99.xyz',//'http://47.243.172.111:10100', //120-app  //http://120.77.173.104:10100  
     //gameConfigUrl:'https://xyx.qqqpgame.com',   //120-小程序
     //gameConfigUrl:'http://119.23.235.127:10100',  //119-app
-    playBackIDUrl:'https://hfapi.7csht8s99.top/getrecord',
+    playBackIDUrl:'http:119.23.235.127:11111/getrecord',
     playBackDataUrl:'https://hfsource.7csht8s99.top/',
     subGameUrl:'http://119.23.235.127:80/',
     miniGameUrl:'https://down.qqqpgame.com/',
@@ -18,12 +18,12 @@ var cfg_dbg = {
    // wsAddress: ["wss://ws.7csht8s99.xyz/ws"], //糖饼
     //wsAddress: ["ws://47.243.172.111:9013/ws"],
     //wsAddress: ["wss://zhouwei520.picp.vip/ws"],
-    wsAddress: ["ws://120.77.173.104:8082/ws"],
-    //wsAddress: ["ws://119.23.235.127:8082/ws"],
+   //wsAddress: ["ws://119.23.235.127:9013/ws"],
+    //@ts-expect-errorwsAddress: ["ws://119.23.235.127:8082/ws"],
     //wsAddress: ["ws://120.77.173.104:8082/ws"],
-    //wsAddress: ["ws://192.168.0.99:8082/ws"],
+    wsAddress: ["ws://127.0.0.1:8082/ws"],
     //wsAddress: ["ws://lisongbing.net/ws"],
-    //wsAddress: ["ws://120.77.85.34:9013/ws"],
+    //wsAddress: ["ws://47.108.39.80:8082/ws"],
     loginMode: 1<<1,
     gamesSeq: [1,9,10,11,4,12,13,14,15,16,18,19,20,21,22,23],//,21
     //"9,2,0,0|10,2,1,1;10,3,1,1;麻将|11,2,2,0" 第四个参数1表示可以出现在添加列表里面

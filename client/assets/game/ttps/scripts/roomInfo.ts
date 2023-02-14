@@ -21,9 +21,9 @@ export default class RoomInfo {
     curGameNum:number = 0;
     dealer:number     = 0;
     private randomZjs:number[] = [];
+    watchDeskId:number = -1;
 
-
-    constructor(randomZjs:number[],roomId:number,status:number,rules:number[],totalNum: number,
+    constructor(watchDeskId:number,randomZjs:number[],roomId:number,status:number,rules:number[],totalNum: number,
         clubId:number,roomType:number,base:number,limit:number,curGameNum:number,gameNum:number,dealer:number){
         this.roomId = roomId;
         this.status =status;
@@ -37,6 +37,7 @@ export default class RoomInfo {
         this.curGameNum = curGameNum;
         this.dealer = dealer;
         this.randomZjs = randomZjs;
+        this.watchDeskId = watchDeskId;
     }
 
     public setRandomZjs(zjs:number[]){

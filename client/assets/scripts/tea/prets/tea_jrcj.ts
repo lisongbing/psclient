@@ -41,7 +41,7 @@ export default class TeaJrcj extends cc.Component {
 
         this.jieSanButton = cc.find("JieSanButton", this.node).getComponent(cc.Button);
         this.jieSanButton.node.active = false;
-        this.addButton = cc.find("AddButton", this.node).getComponent(cc.Button);
+        this.addButton = cc.find("Button/AddButton", this.node).getComponent(cc.Button);
     }
 
     onEnable () {

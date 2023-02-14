@@ -263,7 +263,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "房号: 810184",
     "_N$string": "房号: 810184",
     "_fontSize": 14,
@@ -375,7 +374,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "09:28:24",
     "_N$string": "09:28:24",
     "_fontSize": 14,
@@ -718,7 +716,7 @@
         1,
         1,
         1,
-        1
+        0
       ]
     },
     "_eulerAngles": {
@@ -968,7 +966,7 @@
         1,
         1,
         1,
-        1
+        0
       ]
     },
     "_eulerAngles": {
@@ -1359,7 +1357,7 @@
         1,
         1,
         1,
-        1
+        0
       ]
     },
     "_eulerAngles": {
@@ -1567,7 +1565,7 @@
         1,
         1,
         1,
-        1
+        0
       ]
     },
     "_eulerAngles": {
@@ -1763,7 +1761,7 @@
         1,
         1,
         1,
-        1
+        0
       ]
     },
     "_eulerAngles": {
@@ -2719,7 +2717,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "500000",
     "_N$string": "500000",
     "_fontSize": 16,
@@ -3400,7 +3397,7 @@
         1,
         1,
         1,
-        1
+        0
       ]
     },
     "_eulerAngles": {
@@ -4565,7 +4562,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,
@@ -4674,7 +4670,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,
@@ -4783,7 +4778,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,
@@ -4892,7 +4886,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,
@@ -5001,7 +4994,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,
@@ -5110,7 +5102,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,
@@ -5219,7 +5210,6 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_useOriginalSize": true,
     "_string": "无封顶",
     "_N$string": "无封顶",
     "_fontSize": 22,

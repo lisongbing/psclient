@@ -627,7 +627,7 @@ cc.Class({
             }
 
             o.status = p.d.status;
-            o.money = cc.g.clone(p.d.money);
+            o.money = (p.d.money);
             o.cards = cards;
             o.isZhuang = p.isZhuang;
             o.isReady = p.isReady;

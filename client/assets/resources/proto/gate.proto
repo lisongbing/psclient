@@ -98,6 +98,7 @@ enum PROTO{
 	NOTIFY_TTPS_END_RESULT_LIST=1044;
 	SITDOWN_ROOM=1045;
 	WATCHER_QUIT_ROOM=1046;
+	WATCHER_CAHNGE_POS=1047;
 	CREATE_TEA_HOUSE=2201;
 	APPLY_TEA_HOUSE=2202;
 	AGREE_TEA_HOUSE=2203;
@@ -2775,6 +2776,11 @@ message JoinRoomResp{
 	repeated Player others=3;
 }
 message SitDownRoomResp{
+	RoomInfo room=1;
+	Player one=2;
+	repeated Player others=3;
+}
+message WATCHERCAHNGEPOSResp{
 	RoomInfo room=1;
 	Player one=2;
 	repeated Player others=3;

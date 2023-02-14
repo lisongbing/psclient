@@ -21,6 +21,8 @@ export default class TTPS extends gameBaselib.gameBase {
     @property(cc.SpriteAtlas)
     qzxzAtals:cc.SpriteAtlas = null;
 
+    contrlReconnectCn:number = 0;
+
     TickerIndex:number = 0;
     onLoad(){
        this.gameMgr = cc.g.ttpsMgr;
@@ -34,7 +36,8 @@ export default class TTPS extends gameBaselib.gameBase {
     start(){
        this.startLoadAllView();
        //this.goldFly();
-       this.gameMgr.sendGetRoomInfo();
+       
+       this.contrlReconnectCn = 0;
     }
 
     goldFly(){
@@ -88,6 +91,7 @@ export default class TTPS extends gameBaselib.gameBase {
         this.playersScript.initStartView();
         this.setQZXZBtn();
         this.setJs();
+        this.showSitDown(!eq64(this.gameMgr.ttpsRoomInfo.watchDeskId,-1));
     }
 
     setJs():void{
@@ -222,5 +226,20 @@ export default class TTPS extends gameBaselib.gameBase {
     getPlayerNode(player):cc.Node {
         return this.gameMgr.getPlayerHeadView(player);
     }
+
+    showSitDown(show:boolean){
+        (this as cc.Component).node.getChildByName('SitDown').active = show;
+    }
     
+    update(){
+        this.contrlReconnectCn++;
+        if (this.contrlReconnectCn > 100){
+            this.contrlReconnectCn = 100;
+            return;
+        }
+        if (this.contrlReconnectCn == 100){
+            this.gameMgr.sendGetRoomInfo();
+        }
+       
+    }
 }

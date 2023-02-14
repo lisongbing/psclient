@@ -3018,6 +3018,13 @@ message SitDownRoomResp {
 	repeated Player others = 3;
 }
 
+//@api:1047,@type:resp
+message WATCHERCAHNGEPOSResp {
+	RoomInfo room = 1;
+	Player one = 2;
+	repeated Player others = 3;
+}
+
 //获取房间以及房间玩家的数据
 //@api:1020,@type:req
 message GetRoomDataReq {

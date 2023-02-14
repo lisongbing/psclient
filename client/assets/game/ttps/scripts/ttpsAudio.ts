@@ -69,14 +69,12 @@ export default class TTPSAudio  {
 
     //随机庄家
     randomDealer(){
-        let url = cc.g.audioMgr.getUrl(mp3('nn_bankerrandom')); 
-        cc.resources.load(url, cc.AudioClip,  (err, asset:cc.AudioClip)=> {
-            this.effid = cc.audioEngine.playEffect(asset, true);
-        });
+        cc.g.audioMgr.playSFX(mp3('nn_bankerrandom'));
     }
 
     stopRandomDealer(effid:number){
         cc.audioEngine.stop(effid);
+        
     }
 
     //dz

@@ -145,6 +145,9 @@ module.exports = {
 			1046: {
 				resp:PB.WatcherQuitRoom,
 			},
+			1047: {
+				resp:PB.WATCHERCAHNGEPOSResp,
+			},
 			2000: {
 				req:PB.HeartReq,
 				resp:PB.HeartResp,
