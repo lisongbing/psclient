@@ -883,17 +883,32 @@ cc.Class({
 
         this.Node_BIE.active = true;
 
-        let newsc = (idx, toact, endfun) => {
-            let node = new cc.Node("New Sprite");
-            let sprite = node.addComponent(cc.Sprite);
-            sprite.spriteFrame = this.cardAtlas.getSpriteFrame('d2_card_back');
+        let newsc = (idx, code, toact, endfun) => {
+            //let node = new cc.Node("New Sprite");
+            //let sprite = node.addComponent(cc.Sprite);
+            //sprite.spriteFrame = this.cardAtlas.getSpriteFrame('d2_card_back');
+            
+            let card = new d2Ctrls.LongCard();
+            card.init(this, code);
+
+            let node = card.r;
 
             node.parent = sch.r;
             node.position = sch.StarPos;
             node.zIndex = 1000-idx;
-            
+
+            node.x -= 36;
+            node.y -= 114-50;
+            node.x -= 112-50;
+
+            //node.anchorX = 0;
+            //node.anchorY = 1;
+
+            node.angle = -90;
+            node.opacity = 0;
+
             node.runAction(cc.sequence(
-                cc.delayTime(0.1*idx),
+                cc.delayTime(0.05*idx),
                 cc.callFunc(
                     function (params) {
                         this.Label_paikuNum.string = --this.pGame.roomInfo.cardNum;
@@ -946,6 +961,7 @@ cc.Class({
 
         // 初始手牌都是一样的
         let endidx = 0;
+        let t = 0.2;
         for (let i = 0; i < DEF.StartCardNum+1; ++i) {
 
             this.scheduleOnce(()=>{
@@ -978,7 +994,13 @@ cc.Class({
             if (send0 && ssi[i]) {
                 let selfsc = newsc(
                     i,
-                    cc.moveTo(0.3, ssi[i].pos),
+                    ssi[i].card.uCode,
+                    cc.spawn(
+                        cc.fadeIn(0.1),
+                        cc.moveTo(t, ssi[i].pos),
+                        cc.rotateTo(t, 0),
+                    ),
+                    //cc.moveTo(t, ssi[i].pos),
                     (idx)=>{
                         //cc.log('idx', idx);
                         selfsc.destroy();
@@ -999,7 +1021,6 @@ cc.Class({
                     }
                 );
             }
-            
 
             // 其他人的
             for (let j = 1; j < this.pGame.roomInfo.total; ++j) {
@@ -1008,17 +1029,21 @@ cc.Class({
                 }
 
                 let ctn = false;
+                let N = DEF.StartCardNum;
                 if (xiaojia==j) {
                     if (zj==j) {
                         ctn = xjnum < 3;
+                        N = 3;
                     } else {
                         ctn = xjnum < 2;
+                        N = 2;
                     }
     
                     ++xjnum;
                 } else {
                     if (zj==j) {
                         ctn = true;
+                        N = DEF.StartCardNum+1;
                     } else {
                         ctn = i<DEF.StartCardNum;
                     }
@@ -1026,17 +1051,24 @@ cc.Class({
 
                 if (!ctn) continue;
 
-                let othersc = newsc(
-                    i,
-                    cc.spawn(
-                        cc.moveTo(0.3, sch.toPos[j]),
-                        cc.scaleTo(0.3, 0.1)
-                    ),
-                    (idx)=>{
-                        othersc.removeFromParent();
-                        this.playerView[j].Label_cardNum.string = i+1;
-                    }
-                );
+                this.playerView[j].Label_cardNum.string = N;
+                this.Label_paikuNum.string = --this.pGame.roomInfo.cardNum;
+                
+                // this.scheduleOnce(()=>{
+                //     this.playerView[j].Label_cardNum.string = i+1;
+                // }, 0.1*idx + 0.2);
+
+                // let othersc = newsc(
+                //     i,
+                //     cc.spawn(
+                //         cc.moveTo(0.2, sch.toPos[j]),
+                //         cc.scaleTo(0.2, 0.1)
+                //     ),
+                //     (idx)=>{
+                //         othersc.removeFromParent();
+                //         this.playerView[j].Label_cardNum.string = i+1;
+                //     }
+                // );
             }
         }
     },
@@ -1083,7 +1115,7 @@ cc.Class({
             for (let j = 0; j < g.cards.length; ++j) {
                 let ifo = {};
 
-                ifo.pos = cc.v2(bgTopos.x + w*(gbidx+i), bgTopos.y);
+                ifo.pos = cc.v2(bgTopos.x + w*(gbidx+i) - 34, bgTopos.y+(this.handCardSpa.y*j));
                 ifo.card = g.cards[j];
                 ifo.card.active = false;
                 ssi.push(ifo);
@@ -1177,11 +1209,15 @@ cc.Class({
         let c = card.r;
         c.parent = sch.r;
 
+        if (view.index == 0) {
+            c.rotation = -90;
+        }
+
         if (!this.pGame.DMode.isDrive) {
             c.position = sch.outp[view.index];
             //card.light();
         } else {
-            c.position = sch.toPos[view.index];;
+            c.position = sch.toPos[view.index];
             c.scaleX = c.scaleY = 0.1;
 
             if (DEF.time.tangda <= 0) {
@@ -1231,6 +1267,10 @@ cc.Class({
 
         let c = card.r;
         c.parent = sch.r;
+
+        if (view.index == 0) {
+            c.rotation = -90;
+        }
 
         if (!this.pGame.DMode.isDrive) {
             c.position = sch.outp[view.index];
@@ -2540,9 +2580,13 @@ cc.Class({
             this.pGame.onGameSettle(d);
         }
 
-        if (! true)
+        // 发牌
+        if ( true)
         {
             this.ButtonReady.active = false;
+            this.Node_gmfreeBtns.active = false;
+
+            this.pGame.roomInfo.status = DEF.RMSTA.Play;
 
             for (let i = 0; i < this.playerView.length; i++) {
                 this.playerView[i].root.active = true;
@@ -2551,8 +2595,9 @@ cc.Class({
     
             this.starGame();
     
-    
-            this.playerView[0].player.sendCard();
+            let v = [1,2,3,3,6,6,6,6,8,8,11,12,13,15,16,16,18,19,20,20];
+
+            this.playerView[0].player.sendCard(v);
         }
 
         // 打牌

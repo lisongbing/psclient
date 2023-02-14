@@ -176,6 +176,7 @@ cc.Class({
 
                     if (i==1) {
                         this.votetime = ri.applyStatus[0];
+                        this.gm.askJiesanUid = this.d.uid;
                     }
                     
                     break;
@@ -671,6 +672,7 @@ cc.Class({
         });
 
         this.d.online = v[0]==1;
+        this.d.outLineTime = 0;
         this.view.upOnline();
     },
     /* =====操作========================================================================================== */

@@ -93,6 +93,8 @@ EQS.radio = function () {
     xj.active = (ren==4 && paishu.items[16].toggle.isChecked);
     tpfd.active = paishu.items[15].toggle.isChecked || xj.active;
 
+    fengd.items[94].active = (paishu.items[15].active && paishu.items[15].toggle.isChecked);
+
     if (_cr.curArea==11) {
         //15,14张| 16,20张|
         if (ren==4) {

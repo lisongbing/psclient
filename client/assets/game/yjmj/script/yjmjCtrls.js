@@ -1877,6 +1877,11 @@ let MajhHandCardView = cc.Class({
             tg.uMoved = false;
             tg.zIndex = tg.ozIndex;
             // this.touchMoveCode = null;
+
+            if (!tg.isSelected || tg.y<=0) {
+                this.pPage.gameMgr.audio.dianpai();
+            }
+            
             this.pPage.onClickQiPaiBtnClicked(tg)
         }
     }

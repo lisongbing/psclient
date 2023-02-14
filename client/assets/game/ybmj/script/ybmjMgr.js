@@ -95,6 +95,8 @@ cc.Class({
             this.posPlayers = {};
         }
 
+        this.xiaojjs = false;
+
         // 更新玩家
         this.upPlayers();
 
@@ -313,6 +315,9 @@ cc.Class({
     },
     //准备阶段完毕
     onWaitReadyEnd: function () {
+
+        this.xiaojjs = false;
+
         this.roomInfo.status = DEF.RMSTA.SendCard.v;
         // this.roomInfo.cardNum = DEF.ToltalCardNum;
         //this.gameScript.starGame();
@@ -386,6 +391,8 @@ cc.Class({
                 for (const k in this.uidPlayers) {
                     this.uidPlayers[k].resetPlay();
                 }
+
+                this.xiaojjs = true;
 
                 this.gameScript.onGameSettlement();
             },

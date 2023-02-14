@@ -85,6 +85,8 @@ cc.Class({
         // 初始化界面
         this.initView();
 
+        this.upDeskbg();
+
         // 界面加载完成
         this.pGame.gameScriptLoaded();
 

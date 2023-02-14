@@ -2820,6 +2820,7 @@ let D2PlayerView = cc.Class({
         card.r.parent = wc.r.parent;
         card.r.x = wc.r.x;
         card.r.y = wc.r.y;
+        card.r.rotation = wc.r.rotation;
 
         card.r.runAction(cc.sequence(
             cc.delayTime(0.5),

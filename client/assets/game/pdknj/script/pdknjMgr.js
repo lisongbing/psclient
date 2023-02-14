@@ -95,6 +95,8 @@ cc.Class({
         if (! this.logic) {
             this.logic = new Logic();
             this.logic.init(this);
+        } else {
+            this.logic.up(this);
         }
 
         // 音乐模块
@@ -103,6 +105,8 @@ cc.Class({
             this.audio.init(this);
         }
         this.audio.curBGM = '';
+
+        this.xiaojjs = false;
         
         //UID玩家 位置玩家
         if (! this.uidPlayers) {
@@ -410,6 +414,8 @@ cc.Class({
     onWaitReadyEnd: function () {
         cc.log('onWaitReadyEnd 所有玩家都准备了 进入游戏阶段');
 
+        this.xiaojjs = false;
+
         cc.g.hallMgr.inGameMenu.upBtnShow();
         this.gameScript.Node_gmfreeBtns.active = false;
 
@@ -511,6 +517,8 @@ cc.Class({
                 for (const k in this.uidPlayers) {
                     this.uidPlayers[k].resetPlay();
                 }
+
+                this.xiaojjs = true;
 
                 this.gameScript.onGameSettlement();
             },
@@ -632,7 +640,6 @@ cc.Class({
             'onGameSettleFinal',
             (data)=>{
                 this.roomInfo.status = DEF.RMSTA.Free.v;
-                
                 this.gameScript.onGameSettleFinal();
             },
             {},

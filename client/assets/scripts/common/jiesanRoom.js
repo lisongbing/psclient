@@ -107,11 +107,13 @@ cc.Class({
             let r = cc.instantiate(this.playerPf);
             let ud = {};
             ud.name  = cc.find("Label_name", r).getComponent(cc.Label);
+            ud.id  = cc.find("Label_id", r).getComponent(cc.Label);
             ud.head  = cc.find("mask/head", r).getComponent(cc.Sprite);
             ud.dengdai = cc.find("Label_dengdai", r);
             ud.tongyi  = cc.find("Label_tongyi", r);
             
             ud.name.string = cc.g.utils.getFormatName(d.name, 3*2);
+            ud.id.string = i64v(d.uid);
             cc.g.utils.sethead(ud.head, d.icon?d.icon:'');
 
             d.ud = ud;

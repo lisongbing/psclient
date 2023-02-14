@@ -1,10 +1,10 @@
 
 
-let dir = 'ddz5' + '/';
+let dir = 'pdknj' + '/';
 
 let sex = ['', 'nan', 'nv'];
 
-let mp3 = name => dir + 'ddz5_' + name + '.mp3';
+let mp3 = name => dir + 'pdk_' + name + '.mp3';
 
 let codesType = (name, s) => mp3(sex[s] + '_' + name);
 
@@ -124,7 +124,13 @@ cc.Class({
 
         // 三同
         if (type == CT.SAN) {
-            cc.g.audioMgr.playSFX(codesType('s' + values[0], sex));
+            cc.g.audioMgr.playSFX(codesType('san' + values[0], sex));
+            return;
+        }
+
+        // 炸弹
+        if (type == CT.ZD) {
+            cc.g.audioMgr.playSFX(codesType('si' + values[0], sex));
             return;
         }
 
@@ -132,14 +138,18 @@ cc.Class({
         if (!this.tpName) {
             this.tpName = {
                 3:['shun','shun',],
-                4:['liandui1','liandui2',],
-                6:['three1','three1',],
-                9:['Plane1','Plane2',],
-                10:['Plane1','Plane2',],
-                11:['si2','si2',],
-                12:['si3','si3',],
-                13:['bomb1','bomb2',],
-                14:['bomb1','bomb2',],
+                4:['liandui','liandui',],
+                6:['3d1','3d1',],
+                7:['3d2','3d2',],
+                8:['3d2','3d2',],
+                9:['Plane','Plane',],
+                10:['Plane','Plane',],
+                11:['4d2','4d2',],
+                12:['4d3','4d3',],
+                13:['bomb','bomb',],
+                14:['bomb','bomb',],
+                15:['4d2','4d2',],
+                16:['4d3','4d3',],
             };
         }
 

@@ -349,6 +349,7 @@ cc.Class({
         if (customEventData != null) {
             clickEventHandler.customEventData = customEventData;
         }
+
         var button = node.getComponent(cc.Button);
         button.clickEvents.push(clickEventHandler);
     },
@@ -402,6 +403,50 @@ cc.Class({
         contentPosY = Math.max(contentPosY, scrollView.node.height/2);
         contentPosY = Math.min(contentPosY, scrollView.content.height - scrollView.node.height/2);
         scrollView.content.position = new cc.Vec2(scrollView.content.position.x, contentPosY);
+    },
+
+    backPlayScaleBtnEffct: function (node, fun, s, t) {
+        cc.log('backPlayScaleBtnEffct');
+
+        if (!node) {
+            fun && fun();
+            return;
+        }
+        
+        if (!cc.g.hallMgr)  {
+            fun && fun();
+            return;
+        }
+        if (!cc.g.hallMgr.curGameMgr)  {
+            fun && fun();
+            return;
+        }
+        
+        if (!cc.g.hallMgr.curGameMgr.isBackPlayMode())  {
+            //fun && fun();
+            return;
+        }
+
+        s = s || 0.8;
+        t = t || 0.1;
+
+        node.runAction(cc.sequence(
+            cc.scaleTo(t, s),
+            cc.callFunc(
+                function (params) {
+                    node.runAction(cc.sequence(
+                        cc.scaleTo(t, 1.0),
+                        cc.callFunc(
+                            function (params) {
+                                fun && fun();
+                            },
+                            this,null
+                        ),
+                    ));
+                },
+                this,null
+            ),
+        ));
     },
 
     //获取json表数据
@@ -607,7 +652,7 @@ cc.Class({
         return cc.g.utils.getByteByBinary(parseInt(hexCode, 16).toString(2));
     },
 
-/**参数说明：
+    /**参数说明：
      *
      * 根据长度截取先使用字符串，超长部分追加…
      * @param {String} str 对象字符串
@@ -746,7 +791,7 @@ cc.Class({
         return result;
     },
 
-// 字符串转数字
+    // 字符串转数字
     strToNumber: function (str) {
         if (!str) return;
         

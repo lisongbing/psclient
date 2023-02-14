@@ -1,4 +1,4 @@
-let DEF = require('majhDef');
+let DEF = require('ybmjDef');
 var TingCodeUtils = require("tingCodeUtils");
 let MajhPlayerView = cc.Class({
     extends: cc.Component,
@@ -449,10 +449,10 @@ let MajhPlayerView = cc.Class({
     startSendCard(){
         this.handCardView.setData();
         this.handCardView.upHandCardPosition();
-        if (!this.pPage.isbpm) {
-            this.handCardView.setAniHcGroups();
-            this.handCardView.animatSendCard();
-        }
+        // if (!this.pPage.isbpm) {
+        //     this.handCardView.setAniHcGroups();
+        //     this.handCardView.animatSendCard();
+        // }
         // this.handCardView.setAniHcGroups();
         // this.handCardView.animatSendCard();
         // this.handCardView.showSendCard();
@@ -930,22 +930,51 @@ let MajhHandCardView = cc.Class({
         }
     },
     upReConnectPos: function() {
-        if (this.selfView.index == 0) {
-            let newHcGroups = []
-            this.hcGroups.forEach(card => {
-                if (card.active) {
-                    newHcGroups.push(card)
-                }
-            });
-
-            let lenght = newHcGroups.length % 3
-            if ((lenght == 2) && ((this.selfView.index == 0) || (this.selfView.index == 2))) {
-                let allPaiLenght = newHcGroups.length
-                let lastGrpNode = newHcGroups[allPaiLenght-1];  //最后一张牌
-                let pox = lastGrpNode.x + 10;
-                lastGrpNode.endPosX = pox
-                lastGrpNode.setPosition(pox, lastGrpNode.y);
+        // if (this.selfView.index == 0) {
+        //     let newHcGroups = []
+        //     this.hcGroups.forEach(card => {
+        //         if (card.active) {
+        //             newHcGroups.push(card)
+        //         }
+        //     });
+        //
+        //     let lenght = newHcGroups.length % 3
+        //     if ((lenght == 2) && ((this.selfView.index == 0) || (this.selfView.index == 2))) {
+        //         let allPaiLenght = newHcGroups.length
+        //         let lastGrpNode = newHcGroups[allPaiLenght-1];  //最后一张牌
+        //         let pox = lastGrpNode.x + 10;
+        //         lastGrpNode.endPosX = pox
+        //         lastGrpNode.setPosition(pox, lastGrpNode.y);
+        //     }
+        // }
+        let newHcGroups = []
+        this.hcGroups.forEach(card => {
+            if (card.active) {
+                newHcGroups.push(card)
             }
+        });
+
+        let lenght = newHcGroups.length % 3
+        if (lenght == 2) {
+            let allPaiLenght = newHcGroups.length
+            let lastGrpNode = newHcGroups[allPaiLenght-1];  //最后一张牌
+            let pox = lastGrpNode.x
+            let poy = lastGrpNode.y
+            if (this.selfView.index == 0) {
+                pox += 10;
+            } else if (this.selfView.index == 1) {
+                pox -= 4;
+                poy += 20;
+            } else if (this.selfView.index == 2) {
+                pox -= 10;
+            } else if (this.selfView.index == 3) {
+                pox -= 8;
+                poy -= 20;
+            }
+
+            lastGrpNode.endPosX = pox
+            lastGrpNode.endPosY = poy
+            lastGrpNode.setPosition(pox, poy);
         }
     },
     // 更新手牌位置
@@ -1060,6 +1089,7 @@ let MajhHandCardView = cc.Class({
 
             // 重新绘制位置
             let viewIndex = 0
+            // let lasetCard = null;
             this.hcGroups.forEach(card => {
                 if (card.active && card.code > 0) {
                     let positionX, positionY
@@ -1070,8 +1100,12 @@ let MajhHandCardView = cc.Class({
                     card.isSelected = false;
                     card.setPosition(positionX, positionY);
                     viewIndex++
+                    // lasetCard = card;
                 }
             });
+            // if (lasetCard) {
+            //     lasetCard.setPosition(lasetCard.endPosX + 10, lasetCard.endPosY);
+            // }
         } else if (userPoint == 1) {
             // 获取碰、杠的数据
             let pongArr = this.selfView.pongCardView.pongPaiArr;
@@ -1089,7 +1123,7 @@ let MajhHandCardView = cc.Class({
             }
 
             let viewIndex = 0
-            let startCardNum = this.hcGroups.length;
+            // let startCardNum = this.hcGroups.length;
             this.hcGroups.forEach(card => {
                 if (card.active) {
                     let positionX, positionY
@@ -1145,6 +1179,7 @@ let MajhHandCardView = cc.Class({
             }
             // 重新绘制位置
             let viewIndex = 0
+            // let lasetCard = null;
             this.hcGroups.forEach(card => {
                 if (card.active) {
                     let positionX, positionY
@@ -1168,11 +1203,18 @@ let MajhHandCardView = cc.Class({
                     if (this.pPage.isbpm) {
                         positionY = -6;
                     }
+
+                    card.endPosX = positionX
+                    card.endPosY = positionY
                     // 回放修改 添加end
                     card.setPosition(positionX, positionY);
                     viewIndex++
+                    // lasetCard = card
                 }
             });
+            // if (lasetCard) {
+            //     lasetCard.setPosition(lasetCard.endPosX - 10, lasetCard.endPosY);
+            // }
         } else if (userPoint == 3) {
             // 获取碰、杠的数据
             let pongArr = this.selfView.pongCardView.pongPaiArr;
@@ -1599,15 +1641,21 @@ let MajhHandCardView = cc.Class({
     onTouchstart: function (event) {
         let tg = this.touchInfo(event, 0);
         let code = parseInt(tg.code)
-        if (code == 50 || tg.zezao || tg.yellowZe || this.pPage.isAutoHu || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
+        // if (code == 50 || tg.yellowZe || this.pPage.isAutoHu || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
+        //     return
+        // }
+
+        if (code == 50 || tg.yellowZe || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
             return
         }
 
-        // if (!cc.g.utils.judgeStringEmpty(this.touchMoveCode)) {
-        //     if (this.touchMoveCode != tg.code) {
-        //         return
-        //     }
-        // }
+        // 当前选的不是缺牌,检测是否有缺牌
+        if (!tg.isQue) {
+            let haveQue = this.pPage.checkHaveQuePlayMj();
+            if (haveQue) {
+                return;
+            }
+        }
 
         tg.ozIndex = tg.zIndex
         tg.ox = tg.x
@@ -1617,7 +1665,11 @@ let MajhHandCardView = cc.Class({
     onTouchmove: function (event) {
         let tg = this.touchInfo(event, 1);
         let code = parseInt(tg.code)
-        if (code == 50 || tg.zezao || tg.yellowZe || this.pPage.isAutoHu || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
+        // if (code == 50 || tg.yellowZe || this.pPage.isAutoHu || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
+        //     return
+        // }
+
+        if (code == 50 || tg.yellowZe || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
             return
         }
 
@@ -1626,6 +1678,15 @@ let MajhHandCardView = cc.Class({
         //         return
         //     }
         // }
+
+        // 当前选的不是缺牌,检测是否有缺牌
+        if (!tg.isQue) {
+            let haveQue = this.pPage.checkHaveQuePlayMj();
+            if (haveQue) {
+                return;
+            }
+        }
+
 
         // 移动判断
         if (!tg.uMoved) {
@@ -1666,7 +1727,10 @@ let MajhHandCardView = cc.Class({
     jugDaiPai: function (event) {
         let tg = this.touchInfo(event, 3);
         let code = parseInt(tg.code)
-        if (code == 50 || tg.zezao || tg.yellowZe || this.pPage.isAutoHu || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
+        // if (code == 50 || tg.yellowZe || this.pPage.isAutoHu || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
+        //     return
+        // }
+        if (code == 50 || tg.yellowZe || (code == TingCodeUtils.guiCode1) || (code == TingCodeUtils.guiCode2) || (code == TingCodeUtils.guiCode3)) {
             return
         }
 
@@ -1675,6 +1739,14 @@ let MajhHandCardView = cc.Class({
         //         return
         //     }
         // }
+
+        // 当前选的不是缺牌,检测是否有缺牌
+        if (!tg.isQue) {
+            let haveQue = this.pPage.checkHaveQuePlayMj();
+            if (haveQue) {
+                return;
+            }
+        }
 
         // 点击
         if (tg.uMoved) {
@@ -1702,6 +1774,11 @@ let MajhHandCardView = cc.Class({
             tg.uMoved = false;
             tg.zIndex = tg.ozIndex;
             // this.touchMoveCode = null;
+
+            if (!tg.isSelected || tg.y<=0) {
+                this.pPage.gameMgr.audio.dianpai();
+            }
+            
             this.pPage.onClickQiPaiBtnClicked(tg)
         }
     }
@@ -3236,6 +3313,30 @@ let D2SettleFinalView = cc.Class({
         this.Button_backhall.on('touchend', this.backhall, this);
     },
 
+    upInfo: function () {
+        cc.log("upInfo")
+
+        let ri = this.pg.gameMgr.roomInfo;
+
+        let r = this.root;
+
+        // 地区
+        let Node_ri = cc.find("Node_ri", r);
+        if (!Node_ri) {
+            return;
+        }
+        Node_ri.active = true
+
+        let Label_diqu = cc.find("Label_diqu", Node_ri).getComponent(cc.Label);
+        Label_diqu.string = '宜宾麻将'//cc.g.areaInfo[ri.origin].name + '麻将';
+
+        let Label_room = cc.find("Label_room", Node_ri).getComponent(cc.Label);
+        Label_room.string = `房间号:  ${ri.roomId}  局数: ${ri.curGameNum}/${ri.GameNum}`;
+
+        let Label_time = cc.find("Label_time", Node_ri).getComponent(cc.Label);
+        Label_time.string = cc.g.utils.getFormatTimeXXX(null, 'Y|.|M|.|D| |h|:|m|:|s|');
+    },
+
     /* ------------------------------------------------------------------------------------------------------------ */
 
     //
@@ -3250,6 +3351,11 @@ let D2SettleFinalView = cc.Class({
         // 总局数
         this.Label_rouds.string = sd.num;
 
+        this.upInfo();
+
+        // 地区
+        // this.Label_diqu.string = (this.pg.gameMgr.xiaojjs ? '宜宾麻将' : '宜宾麻将(中途解散)');
+
         this.hboxPlayer = cc.find("Node_All_View/All_View_Layout", this.root);
         // this.hboxPlayer.removeAllChildren(true)
         let list = sd.list
@@ -3262,6 +3368,15 @@ let D2SettleFinalView = cc.Class({
                 // 大赢家
                 let Sprite_bigwin = cc.find("Sprite_bigwin", SpriteNode);
                 let Sprite_bg = cc.find("light", SpriteNode);
+
+
+                // 申请解散
+                let jiesan = cc.find("jiesan", SpriteNode);
+                jiesan.active = false;
+                if (!this.pg.gameMgr.xiaojjs && this.pg.gameMgr.askJiesanUid) {
+                    jiesan.active = eq64(this.pg.gameMgr.askJiesanUid, allPerResultItem.uid);
+                }
+
                 // 大赢家
                 // Sprite_bigwin.active = (allPerResultItem.winlose > 0) ? true : false
                 Sprite_bigwin.active = allPerResultItem.bigWin ? true : false

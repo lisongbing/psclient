@@ -110,6 +110,8 @@ cc.Class({
             this.posPlayers = {};
         }
 
+        this.xiaojjs = false;
+
         if (!this.isBackPlayMode()) {
             this.upExpand();
         }
@@ -411,6 +413,8 @@ cc.Class({
     onWaitReadyEnd: function () {
         cc.log('onWaitReadyEnd 所有玩家都准备了 进入游戏阶段');
 
+        this.xiaojjs = false;
+
         cc.g.hallMgr.inGameMenu.upBtnShow();
         this.gameScript.Node_gmfreeBtns.active = false;
 
@@ -512,6 +516,8 @@ cc.Class({
                 for (const k in this.uidPlayers) {
                     this.uidPlayers[k].resetPlay();
                 }
+
+                this.xiaojjs = true;
 
                 this.gameScript.onGameSettlement();
             },

@@ -99,7 +99,13 @@ cc.Class({
         if (!gmbg) {
             for (let i = 0; i < GMGrp.mahjong.length; i++) {
                 if (GMGrp.mahjong[i] == cc.g.hallMgr.curGameType) {
-                    gmbg = '3';
+
+                    if (GMGrp.mahjong[i]==GMID.PDKNJ || GMGrp.mahjong[i]==GMID.PDKGX) {
+                        gmbg = 'a0';
+                    } else {
+                        gmbg = '3';
+                    }
+                    
                     break;
                 }
             }
@@ -123,7 +129,7 @@ cc.Class({
 
         gmbg = gmbg || 0;
 
-        spr.spriteFrame = cc.g.hallMgr.inGameMenu.dlgSetting.bg[parseInt(gmbg)];
+        spr.spriteFrame = cc.g.hallMgr.inGameMenu.dlgSetting.bgFrm[gmbg];
     },
 
     

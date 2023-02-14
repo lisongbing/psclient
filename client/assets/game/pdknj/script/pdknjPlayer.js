@@ -6,7 +6,7 @@ let LG_opt = DEF.PlayerOpt;
 let LG_optStr = DEF.PlayerOptStr;
 
 // 客户端先出牌开关
-let iscltout = true;
+let iscltout = false;
 
 cc.Class({
     /* =============================================================================================== */
@@ -182,6 +182,7 @@ cc.Class({
 
                     if (i==1) {
                         this.votetime = ri.applyStatus[0];
+                        this.gm.askJiesanUid = this.d.uid;
                     }
                     
                     break;
@@ -644,9 +645,9 @@ cc.Class({
             });
 
             //强制女性
-            this.gm.audio.play('ybq1', 2);
+            this.gm.audio.play('ybq', 2);
         } else {
-            this.gm.audio.play('ybq1', this.d.sex);
+            this.gm.audio.play('ybq', this.d.sex);
         }
     },
 
@@ -714,6 +715,7 @@ cc.Class({
         });
 
         this.d.online = v[0]==1;
+        this.d.outLineTime = 0;
         this.view.upOnline();
     },
     /* =====操作========================================================================================== */

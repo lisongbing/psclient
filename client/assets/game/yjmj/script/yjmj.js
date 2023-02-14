@@ -3172,6 +3172,7 @@ cc.Class({
 
         // 播放音频
         this.gameMgr.audio.pai(v, palyerViewItem.player.d.sex);
+        this.gameMgr.audio.chupai();
 
         // 移除特效
         for (let i = 0; i < this.playerView.length; i++) {
@@ -3626,6 +3627,8 @@ cc.Class({
     //     }
     // },
     doReciveTi: function(palyerViewItem, v, gui) {
+        cc.g.utils.backPlayScaleBtnEffct(this.Button_Ti);
+
         let getRelDeskId = palyerViewItem.index//this.gameMgr.getViewPos(deskId)
         //  显示定时器
         this.startTimer(getRelDeskId)
@@ -3664,6 +3667,8 @@ cc.Class({
         // }
     },
     doReciveTiTwo: function(palyerViewItem, gui) {
+        cc.g.utils.backPlayScaleBtnEffct(this.Button_Ti);
+
         let getRelDeskId = palyerViewItem.index//this.gameMgr.getViewPos(deskId)
         // //  显示定时器
         // this.startTimer(getRelDeskId)
@@ -4580,7 +4585,7 @@ cc.Class({
         this.doRealFeiShow(palyerViewItem, v, gui, getRelDeskId)
 
         // 隐藏胡提杠
-        this.doHiddenHutiGang();
+        cc.g.utils.backPlayScaleBtnEffct(this.Button_Fei, ()=>this.doHiddenHutiGang());
 
         if (getRelDeskId == 0 && !this.isbpm) {
             // 胡牌提示
@@ -4609,7 +4614,7 @@ cc.Class({
         this.doShowRealPeng(palyerViewItem, v, getRelDeskId)
 
         // 隐藏胡提杠
-        this.doHiddenHutiGang();
+        cc.g.utils.backPlayScaleBtnEffct(this.Button_Peng, ()=>this.doHiddenHutiGang());
 
         if (getRelDeskId == 0 && !this.isbpm) {
             // 胡牌提示
@@ -4661,7 +4666,7 @@ cc.Class({
         this.doRealMoPaiGang(palyerViewItem, v, getRelDeskId)
 
         // 隐藏胡提杠
-        this.doHiddenHutiGang();
+        cc.g.utils.backPlayScaleBtnEffct(this.Button_Gang, ()=>this.doHiddenHutiGang());
 
         if (getRelDeskId == 0 && !this.isbpm) {
             // 胡牌提示
@@ -5170,7 +5175,7 @@ cc.Class({
 
         if (palyerViewItem.index == 0) {
 
-            this.doHiddenHutiGang();
+            cc.g.utils.backPlayScaleBtnEffct(this.Button_Hu, ()=>this.doHiddenHutiGang());
 
             let handlePaiArray = palyerViewItem.handCardView.hcGroups;
             handlePaiArray.forEach((node)=>{

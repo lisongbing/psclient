@@ -277,9 +277,9 @@ cc.Class({
         }
 
         // 房间信息
-        let roomInfo = cc.find("game_top_layout", r);
+        // let roomInfo = cc.find("game_top_layout", r);
         // 局数
-        this.labelJueShu = cc.find("game_top_jeshu_layout/jueshu_label", roomInfo).getComponent(cc.Label);
+        // this.labelJueShu = cc.find("game_top_jeshu_layout/jueshu_label", roomInfo).getComponent(cc.Label);
         //  房间号
         // this.label_room = cc.find("game_top_room_layout/room_label", roomInfo).getComponent(cc.Label);
         // 显示时间
@@ -400,11 +400,12 @@ cc.Class({
 
         // 底牌
         // this.Sprite_Bg_Node = cc.find("Sprite_Bg_Node", r);
-        this.Sprite_Bg_Num = cc.find("Sprite_Bg_Node/Sprite_Bg_Num", r);
-        this.Sprite_Bg_Num.active = false;
+        // this.Sprite_Bg_Num = cc.find("Sprite_Bg_Node/Sprite_Bg_Num", r);
+        // this.Sprite_Bg_Num.active = false;
         this.Label_Left_Num = cc.find("Sprite_Bg_Node/Label_Left_Num", r).getComponent(cc.Label);
         this.Label_Left_Num.node.active = false;
 
+        this.labelJueShu = cc.find("Sprite_Bg_Node/jueshu_label", r).getComponent(cc.Label);
 
         // 倒计时，东南西北
         this.Num_Down_Label = cc.find("Sprite_Bg_Node/Num_Down_Label", r).getComponent(cc.Label);
@@ -425,10 +426,10 @@ cc.Class({
         // 胡牌提示
         this.HuNodeTips = cc.find("HuNodeTips", r);
         this.HuNodeTips.active = false;
-        this.Sprite_Light = cc.find("HuNodeTips/AutoHuButton/Sprite_Light", r);//.getComponent(cc.Sprite);
-        this.Sprite_Light.active = false
-        // 是否自动胡牌
-        this.isAutoHu = false;
+        // this.Sprite_Light = cc.find("HuNodeTips/AutoHuButton/Sprite_Light", r);//.getComponent(cc.Sprite);
+        // this.Sprite_Light.active = false
+        // // 是否自动胡牌
+        // this.isAutoHu = false;
 
 
         // piao
@@ -487,13 +488,13 @@ cc.Class({
         this.hidderStartTimer();
 
         if (payerIndex == 0) {
-            this.Sprite_dong.active = true;
-        } else if (payerIndex == 1) {
-            this.Sprite_bei.active = true;
-        } else if (payerIndex == 2) {
             this.Sprite_xi.active = true;
-        } else if (payerIndex == 3) {
+        } else if (payerIndex == 1) {
             this.Sprite_nan.active = true;
+        } else if (payerIndex == 2) {
+            this.Sprite_dong.active = true;
+        } else if (payerIndex == 3) {
+            this.Sprite_bei.active = true;
         }
         this.Num_Down_Label.node.active = true;
         this.Num_Down_Label.string = 10;           //  场景文本框为 显示20
@@ -884,7 +885,7 @@ cc.Class({
                     this.scheduleOnce(()=>{
                         this.Node_SaiZi_View.active = false;
                         this.sendCard();
-                        this.Sprite_Bg_Num.active = true;
+                        // this.Sprite_Bg_Num.active = true;
                         this.Label_Left_Num.node.active = true;
                     }, parseInt(this.sendCardTimer));
                 }, 0.8);
@@ -1091,11 +1092,11 @@ cc.Class({
         let palyerViewItemp = this.playerView[0]
         palyerViewItemp.handCardView.Node_Place.active = false
 
-        // 是否自动胡牌
-        this.isAutoHu = false;
-        if (this.Sprite_Light != null) {
-            this.Sprite_Light.active = false
-        }
+        // // 是否自动胡牌
+        // this.isAutoHu = false;
+        // if (this.Sprite_Light != null) {
+        //     this.Sprite_Light.active = false
+        // }
 
         // // 修改样式
         // for (let i = 0; i < this.playerView.length; i++) {
@@ -1169,8 +1170,10 @@ cc.Class({
         palyerViewItem.Sprite_Piao_Img.active = true;
         palyerViewItem.piao = status
         if (status == 1) {
+            this.gameMgr.audio.pai('piao', palyerViewItem.player.d.sex);
             palyerViewItem.Sprite_Piao_Img.getComponent(cc.Sprite).spriteFrame = this.majhAtlas0.getSpriteFrame('piao');
         } else {
+            this.gameMgr.audio.pai('piaono', palyerViewItem.player.d.sex);
             palyerViewItem.Sprite_Piao_Img.getComponent(cc.Sprite).spriteFrame = this.majhAtlas0.getSpriteFrame('bupiao');
         }
     },
@@ -1363,7 +1366,7 @@ cc.Class({
             //     return
             // }
             // 红中，则返回 或者 显示操作按钮时候 返回
-            if (qiPaiItemTwo.code == 50 || qiPaiItemTwo.zezao || qiPaiItemTwo.yellowZe) {
+            if (qiPaiItemTwo.code == 50 || qiPaiItemTwo.yellowZe) {
                 return
             }
             if (qiPaiItemTwo.isSelected || qiPaiItemTwo.y > 0) {
@@ -1420,7 +1423,7 @@ cc.Class({
             let qiPaiItemTwo = customData
 
             // 红中，则返回 或者 显示操作按钮时候 返回
-            if (qiPaiItemTwo.code == 50 || this.Node_HuTiGangView.active || qiPaiItemTwo.zezao || qiPaiItemTwo.yellowZe) {
+            if (qiPaiItemTwo.code == 50 || this.Node_HuTiGangView.active || qiPaiItemTwo.yellowZe) {
                 return
             }
             if (qiPaiItemTwo.isSelected || qiPaiItemTwo.y > 0) {
@@ -2145,7 +2148,7 @@ cc.Class({
         this.node_Huanpai.active = false
 
         const self = this
-        let timerLen = 2.5;
+        let timerLen = 3;
         if (this.isbpm) {
             timerLen = 0.5;
         }
@@ -2236,6 +2239,7 @@ cc.Class({
 
         // 播放音频
         this.gameMgr.audio.pai(v, palyerViewItem.player.d.sex);
+        this.gameMgr.audio.chupai();
 
         // 移除特效
         for (let i = 0; i < this.playerView.length; i++) {
@@ -2986,9 +2990,11 @@ cc.Class({
 
         this.showZeZaoImg(palyerViewItem)
 
+        palyerViewItem.handCardView.upReConnectPos();
+
         if (getRelDeskId == 0 && !this.isbpm) {
 
-            palyerViewItem.handCardView.upReConnectPos();
+            // palyerViewItem.handCardView.upReConnectPos();
 
             // 每次摸牌都判断胡牌提示
             this.doCheckHuPai();
@@ -3297,13 +3303,13 @@ cc.Class({
         cc.find("Node_HanPai_All_View/mjhuanpai2", this.node).active = false;
         cc.find("Node_HanPai_All_View/mjhuanpai3", this.node).active = false;
 
-        // 是否自动胡牌
-        this.isAutoHu = false;
-        if (this.Sprite_Light != null) {
-            this.Sprite_Light.active = false
-        }
+        // // 是否自动胡牌
+        // this.isAutoHu = false;
+        // if (this.Sprite_Light != null) {
+        //     this.Sprite_Light.active = false
+        // }
 
-        this.doShowAllHiddenZeZhaoView();
+        // this.doShowAllHiddenZeZhaoView();
 
 
         let palyerViewItemp = this.playerView[0]
@@ -3390,8 +3396,8 @@ cc.Class({
         this.Node_hupaiTip.active = false;
     },
     doShowAllHiddenZeZhaoView:function() {
-        let palyerViewItem = this.playerView[0]
-        palyerViewItem.handCardView.Node_Place.active = this.isAutoHu
+        // let palyerViewItem = this.playerView[0]
+        // palyerViewItem.handCardView.Node_Place.active = this.isAutoHu
     },
 
     doShowMyQueImg: function(palyerViewItem) {
@@ -3420,7 +3426,7 @@ cc.Class({
             this.showZeZaoImg(palyerViewItem)
 
             // 显示剩下牌
-            this.Sprite_Bg_Num.active = true;
+            // this.Sprite_Bg_Num.active = true;
             this.Label_Left_Num.node.active = true;
             this.Label_Left_Num.string = parseInt(this.gameMgr.roomInfo.cardNum) + ''
 
@@ -3590,7 +3596,11 @@ cc.Class({
                         org.yellowZe = true
                     } else {
                         // 条 同 万 0  1 2
-                        if (!org.isQue) {
+                        // if (!org.isQue) {
+                        //     Sprite_ZeZao.active = true;
+                        //     org.zezao = true;
+                        // }
+                        if (org.isQue) {
                             Sprite_ZeZao.active = true;
                             org.zezao = true;
                         }
@@ -3639,6 +3649,19 @@ cc.Class({
                 // }
             }
         }
+    },
+    checkHaveQuePlayMj: function() {
+        let isCanPlay = false;
+        let handlePaiArray = this.playerView[0].handCardView.hcGroups;
+        for (let i = 0; i < handlePaiArray.length; i++) {
+            let qiPaiItem = handlePaiArray[i]
+            if (qiPaiItem.active && qiPaiItem.isQue) {
+                isCanPlay = true;
+                break
+            }
+        }
+
+        return isCanPlay;
     },
     doShowYellowMeng: function(handlePaiArrayActive) {
         if (!cc.g.utils.judgeArrayEmpty(this.tingCodeArr)) {
@@ -4120,7 +4143,7 @@ cc.Class({
                             cc.sequence(
                                 cc.delayTime(0.2),
                                 cc.spawn(
-                                    cc.moveTo(0.2, -400, 284),
+                                    cc.moveTo(0.2, -250, 295),
                                     cc.scaleTo(0.2, 1, 1),
                                 ),
                             )
@@ -4136,7 +4159,7 @@ cc.Class({
         const self = this
         self.scheduleOnce(()=>{
             self.doReciveBenJing(palyerViewItem, code, showAnima)
-        }, 2);
+        }, 3);
 
         // if (palyerViewItem.index == 0) {
         //     this.benjing = code
@@ -4289,7 +4312,8 @@ cc.Class({
                     this.NodeTingYongView.active = true;
                     this.Node_Ting_Anmi.active = false;
                     this.Node_Ting_All.active = true;
-                    this.Node_Ting_All.setPosition(-400, 284);
+                    // this.Node_Ting_All.setPosition(-400, 284);
+                    this.Node_Ting_All.setPosition(-250, 295);
                     this.Node_Ting_Layout.active = true;
                 }
             }
@@ -5245,60 +5269,59 @@ cc.Class({
 
     doAutoHu(event) {
         //cc.log('doAutoHu....')
+        //
+        // if (this.Sprite_Light.active) {
+        //     this.gameMgr.sendOp(DEF.PlayerOpt.AutoHu.v, 0);
+        // } else {
+        //     this.gameMgr.sendOp(DEF.PlayerOpt.AutoHu.v, 1);
+        // }
+        //
+        // this.Sprite_Light.active = !this.Sprite_Light.active;
 
-        if (this.Sprite_Light.active) {
-            this.gameMgr.sendOp(DEF.PlayerOpt.AutoHu.v, 0);
-        } else {
-            this.gameMgr.sendOp(DEF.PlayerOpt.AutoHu.v, 1);
-        }
+        // if (this.checkCanPlayMj()) {
+        //     this.needCallBack = true;
+        //     if (!this.Sprite_Light.active) {
+        //         this.isAutoHu = false;
+        //     }
+        // } else {
+        //     this.isAutoHu = this.Sprite_Light.active;
+        // }
 
-        this.Sprite_Light.active = !this.Sprite_Light.active;
-        // this.isAutoHu = this.Sprite_Light.active;
-        if (this.checkCanPlayMj()) {
-            this.needCallBack = true;
-            if (!this.Sprite_Light.active) {
-                this.isAutoHu = false;
-            }
-        } else {
-            this.isAutoHu = this.Sprite_Light.active;
-        }
-
-        this.doShowAllHiddenZeZhaoView();
+        // this.doShowAllHiddenZeZhaoView();
     },
 
     doCancelAutoHu: function() {
-        if (!this.isbpm) {
-            if (this.Sprite_Light.active) {
-                this.gameMgr.sendOp(DEF.PlayerOpt.AutoHu.v, 0);
-                this.Sprite_Light.active = false
-                this.isAutoHu = false;
-                this.doShowAllHiddenZeZhaoView();
-            }
-        }
+        // if (!this.isbpm) {
+        //     if (this.Sprite_Light.active) {
+        //         this.gameMgr.sendOp(DEF.PlayerOpt.AutoHu.v, 0);
+        //         this.Sprite_Light.active = false
+        //         this.isAutoHu = false;
+        //         this.doShowAllHiddenZeZhaoView();
+        //     }
+        // }
     },
 
     checkDaPaiStatus: function() {
-        this.isAutoHu = this.Sprite_Light.active;
-        this.needCallBack = false;
-        this.doShowAllHiddenZeZhaoView();
+        // this.isAutoHu = this.Sprite_Light.active;
+        // this.needCallBack = false;
+        // this.doShowAllHiddenZeZhaoView();
     },
 
     doReconAutoHu(hu) {
-        //cc.log('doReconAutoHu....')
-        this.Sprite_Light.active = hu;
-        this.isAutoHu = hu;
-        this.doShowAllHiddenZeZhaoView();
+        // this.Sprite_Light.active = hu;
+        // this.isAutoHu = hu;
+        // this.doShowAllHiddenZeZhaoView();
     },
 
     doRealReciveAutoHu: function(palyerViewItem, code, showAnima) {
-        if (code == 1) {
-            this.Sprite_Light.active = true
-            this.isAutoHu = true
-        } else {
-            this.Sprite_Light.active = false
-            this.isAutoHu = false
-        }
-        this.doShowAllHiddenZeZhaoView();
+        // if (code == 1) {
+        //     this.Sprite_Light.active = true
+        //     this.isAutoHu = true
+        // } else {
+        //     this.Sprite_Light.active = false
+        //     this.isAutoHu = false
+        // }
+        // this.doShowAllHiddenZeZhaoView();
     },
 
     /* =================================================================================================================== */

@@ -428,10 +428,15 @@ cc.Class({
 
     onBTnQxtg: function () {
         //if (this.dlgTuoguan) {
-        //    this.dlgTuoguan.active = false;
+        //    this.dlgTuoguan.active = false; 
         //}
 
         cc.g.utils.btnShake();
+
+        if (!cc.g.hallMgr.curGameMgr) {
+            cc.warn('onBTnQxtg  !cc.g.hallMgr.curGameMgr');
+            return;
+        }
 
         let ri = cc.g.hallMgr.curGameMgr.roomInfo;
 

@@ -1,4 +1,5 @@
 const OPT_Online = 993;
+const OPT_JiesanTP = 996;
 const OPT_Jiesan = 997;
 const OPT_Tuoguan = (1<<30)-1;
 
@@ -376,12 +377,28 @@ cc.Class({
         //cc.log('mgrOp', uid, resp, isself);
 
         if (resp.op.k == OPT_Jiesan) {
-            cc.log('解散次数检查 mgrOp OPT_Jiesan');
+            cc.log('解散次数检查 mgrOp OPT_Jiesan uid', uid);
+            this.askJiesanUid = uid;
             if (resp.op.v[0] > 0) {
                 cc.g.global.hint(`每局游戏最多解散${resp.op.v[0]}次`);
                 return;
+            } else if (resp.op.v[0] >= 0) {
+                cc.g.global.hint(`解散次数不足`);
+                return;
+            }
+        } else if (resp.op.k == OPT_JiesanTP) {
+            cc.log('解散投票');
+
+            let v = resp.op.v[0];
+            if (v.toNumber) {
+                v = v.toNumber();
+            }
+
+            if (v == 0){
+                this.askJiesanUid = null;
             }
         }
+        
         
 
         if (resp.op.k == OPT_Online) {

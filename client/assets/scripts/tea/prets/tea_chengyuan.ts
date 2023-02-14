@@ -1481,6 +1481,7 @@ export default class TeaChenYuan extends cc.Component {
                 } else {
                     this.listOneArr = items
                 }
+                this.checkShowUserId(items)
                 this.listOneAdapter.setDataSet(this.listOneArr);
                 this.listOneView.notifyUpdate();
                 this.listOneView.scrollToLitte()
@@ -1490,6 +1491,7 @@ export default class TeaChenYuan extends cc.Component {
                 if (!cc.g.utils.judgeArrayEmpty(items)) {
                     let concatArr = this.listOneArr.concat(items)
                     this.listOneArr = concatArr
+                    this.checkShowUserId(items)
                     this.listOneAdapter.setDataSet(this.listOneArr);
                     this.listOneView.notifyUpdate();
                     // this.listOneView.scrollToLitte()
@@ -1497,6 +1499,30 @@ export default class TeaChenYuan extends cc.Component {
             }
             // this.doRenderListView(resp.list, isRemoveAll)
         });
+    }
+
+    checkShowUserId(items) {
+        // @ts-ignore
+        if (!cc.g.utils.judgeArrayEmpty(this.listOneArr)) {
+            let groupPer = this.listOneArr[0]
+            let groupName = groupPer.groupName
+            // @ts-ignore
+            if (!cc.g.utils.judgeStringEmpty(groupName)) {
+                // @ts-ignore
+                if (!cc.g.utils.judgeArrayEmpty(items)) {
+                    items.forEach(item => {
+                        let groupNameLabel = item.groupName
+                        if(groupNameLabel.indexOf(groupName) == 0) {
+                            item.showUserId = true
+                        } else {
+                            item.showUserId = false
+                        }
+                    })
+                }
+            }
+
+            groupPer.showUserId = true
+        }
     }
 
     doRealSearchZhanDuiList() {

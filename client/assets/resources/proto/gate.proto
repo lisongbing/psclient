@@ -1431,7 +1431,6 @@ message JoinTeaHouseDeskReq{
 	int32 floor=2;
 	int32 deskNo=3;
 	bool openGps=4;
-	bool isWatch=5;
 }
 message DisbandTeaHouseDeskReq{
          int32 teaHouseId=1;
@@ -2661,8 +2660,6 @@ message RoomInfo{
 	GoldMatchRoomRule goldMatchRoomRule=35;
 	repeated int64 autoCountDown=36;
 	ExpendSpeciThing expendSpeciThing=41;
-	repeated int64   randomZjs=42;
-	int32 watchDeskId=43;
 }
 message PaoDeKuaiRoomInfo{
 	repeated int32 cardRecord=1;
@@ -2709,9 +2706,7 @@ message Player{
 	int64  gold=35;
 	bool isAutoHu=36;
 	int32 outLineTime=37;
-	int32 lastTZNum=38;
-	int32 lastWinValue=39;
-	bool isWatch=40;
+	int64 luckValue=38;
 }
 message Gps{
 	string longitude=1;
@@ -2815,10 +2810,6 @@ message JoinRoomNtf{
 	Player other=1;
 }
 message QuitRoomNtf{
-	int64 uid=1;
-	ERROR error=2;
-}
-message WatcherQuitRoom{
 	int64 uid=1;
 	ERROR error=2;
 }

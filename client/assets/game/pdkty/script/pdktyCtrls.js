@@ -546,6 +546,7 @@ let LocSettleFinalView = cc.Class({
         // // 总局数
         // this.Label_rouds.string = sd.num;
 
+        this.upInfo();
 
         // 调整滑动区域大小
         let pnum = sd.player.length;
@@ -558,7 +559,30 @@ let LocSettleFinalView = cc.Class({
 
         this.upPlyaers();
     },
+    upInfo: function () {
+        cc.log("upInfo")
 
+        let ri = GM.roomInfo;
+
+        let r = this.root;
+        
+        // 地区
+        let Node_ri = cc.find("Node_ri", r);
+        if (!Node_ri) {
+            return;
+        }
+
+        let Label_diqu = cc.find("Label_diqu", Node_ri).getComponent(cc.Label);
+        //Label_diqu.string = (GM.xiaojjs ? '珙县跑得快' : '珙县跑得快(中途解散)');
+        Label_diqu.string = '通用跑得快';
+
+        let Label_room = cc.find("Label_room", Node_ri).getComponent(cc.Label);
+        Label_room.string = `房间号:  ${ri.roomId}  局数: ${ri.curGameNum}/${ri.GameNum}`;
+
+        let Label_time = cc.find("Label_time", Node_ri).getComponent(cc.Label);
+        Label_time.string = cc.g.utils.getFormatTimeXXX(null, 'Y|.|M|.|D| |h|:|m|:|s|');
+    },
+    
     //
     upPlyaers: function () {
         cc.log(this.dbgstr('upPlyaers'));
@@ -575,6 +599,13 @@ let LocSettleFinalView = cc.Class({
             cc.find("light", r).active = eq64(d.uid, cc.g.userMgr.userId);
             // 大赢家
             cc.find("dyj", r).active = (d.winlose == sd.maxsco);
+
+            // 申请解散
+            let jiesan=cc.find("jiesan", r);
+            jiesan.active = false;
+            if (!GM.xiaojjs && GM.askJiesanUid) {
+                jiesan.active = eq64(GM.askJiesanUid, d.uid);
+            }
 
             // 头像
             let Sprite_head = cc.find("head", r).getComponent(cc.Sprite);

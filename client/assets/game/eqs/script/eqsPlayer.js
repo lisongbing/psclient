@@ -903,6 +903,8 @@ cc.Class({
 
     // 吃牌
     chi: function (va) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.ButtonChi, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
 
         let v = [];
@@ -1009,6 +1011,8 @@ cc.Class({
 
     // 对
     peng: function (va) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.Buttondui, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
 
         let v = [];
@@ -1045,6 +1049,8 @@ cc.Class({
 
     // 开
     zhao: function (va) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.Buttonkai, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
 
         let v = [];
@@ -1162,6 +1168,8 @@ cc.Class({
 
     // 胡
     hu: function (va) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.ButtonHu, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
         
         let v = [];
@@ -1181,6 +1189,8 @@ cc.Class({
 
     // 过
     pass: function (v) {
+        cc.g.utils.backPlayScaleBtnEffct(this.pg.ButtonPass, ()=>this.pg.Node_opt.active=false);
+
         this.pg.clearTgTishi(this.d.uid);
 
         this.obks = null;

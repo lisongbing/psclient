@@ -110,12 +110,12 @@ D2Def.PlayerOpt = {
     SendCard:{
         v: 1 << 3,
         s: '发牌',
-        t: 2.3,
+        t: 2.0,
     },
 
     QuanPai:{
         v: 1 << 4,
-        s: '圈排',
+        s: '圈牌',
     },
 
     CanBao:{
